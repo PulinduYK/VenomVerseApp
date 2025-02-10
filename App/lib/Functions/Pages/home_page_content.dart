@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:venomverse/Functions/Pages/test.dart';
 
+import '../../Profile/pages/settings_page.dart';
 import '../reusable_widgets/homepage_card.dart';
 
 class HomePageContent extends StatelessWidget {
@@ -29,7 +29,7 @@ class HomePageContent extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TestPage(),
+                        builder: (context) => SettingsPage(),
                       ),
                     );
                   },
