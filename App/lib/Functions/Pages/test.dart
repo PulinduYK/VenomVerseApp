@@ -8,7 +8,21 @@ class TestPage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text("This is home"),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Goes back to the previous screen
+                },
+                child: Text("Go Back"),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text("This is home"),
+            ],
+          ),
         ),
       ),
     );

@@ -72,21 +72,21 @@ class HomePageContent extends StatelessWidget {
                     height: 25,
                   ),
                   HomepageCard(
-                    iconData: Icons.ice_skating,
+                    imgPath: "assets/snake.png",
                     option: "Insects Scan",
                   ),
                   SizedBox(
                     height: 25,
                   ),
                   HomepageCard(
-                    iconData: Icons.ice_skating,
+                    imgPath: "assets/snake.png",
                     option: "Snake Scan",
                   ),
                   SizedBox(
                     height: 25,
                   ),
                   HomepageCard(
-                    iconData: Icons.ice_skating,
+                    imgPath: "assets/snake.png",
                     option: "Symptoms Scan",
                   ),
                   SizedBox(
@@ -109,6 +109,7 @@ class HomePageContent extends StatelessWidget {
                             "journey to venom world",
                             style: TextStyle(
                               fontSize: 20,
+                              color: Colors.white,
                             ),
                             textAlign: TextAlign.center,
                           ),

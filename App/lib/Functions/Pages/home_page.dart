@@ -8,6 +8,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "home"),
+          BottomNavigationBarItem(icon: Icon(Icons.man), label: "home"),
+        ],
+      ),
       body: Container(
         //height: double.infinity,
         decoration: BoxDecoration(

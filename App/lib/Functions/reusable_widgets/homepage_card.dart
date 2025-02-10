@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HomepageCard extends StatelessWidget {
-  final IconData iconData;
+  //final IconData iconData;
   final String option;
-  const HomepageCard({super.key, required this.iconData, required this.option});
+  final String imgPath;
+  const HomepageCard({super.key, required this.option, required this.imgPath});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,8 @@ class HomepageCard extends StatelessWidget {
                 color: Color(0xFF756EF3),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Icon(
-                iconData,
-                size: 35,
+              child: Image.asset(
+                imgPath,
               ),
             ),
             SizedBox(
