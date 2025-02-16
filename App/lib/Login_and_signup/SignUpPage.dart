@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'CreateAccountPnumber.dart'; // Next page
+import 'dart:async';
+
+import 'SetPasswordPage.dart'; // Next page
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -16,23 +18,93 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _isAgreeChecked = false;
   bool _isEmailValid = true;
   bool _isUsernameValid = true;
+  bool _isOTPSent = false;
+  bool _isOTPVerified = false;
+  int _otpCountdown = 60;
+  Timer? _timer;
+  final String _demoOTP = "123456"; // Hardcoded demo OTP
 
   @override
   void dispose() {
     _usernameController.dispose();
     _emailController.dispose();
     _otpController.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
-  // External email validation function (Pulindu can implement this with Firebase)
   bool validateEmailExternally(String email) {
     return email.endsWith('@gmail.com');
   }
 
-  // Check if the form is valid
   bool _isFormValid() {
-    return _isUsernameValid && _isEmailValid && _otpController.text.isNotEmpty && _isAgreeChecked;
+    return _isUsernameValid && _isEmailValid && _isOTPVerified && _isAgreeChecked;
+  }
+
+  void _startOTPTimer() {
+    setState(() {
+      _otpCountdown = 60;
+      _isOTPSent = true;
+    });
+
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_otpCountdown > 0) {
+        setState(() {
+          _otpCountdown--;
+        });
+      } else {
+        setState(() {
+          _isOTPSent = false; // Allow resend
+        });
+        timer.cancel();
+      }
+    });
+  }
+
+  void _sendOTP() {
+    setState(() {
+      _isEmailValid = validateEmailExternally(_emailController.text);
+    });
+
+    if (_isEmailValid) {
+      _startOTPTimer();
+    }
+  }
+
+  void _verifyOTP() {
+    setState(() {
+      _isOTPVerified = _otpController.text == _demoOTP;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(_isOTPVerified ? "OTP Verified Successfully!" : "Invalid OTP. Try again!")),
+    );
+  }
+
+  void _showTermsAndConditions() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Terms and Conditions"),
+          content: const SingleChildScrollView(
+            child: Text(
+              "I love you"
+                  ,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -97,62 +169,66 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                               ),
                               const SizedBox(height: 40),
-                              // Username Field
                               TextField(
                                 controller: _usernameController,
                                 decoration: InputDecoration(
-                                  hintText: 'Username',
+                                  hintText: 'Full Name',
                                   prefixIcon: const Icon(Icons.person),
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 18),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  errorText: !_isUsernameValid && _usernameController.text.isNotEmpty
-                                      ? 'Username is required'
-                                      : null,
                                 ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isUsernameValid = value.isNotEmpty;
-                                  });
-                                },
                               ),
                               const SizedBox(height: 20),
-                              // Email Field
                               TextField(
                                 controller: _emailController,
                                 decoration: InputDecoration(
                                   hintText: 'Email (@gmail.com)',
                                   prefixIcon: const Icon(Icons.email),
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 18),
+                                  suffixIcon: IconButton(
+                                    icon: const Icon(Icons.send, color: Colors.blue),
+                                    onPressed: _sendOTP,
+                                  ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  errorText: !_isEmailValid && _emailController.text.isNotEmpty
-                                      ? 'Invalid email. Must end with @gmail.com'
-                                      : null,
                                 ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isEmailValid = validateEmailExternally(value);
-                                  });
-                                },
                               ),
                               const SizedBox(height: 20),
-                              // OTP Field
+                              if (_isOTPSent)
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      _otpCountdown > 0
+                                          ? "Resend OTP in $_otpCountdown sec"
+                                          : "Didn't receive OTP?",
+                                      style: const TextStyle(color: Colors.grey),
+                                    ),
+                                    if (_otpCountdown == 0)
+                                      TextButton(
+                                        onPressed: _sendOTP,
+                                        child: const Text("Resend OTP", style: TextStyle(color: Colors.blue)),
+                                      ),
+                                  ],
+                                ),
+                              const SizedBox(height: 10),
                               TextField(
                                 controller: _otpController,
                                 decoration: InputDecoration(
                                   hintText: 'Enter OTP',
                                   prefixIcon: const Icon(Icons.lock),
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 18),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 10),
+                              ElevatedButton(
+                                onPressed: _isOTPSent ? _verifyOTP : null,
+                                child: const Text("Confirm OTP"),
+                              ),
                               const SizedBox(height: 20),
-                              // Checkbox for terms and conditions
                               Row(
                                 children: [
                                   Checkbox(
@@ -163,72 +239,31 @@ class _SignUpPageState extends State<SignUpPage> {
                                       });
                                     },
                                   ),
-                                  const Text('I agree to the terms and conditions'),
+                                  GestureDetector(
+                                    onTap: _showTermsAndConditions,
+                                    child: const Text(
+                                      'I agree to the Terms and Conditions',
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              // Create Account Button with Gradient
-                              Container(
-                                width: double.infinity,
-                                height: 55,
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.3),
-                                      offset: const Offset(0, 5),
-                                      blurRadius: 10,
+                              ElevatedButton(
+                                onPressed: _isFormValid()
+                                    ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const SetPasswordPage(email: '', phoneNumber: '',),
                                     ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    padding: const EdgeInsets.all(0),
-                                    elevation: 0,
-                                    backgroundColor: _isFormValid()
-                                        ? const Color(0xFF1C16B9)
-                                        : Colors.grey,
-                                  ),
-                                  onPressed: _isFormValid()
-                                      ? () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const CreateAccountPnumber(),
-                                      ),
-                                    );
-                                  }
-                                      : null,
-                                  child: Ink(
-                                    decoration: BoxDecoration(
-                                      gradient: _isFormValid()
-                                          ? const LinearGradient(
-                                        colors: [
-                                          Color(0xFF1C16B9),
-                                          Color(0xFF6D5FD5),
-                                          Color(0xFF8A7FD6),
-                                        ],
-                                      )
-                                          : const LinearGradient(
-                                        colors: [Colors.grey, Colors.grey],
-                                      ),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        'Create Account',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                  );
+                                }
+                                    : null,
+                                child: const Text("Create Account"),
                               ),
                             ],
                           ),

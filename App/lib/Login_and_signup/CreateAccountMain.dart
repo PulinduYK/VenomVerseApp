@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'CustomPageRoute.dart';
-import 'SignUpPage.dart';
+import 'signuppage.dart';
 import 'StarterPage.dart';
 
 class CreateAccountMain extends StatelessWidget {
