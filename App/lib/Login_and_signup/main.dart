@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'CreateAccountMain.dart';
-import 'LoginPage.dart';
-import 'SignUpPage.dart';
+import 'createaccountmain.dart';
+import 'loginpage.dart';
+import 'signuppage.dart';
 // Import your login page
 
 void main() {

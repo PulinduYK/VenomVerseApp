@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'SuccessPage.dart';
+
+import 'birthdaygenderpage.dart';
 
 class SetPasswordPage extends StatefulWidget {
   final String email;
@@ -187,7 +188,7 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const SuccessPage(),
+                                      builder: (context) => BirthdayGenderPage(),
                                     ),
                                   );
                                 }
