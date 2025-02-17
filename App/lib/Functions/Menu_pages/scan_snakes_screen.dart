@@ -23,7 +23,7 @@ class ScanInsectsScreen extends StatelessWidget{
               child: const Padding(
                 padding: EdgeInsets.only(top: 60.0,left: 22),
                 child: Text(
-                  "Scan Insects",
+                  "Scan Snakes",
                   style: TextStyle(
                       fontSize: 24,
                       color: Colors.white,
