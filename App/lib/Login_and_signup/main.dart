@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'createaccountmain.dart';
-import 'loginpage.dart';
-import 'signuppage.dart';
+import 'package:venomverse/Login_and_signup/signup/createaccountmain.dart';
+import 'package:venomverse/Login_and_signup/signup/register/signuppage.dart';
+
+
 // Import your login page
 
 void main() {

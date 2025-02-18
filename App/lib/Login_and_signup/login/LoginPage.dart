@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'createaccountmain.dart';
-import 'CustomPageRoute.dart';
+import '../custom page route widget/CustomPageRoute.dart';
+import '../signup/createaccountmain.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
