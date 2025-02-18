@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:venomverse/Login_and_signup/signup/register/signuppage.dart';
 
-import 'CustomPageRoute.dart';
-import 'signuppage.dart';
-import 'StarterPage.dart';
+import '../custom page route widget/CustomPageRoute.dart';
+import '../login/StarterPage.dart';
+
+
 
 class CreateAccountMain extends StatelessWidget {
   const CreateAccountMain({super.key});

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'SuccessPage.dart';
+
+import '../../done/SuccessPage.dart';
+
 
 class BirthdayGenderPage extends StatefulWidget {
   @override
