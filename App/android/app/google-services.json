@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393479446683",
+    "project_id": "venomverse-ee5c3",
+    "storage_bucket": "venomverse-ee5c3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393479446683:android:01cf9dcf7dfbfe2455263e",
+        "android_client_info": {
+          "package_name": "com.example.venomverse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGep1yoYPT7Bs2k5Mw4aPWruhKZj8JiRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
