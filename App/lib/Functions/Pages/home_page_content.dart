@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:venomverse/Login_and_signup/Login_and_signup_logic/authentication/wrapper.dart';
 
-import '../../Profile/pages/settings_page.dart';
 import '../reusable_widgets/homepage_card.dart';
 
-class HomePageContent extends StatelessWidget {
+class HomePageContent extends StatefulWidget {
   const HomePageContent({super.key});
 
+  @override
+  State<HomePageContent> createState() => _HomePageContentState();
+}
+
+class _HomePageContentState extends State<HomePageContent> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,13 +31,14 @@ class HomePageContent extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SettingsPage(),
-                      ),
-                    );
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    if (mounted) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Wrapper()),
+                      );
+                    }
                   },
                   child: Icon(
                     Icons.settings,

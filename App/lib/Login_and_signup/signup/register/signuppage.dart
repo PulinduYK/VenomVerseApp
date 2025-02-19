@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'birthdaygenderpage.dart';
+import 'package:venomverse/Login_and_signup/Login_and_signup_logic/services/auth.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -10,9 +9,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final AuthServices _auth = AuthServices();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   bool _isAgreeChecked = false;
   bool _isEmailValid = true;
   bool _isPasswordValid = false;
@@ -51,9 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
         return AlertDialog(
           title: const Text("Terms and Conditions"),
           content: const SingleChildScrollView(
-            child: Text(
-                "ily."
-            ),
+            child: Text("ily."),
           ),
           actions: [
             TextButton(
@@ -96,21 +95,24 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       const SizedBox(height: 50),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 20.0),
                         child: Row(
                           children: [
                             IconButton(
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              icon: const Icon(Icons.arrow_back, color: Colors.white),
+                              icon: const Icon(Icons.arrow_back,
+                                  color: Colors.white),
                             ),
                           ],
                         ),
                       ),
                       Expanded(
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 30),
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
@@ -138,7 +140,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  errorText: _isEmailValid ? null : "Invalid email. Must end with @gmail.com",
+                                  errorText: _isEmailValid
+                                      ? null
+                                      : "Invalid email. Must end with @gmail.com",
                                 ),
                                 onChanged: _validateEmail,
                               ),
@@ -152,7 +156,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  errorText: _isPasswordValid ? null : "Password must be between 6 and 12 characters.",
+                                  errorText: _isPasswordValid
+                                      ? null
+                                      : "Password must be between 6 and 12 characters.",
                                 ),
                                 onChanged: _validatePassword,
                               ),
@@ -166,7 +172,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  errorText: _doPasswordsMatch ? null : "Passwords do not match",
+                                  errorText: _doPasswordsMatch
+                                      ? null
+                                      : "Passwords do not match",
                                 ),
                                 onChanged: _validateConfirmPassword,
                               ),
@@ -195,12 +203,22 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                               const SizedBox(height: 20),
                               ElevatedButton(
-                                onPressed: (_isEmailValid && _isPasswordValid && _doPasswordsMatch && _isAgreeChecked) ? () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => BirthdayGenderPage()),
-                                  );
-                                } : null,
+                                onPressed: (_isEmailValid &&
+                                        _isPasswordValid &&
+                                        _doPasswordsMatch &&
+                                        _isAgreeChecked)
+                                    ? () async {
+                                        await _auth
+                                            .createUserWithEmailAndPassword(
+                                                _emailController.text,
+                                                _confirmPasswordController
+                                                    .text);
+                                        if (mounted) {
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
+                                        }
+                                      }
+                                    : null,
                                 child: const Text("Continue"),
                               ),
                             ],

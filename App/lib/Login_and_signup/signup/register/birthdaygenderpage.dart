@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../Login_and_signup_logic/services/firebase.dart';
 import '../../done/SuccessPage.dart';
 
-
 class BirthdayGenderPage extends StatefulWidget {
+  const BirthdayGenderPage({super.key});
+
   @override
   _BirthdayGenderPageState createState() => _BirthdayGenderPageState();
 }
@@ -75,7 +77,8 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 35),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 35),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -97,7 +100,8 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                     const SizedBox(height: 30),
                     // Full Name Input Field (No Border)
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(30),
@@ -126,7 +130,8 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                     GestureDetector(
                       onTap: () => _selectDate(context),
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(30),
@@ -136,7 +141,8 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                           children: [
                             Text(
                               DateFormat('MMMM d, yyyy').format(_selectedDate),
-                              style: TextStyle(fontSize: 18, color: Colors.black54),
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.black54),
                             ),
                             Icon(Icons.calendar_today, color: Colors.black54),
                           ],
@@ -146,7 +152,8 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                     const SizedBox(height: 20),
                     // Modern Gender Selection
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(30),
@@ -166,7 +173,9 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                   ? Color(0xFF6D5FD5)
                                   : Colors.grey[300],
                               labelStyle: TextStyle(
-                                color: _selectedGender == 'Male' ? Colors.white : Colors.black,
+                                color: _selectedGender == 'Male'
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                           ),
@@ -182,7 +191,9 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                   ? Color(0xFF6D5FD5)
                                   : Colors.grey[300],
                               labelStyle: TextStyle(
-                                color: _selectedGender == 'Female' ? Colors.white : Colors.black,
+                                color: _selectedGender == 'Female'
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                           ),
@@ -201,7 +212,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                           ),
                           padding: const EdgeInsets.all(0),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           String fullName = _fullNameController.text.trim();
                           if (fullName.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -212,6 +223,10 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                             );
                             return;
                           }
+                          await FirebaseService().updateFirst(
+                              _fullNameController.text,
+                              _selectedDate.toString(),
+                              _selectedGender);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

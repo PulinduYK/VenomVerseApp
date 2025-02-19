@@ -4,8 +4,6 @@ import 'package:venomverse/Login_and_signup/signup/register/signuppage.dart';
 import '../custom page route widget/CustomPageRoute.dart';
 import '../login/StarterPage.dart';
 
-
-
 class CreateAccountMain extends StatelessWidget {
   const CreateAccountMain({super.key});
 
@@ -27,7 +25,8 @@ class CreateAccountMain extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minHeight: constraints.maxHeight,
@@ -37,21 +36,24 @@ class CreateAccountMain extends StatelessWidget {
                     children: [
                       const SizedBox(height: 15),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 50.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 50.0),
                         child: Row(
                           children: [
                             IconButton(
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              icon: const Icon(Icons.arrow_back, color: Colors.white),
+                              icon: const Icon(Icons.arrow_back,
+                                  color: Colors.white),
                             ),
                           ],
                         ),
                       ),
                       Expanded(
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 30),
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
@@ -112,14 +114,17 @@ class CreateAccountMain extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     padding: const EdgeInsets.all(0),
-                                    elevation: 0, // Disable default button elevation
+                                    elevation:
+                                        0, // Disable default button elevation
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                      ModernPageRoute(page: const SignUpPage()), // Custom transition to SignUpPage
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignUpPage()),
                                     );
                                   },
-
                                   child: Ink(
                                     decoration: BoxDecoration(
                                       gradient: const LinearGradient(
@@ -148,7 +153,8 @@ class CreateAccountMain extends StatelessWidget {
                               const SizedBox(height: 100),
                               // Row of White Buttons for Google and Phone Login
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   // Google Button
                                   Container(
@@ -164,8 +170,12 @@ class CreateAccountMain extends StatelessWidget {
                                     ),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        Navigator.of(context).push(
-                                          ModernPageRoute(page: const StarterPage()), // Custom transition to SignUpPage
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                          ModernPageRoute(
+                                              page: const StarterPage()),
+                                          (route) =>
+                                              false, // Removes all previous routes // Custom transition to SignUpPage
                                         );
                                       },
                                       style: ElevatedButton.styleFrom(

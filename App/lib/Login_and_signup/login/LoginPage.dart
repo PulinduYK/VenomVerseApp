@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../custom page route widget/CustomPageRoute.dart';
-import '../signup/createaccountmain.dart';
 
+import '../Login_and_signup_logic/services/auth.dart';
+import '../signup/createaccountmain.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,7 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final AuthServices _auth = AuthServices();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _isEmailValid = true;
   bool _obscurePassword = true;
 
@@ -42,21 +44,24 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     const SizedBox(height: 5),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 50.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 50.0),
                       child: Row(
                         children: [
                           IconButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: const Icon(Icons.arrow_back, color: Colors.white),
+                            icon: const Icon(Icons.arrow_back,
+                                color: Colors.white),
                           ),
                         ],
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 35),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 35),
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -82,7 +87,8 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: InputDecoration(
                                 hintText: 'Email',
                                 prefixIcon: const Icon(Icons.email),
-                                contentPadding: const EdgeInsets.symmetric(vertical: 18),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 18),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
@@ -99,19 +105,23 @@ class _LoginPageState extends State<LoginPage> {
                                 padding: EdgeInsets.only(top: 8.0),
                                 child: Text(
                                   'Invalid email. Must with @gmail.com',
-                                  style: TextStyle(color: Colors.red, fontSize: 12),
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 12),
                                 ),
                               ),
                             const SizedBox(height: 20),
                             // Password TextField
                             TextField(
+                              controller: _passwordController,
                               obscureText: _obscurePassword,
                               decoration: InputDecoration(
                                 hintText: 'Password',
                                 prefixIcon: const Icon(Icons.lock),
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                                    _obscurePassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -119,7 +129,8 @@ class _LoginPageState extends State<LoginPage> {
                                     });
                                   },
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(vertical: 18),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 18),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
@@ -146,16 +157,22 @@ class _LoginPageState extends State<LoginPage> {
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   padding: const EdgeInsets.all(0),
-                                  elevation: 0, // Disable default button elevation
+                                  elevation:
+                                      0, // Disable default button elevation
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   if (_isEmailValid) {
+                                    await _auth.sgnInWithEmailAndPassword(
+                                        _emailController.text,
+                                        _passwordController.text);
                                     // Pulindu Firebase login logic here (Firebase auth)
-                                    print('Login attempt: ${_emailController.text}');
+                                    print(
+                                        'Login attempt: ${_emailController.text}');
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                        content: Text('Please enter a valid email ending with @gmail.com'),
+                                        content: Text(
+                                            'Please enter a valid email ending with @gmail.com'),
                                       ),
                                     );
                                   }
@@ -196,8 +213,11 @@ class _LoginPageState extends State<LoginPage> {
                             // Sign Up Button
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).push(
-                                  ModernPageRoute(page: const CreateAccountMain()),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CreateAccountMain()),
                                 );
                               },
                               child: const Text(

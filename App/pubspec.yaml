@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^5.4.2
   provider: ^6.1.2
   cloud_firestore: ^5.6.3
+  photo_manager: ^3.6.4
+  google_fonts: ^6.2.1
 
 
 dev_dependencies:

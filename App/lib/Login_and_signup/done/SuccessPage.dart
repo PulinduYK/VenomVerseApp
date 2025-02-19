@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:venomverse/Functions/Pages/home_page.dart';
 
 class SuccessPage extends StatelessWidget {
   const SuccessPage({super.key});
@@ -22,7 +23,8 @@ class SuccessPage extends StatelessWidget {
           children: [
             const SizedBox(height: 5),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0 , vertical: 50.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 50.0),
               child: Row(
                 children: [
                   IconButton(
@@ -36,7 +38,8 @@ class SuccessPage extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -89,7 +92,10 @@ class SuccessPage extends StatelessWidget {
                           elevation: 0,
                         ),
                         onPressed: () {
-                          Navigator.popUntil(context, (route) => route.isFirst);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
                         },
                         child: Ink(
                           decoration: const BoxDecoration(
