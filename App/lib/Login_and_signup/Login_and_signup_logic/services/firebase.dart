@@ -76,4 +76,28 @@ class FirebaseService {
       print("Error updating name: $e");
     }
   }
+
+  // Stream function to get user data as string variables
+  Stream<Map<String, String>> getUserData() {
+    return _firestore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+        return {
+          'name': data['name'] ?? 'No Name',
+          'email': data['email'] ?? 'No Email',
+          'profileImage': data['profileImage'] ?? '',
+        };
+      } else {
+        return {
+          'name': 'No Data',
+          'email': 'No Data',
+          'profileImage': '', // Default empty string for no image
+        };
+      }
+    });
+  }
 }

@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:venomverse/Login_and_signup/Login_and_signup_logic/authentication/wrapper.dart';
 
+import '../../Profile/pages/settings_page.dart';
 import '../reusable_widgets/homepage_card.dart';
 
 class HomePageContent extends StatefulWidget {
@@ -31,14 +30,16 @@ class _HomePageContentState extends State<HomePageContent> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () async {
-                    await FirebaseAuth.instance.signOut();
-                    if (mounted) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => Wrapper()),
-                      );
-                    }
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsPage(
+                          name: "taka",
+                          username: "tuka",
+                        ),
+                      ),
+                    );
                   },
                   child: Icon(
                     Icons.settings,
