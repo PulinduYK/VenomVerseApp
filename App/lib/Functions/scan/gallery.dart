@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 class UploadImagesPage extends StatefulWidget {
   @override
@@ -10,7 +12,8 @@ class UploadImagesPage extends StatefulWidget {
 
 class _UploadImagesPageState extends State<UploadImagesPage> {
   List<AssetEntity> _galleryImages = [];
-  List<File> _selectedImages = [];
+  File? _selectedImage;
+  bool _isUploading = false;
 
   @override
   void initState() {
@@ -19,67 +22,89 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
   }
 
   Future<void> _loadGalleryImages() async {
-    final PermissionState ps = await PhotoManager.requestPermissionExtend();
-    if (ps.isAuth) {
-      final List<AssetPathEntity> albums =
-          await PhotoManager.getAssetPathList(type: RequestType.image);
+    if ((await PhotoManager.requestPermissionExtend()).isAuth) {
+      final albums =
+      await PhotoManager.getAssetPathList(type: RequestType.image);
       if (albums.isNotEmpty) {
-        final List<AssetEntity> photos =
-            await albums[0].getAssetListPaged(page: 0, size: 50);
-        setState(() {
-          _galleryImages = photos;
-        });
+        _galleryImages =
+        await albums.first.getAssetListPaged(page: 0, size: 50);
+        setState(() {});
       }
     } else {
-      print("Permission Denied");
+      debugPrint("Permission Denied");
     }
   }
 
-  void _toggleImageSelection(File imageFile) {
-    setState(() {
-      if (_selectedImages.any((img) => img.path == imageFile.path)) {
-        _selectedImages.removeWhere((img) => img.path == imageFile.path);
-      } else {
-        _selectedImages.add(imageFile);
-      }
-    });
+  Future<void> _selectImage(AssetEntity asset) async {
+    final file = await asset.file;
+    if (file != null) setState(() => _selectedImage = file);
   }
 
-  Future<void> _selectImage(AssetEntity asset) async {
-    final File? file = await asset.file;
-    if (file != null) {
-      _toggleImageSelection(file);
+  Future<void> _uploadImage() async {
+    if (_selectedImage == null) return;
+
+    setState(() => _isUploading = true);
+
+    var uri = Uri.parse(
+        'https://yourserver.com/upload'); // Replace with your API endpoint
+    var request = http.MultipartRequest('POST', uri);
+    request.files
+        .add(await http.MultipartFile.fromPath('image', _selectedImage!.path));
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        // Read and decode the JSON response
+        var responseBody = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseBody);
+
+        // Store the JSON response in a variable
+        Map<String, dynamic> uploadedImageData = jsonResponse;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Image uploaded successfully!')),
+        );
+
+        // Example of using the stored variable
+        print('Uploaded Image Data: $uploadedImageData');
+
+        setState(() => _selectedImage = null); // Clear selection after upload
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to upload image.')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    } finally {
+      setState(() => _isUploading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: AppBar(
-          elevation: 0,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blueAccent, Colors.purpleAccent],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+      appBar: AppBar(
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blueAccent, Colors.purpleAccent],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
           ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            'Upload Images',
-            style: GoogleFonts.roboto(fontSize: 20, color: Colors.white),
-          ),
-          centerTitle: true,
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text('Upload Image',
+            style: GoogleFonts.roboto(fontSize: 20, color: Colors.white)),
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -88,54 +113,46 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
               padding: const EdgeInsets.all(16.0),
               child: GridView.builder(
                 itemCount: _galleryImages.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
                 itemBuilder: (context, index) {
+                  final asset = _galleryImages[index];
                   return GestureDetector(
-                    onTap: () => _selectImage(_galleryImages[index]),
+                    onTap: () => _selectImage(asset),
                     child: FutureBuilder<File?>(
-                      future: _galleryImages[index].file,
+                      future: asset.file,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.data != null) {
-                          bool isSelected = _selectedImages
-                              .any((file) => file.path == snapshot.data!.path);
-
-                          return Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.file(
-                                  snapshot.data!,
+                        final file = snapshot.data;
+                        final isSelected = file?.path == _selectedImage?.path;
+                        return snapshot.connectionState ==
+                            ConnectionState.done &&
+                            file != null
+                            ? Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.file(file,
                                   width: double.infinity,
                                   height: double.infinity,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.cover),
+                            ),
+                            if (isSelected)
+                              const Positioned(
+                                top: 5,
+                                right: 5,
+                                child: CircleAvatar(
+                                  radius: 14,
+                                  backgroundColor: Colors.green,
+                                  child: Icon(Icons.check,
+                                      color: Colors.white),
                                 ),
                               ),
-                              if (isSelected)
-                                Positioned(
-                                  top: 5,
-                                  right: 5,
-                                  child: CircleAvatar(
-                                    radius: 14,
-                                    backgroundColor: Colors.green,
-                                    child:
-                                        Icon(Icons.check, color: Colors.white),
-                                  ),
-                                ),
-                            ],
-                          );
-                        } else {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          );
-                        }
+                          ],
+                        )
+                            : _placeholderImage();
                       },
                     ),
                   );
@@ -143,63 +160,63 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
               ),
             ),
           ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-            child: ElevatedButton(
-              onPressed: _selectedImages.isNotEmpty ? () {} : null,
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                backgroundColor: Colors.transparent,
-                disabledBackgroundColor: Colors.grey.shade300,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24.0),
-                ),
-                shadowColor: Colors.transparent,
-              ).copyWith(
-                backgroundColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.disabled)) {
-                    return Colors.grey.shade300;
-                  }
-                  return null;
-                }),
-                foregroundColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.disabled)) {
-                    return Colors.grey.shade600;
-                  }
-                  return Colors.white;
-                }),
-              ),
-              child: Ink(
-                decoration: BoxDecoration(
-                  gradient: _selectedImages.isNotEmpty
-                      ? LinearGradient(
-                          colors: [Colors.blueAccent, Colors.purpleAccent],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        )
-                      : null,
-                  borderRadius: BorderRadius.circular(24.0),
-                ),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50,
-                  child: Text(
-                    'Upload',
-                    style: GoogleFonts.roboto(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          _uploadButton(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: _selectedImage != null ? _uploadImage : null,
         backgroundColor: Colors.redAccent,
-        child: Icon(Icons.cloud_upload, color: Colors.white),
+        child: _isUploading
+            ? const CircularProgressIndicator(color: Colors.white)
+            : const Icon(Icons.cloud_upload, color: Colors.white),
       ),
     );
   }
+
+  Widget _placeholderImage() => Container(
+    decoration: BoxDecoration(
+      color: Colors.grey[300],
+      borderRadius: BorderRadius.circular(12),
+    ),
+  );
+
+  Widget _uploadButton() => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+    child: ElevatedButton(
+      onPressed:
+      _selectedImage != null && !_isUploading ? _uploadImage : null,
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.0)),
+        disabledBackgroundColor: Colors.grey.shade300,
+        foregroundColor:
+        _selectedImage != null ? Colors.white : Colors.grey.shade600,
+      ),
+      child: Ink(
+        decoration: BoxDecoration(
+          gradient: _selectedImage != null
+              ? const LinearGradient(
+            colors: [Colors.blueAccent, Colors.purpleAccent],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          )
+              : null,
+          borderRadius: BorderRadius.circular(24.0),
+        ),
+        child: Container(
+          alignment: Alignment.center,
+          height: 50,
+          child: _isUploading
+              ? const CircularProgressIndicator(color: Colors.white)
+              : Text('Upload',
+              style: GoogleFonts.roboto(
+                  fontSize: 16, fontWeight: FontWeight.bold)),
+        ),
+      ),
+    ),
+  );
 }
+
+void main() => runApp(
+    MaterialApp(debugShowCheckedModeBanner: false, home: UploadImagesPage()));
