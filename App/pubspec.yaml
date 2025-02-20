@@ -70,6 +70,7 @@ flutter:
   assets:
     - assets/snake.png
     - assets/panic_button.png
+    - assets/default_profile_picture.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

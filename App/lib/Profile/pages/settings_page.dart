@@ -41,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
             backgroundColor: Color(0xFFD9D9D9), // Placeholder color
             backgroundImage: widget.profileImage != null && widget.profileImage!.isNotEmpty
                 ? NetworkImage(widget.profileImage!) as ImageProvider
-                : const AssetImage('assets/profile_picture.jpg'),
+                : const AssetImage('assets/default_profile_picture.jpg'),
           ),
           SizedBox(height: 20), // For Space
           Text(
