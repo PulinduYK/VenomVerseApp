@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
 
 
 // PersonalInfoPage displays the user's personal details.
-class PersonalInfoPage extends StatelessWidget {
-  const PersonalInfoPage({super.key});
+class PersonalInfoPage extends StatefulWidget {
+  const PersonalInfoPage({super.key,});
+
+  @override
+  State<PersonalInfoPage> createState() => _PersonalInfoPageState();
+}
+
+class _PersonalInfoPageState extends State<PersonalInfoPage> {
+  String dob = " ";
+  String gender = " ";
+  String phoneNumber = " ";
+  String email = " ";
 
   @override
   Widget build(BuildContext context) {
@@ -13,132 +24,122 @@ class PersonalInfoPage extends StatelessWidget {
         contentHeightFactor: 0.85,
         child: Column(
           children:[
-            SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             CustomTextBox(
                 child: Row(
                   children: [
                     SizedBox(width: 20),
                     Text(
                       "Date of Birth:",
-                      style: TextStyle(
+                      style: GoogleFonts.inriaSans(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width > 375 ? 24 : 18,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Inria Sans',
+                        fontSize:  MediaQuery.of(context).size.width > 350 ? 18 : 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(width:5),
                     Text(
-                      "2000/02/28",
-                      style: TextStyle(
+                      dob,
+                      style: GoogleFonts.inriaSans(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width > 375 ? 20 : 16,
+                        fontSize:  MediaQuery.of(context).size.width > 350 ? 18 : 16,
                         fontWeight: FontWeight.normal,
-                        fontFamily: 'Inria Sans',
                       ),
                     ),
                   ],
                 )
-              ),
-            SizedBox(height: 20),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.025),
             CustomTextBox(
                 child: Row(
                   children: [
                     SizedBox(width: 20),
                     Text(
                       "Gender:",
-                      style: TextStyle(
+                      style: GoogleFonts.inriaSans(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width > 375 ? 24 : 18,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Inria Sans',
+                        fontSize:  MediaQuery.of(context).size.width > 350 ? 18 : 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(width: 5),
                     Text(
-                      "Male",
-                      style: TextStyle(
+                      gender,
+                      style: GoogleFonts.inriaSans(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width > 375 ? 20 : 16,
+                        fontSize:  MediaQuery.of(context).size.width > 350 ? 18 : 16,
                         fontWeight: FontWeight.normal,
-                        fontFamily: 'Inria Sans',
                       ),
                     ),
                   ],
                 )
             ),
-            SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.025),
             CustomTextBox(
                 child: Row(
                   children: [
                     SizedBox(width: 20),
                     Text(
                       "Phone Number:",
-                      style: TextStyle(
+                      style: GoogleFonts.inriaSans(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width > 375 ? 20: 14,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Inria Sans',
+                        fontSize:  MediaQuery.of(context).size.width > 350 ? 16 : 14,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(width: 5),
                     Text(
-                      "+94 75 000 2012",
-                      style: TextStyle(
+                      phoneNumber,
+                      style: GoogleFonts.inriaSans(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width > 375 ? 20 : 16,
+                        fontSize:  MediaQuery.of(context).size.width > 350 ? 18 : 16,
                         fontWeight: FontWeight.normal,
-                        fontFamily: 'Inria Sans',
                       ),
                     ),
                   ],
                 )
             ),
-            SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.025),
             CustomTextBox(
                 child: Row(
                   children: [
                     SizedBox(width: 20),
                     Text(
                       "Email:",
-                      style: TextStyle(
+                      style: GoogleFonts.inriaSans(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width > 375 ? 24 : 18,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Inria Sans',
+                        fontSize:  MediaQuery.of(context).size.width > 350 ? 18 : 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(width: 5),
                     Text(
-                      "johncollins@gmail.com",
-                      style: TextStyle(
+                      email,
+                      style: GoogleFonts.inriaSans(
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width > 375 ? 20 : 16,
+                        fontSize:  MediaQuery.of(context).size.width > 350 ? 18 : 16,
                         fontWeight: FontWeight.normal,
-                        fontFamily: 'Inria Sans',
                       ),
                     ),
                   ],
                 )
             ),
-            SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.035),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
                 gradient: LinearGradient(
                   colors: [
                     Color(0xFF1C16B9), // 0%
-                    Color(0xFF6D5FD5), // 50%
-                    Color(0xFF8A7FD6), // 100%
+                    Color(0xFFDC9FDA), // 100%
                   ],
-                  stops: [0.0, 0.5, 1.0], // Gradient stops
                   begin: Alignment.topLeft,
                   end: Alignment.topRight,
 
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withAlpha((0.3 * 255).toInt()),
                     offset: const Offset(0, 5),
                     blurRadius: 10,
 
@@ -147,10 +148,11 @@ class PersonalInfoPage extends StatelessWidget {
               ),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 60),
-                    textStyle: TextStyle(
-                      fontSize:  MediaQuery.of(context).size.width > 375 ? 24 : 18,
-                      fontWeight: FontWeight.normal,
+                    minimumSize: Size(MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.height * 0.06),
+                    textStyle: GoogleFonts.inriaSans(
+                      color: Colors.black,
+                      fontSize:  MediaQuery.of(context).size.width > 350 ? 24 : 20,
+                      fontWeight: FontWeight.bold,
                     ),
                     elevation: 5,
                     backgroundColor: Colors.transparent,
@@ -169,4 +171,3 @@ class PersonalInfoPage extends StatelessWidget {
     );
   }
 }
-
