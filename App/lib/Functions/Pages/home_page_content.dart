@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Profile/pages/settings_page.dart';
+import '../Menu_pages/scan_snakes_screen.dart';
 import '../reusable_widgets/homepage_card.dart';
 
 class HomePageContent extends StatefulWidget {
@@ -79,9 +80,18 @@ class _HomePageContentState extends State<HomePageContent> {
                   SizedBox(
                     height: 25,
                   ),
-                  HomepageCard(
-                    imgPath: "assets/snake.png",
-                    option: "Insects Scan",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ScanSnakesScreen()),
+                      );
+                    },
+                    child: HomepageCard(
+                      imgPath: "assets/snake.png",
+                      option: "Insects Scan",
+                    ),
                   ),
                   SizedBox(
                     height: 25,

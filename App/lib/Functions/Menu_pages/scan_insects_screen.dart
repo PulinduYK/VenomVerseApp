@@ -1,110 +1,100 @@
 import 'package:flutter/material.dart';
-class ScanInsectsScreen extends StatelessWidget{
-  const ScanInsectsScreen({super.key});
 
+class ScanInsectsScreen extends StatelessWidget {
+  const ScanInsectsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-          children: [
-            Container(
+      body: Stack(
+        children: [
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color(0xff1C16B9),
+                Color(0xff6D5FD5),
+                Color(0xff8A7FD6),
+              ]),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.only(top: 60.0, left: 22),
+              child: Text(
+                "Scan Insects",
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 200.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                color: Colors.white,
+              ),
               height: double.infinity,
               width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [
-                      Color(0xff1C16B9),
-                      Color(0xff6D5FD5),
-                      Color(0xff8A7FD6),
-                    ]
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.only(top: 60.0,left: 22),
-                child: Text(
-                  "Scan Insects",
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
-
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 200.0),
-              child: Container(
-                decoration:BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight:Radius.circular(40) ,
-                  ),
-                  color: Colors.white,
-                ),
-                height: double.infinity,
-                width: double.infinity,
-
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
+                          )
+                        ]),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 8,
-                              offset: Offset(0,4),
-                            )
-                          ]
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Container(
-                        padding:EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildInstructionStep(1, "Choose Your Scan Method",
-                                "Take a live photo or upload existing or via text."),
-                            const SizedBox(height: 20),
-                            _buildInstructionStep(2, "Identify the Insect",
-                                "Press the 'Scan' button to begin processing."),
-                            const SizedBox(height: 20),
-                            _buildInstructionStep(3, "View the results",
-                                "App will display the insect's details, possible species, and recommendations."),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildGradientButton("Scan Now", () {}),
+                          _buildInstructionStep(1, "Choose Your Scan Method",
+                              "Take a live photo or upload existing or via text."),
                           const SizedBox(height: 20),
-                          _buildGradientButton("Upload Image", () {
-
-                          }),
+                          _buildInstructionStep(2, "Identify the Insect",
+                              "Press the 'Scan' button to begin processing."),
                           const SizedBox(height: 20),
-                          _buildGradientButton("Via Text", () {
-
-                          }),
+                          _buildInstructionStep(3, "View the results",
+                              "App will display the insect's details, possible species, and recommendations."),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(
+                      children: [
+                        _buildGradientButton("Scan Now", () {}),
+                        const SizedBox(height: 20),
+                        _buildGradientButton("Upload Image", () {}),
+                        const SizedBox(height: 20),
+                        _buildGradientButton("Via Text", () {}),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -117,7 +107,6 @@ class ScanInsectsScreen extends StatelessWidget{
           colors: [
             Color(0xFF1C16B9),
             Color(0xFFDC9FDA),
-
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
@@ -145,15 +134,11 @@ class ScanInsectsScreen extends StatelessWidget{
     );
   }
 
-
-
   Widget _buildInstructionStep(int number, String title, String subtitle) {
     return Row(
-
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CircleAvatar(
-
           backgroundColor: Colors.purple[300],
           child: Text(
             number.toString(),
@@ -190,8 +175,4 @@ class ScanInsectsScreen extends StatelessWidget{
       ],
     );
   }
-
-
-
-
 }
