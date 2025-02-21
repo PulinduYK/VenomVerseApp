@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // create custom widget to reuse same background template
 class ProfilePageTemplate extends StatelessWidget {
@@ -19,11 +20,13 @@ class ProfilePageTemplate extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        toolbarHeight: 80,
+        titleSpacing: 10,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: Colors.white,
-            size: 30,
+            size: MediaQuery.of(context).size.width > 350 ? 26 : 20,
           ),
           onPressed: (){
             Navigator.pop(context);
@@ -31,9 +34,9 @@ class ProfilePageTemplate extends StatelessWidget {
         ),
         title: Text(
           title,
-          style: TextStyle(
+          style: GoogleFonts.inriaSans(
             color: Colors.white,
-            fontSize: MediaQuery.of(context).size.width > 375 ? 24 : 18,
+            fontSize: MediaQuery.of(context).size.width > 350 ? 24 : 18,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -107,10 +110,10 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(MediaQuery.of(context).size.width * 0.85, 60),
+        minimumSize: Size(MediaQuery.of(context).size.width * 0.85, MediaQuery.of(context).size.height * 0.075),
         alignment: Alignment.centerLeft,
-        textStyle: TextStyle(
-          fontSize:  MediaQuery.of(context).size.width > 375 ? 24 : 18,
+        textStyle: GoogleFonts.inriaSans(
+          fontSize:  MediaQuery.of(context).size.width > 350 ? 24 : 18,
           fontWeight: FontWeight.normal,
         ),
         elevation: 5,
@@ -135,14 +138,14 @@ class CustomTextBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
-      height: 60,
+      height: MediaQuery.of(context).size.height * 0.075,
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(40),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withAlpha((0.3 * 255).toInt()),
             spreadRadius: 2,
             blurRadius: 5,
             offset: Offset(0, 3), // Shadow position
@@ -153,36 +156,3 @@ class CustomTextBox extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-//
-// import 'package:flutter/material.dart';
-// import 'package:venomverse/widgets/profile_page_template.dart';
-//
-// // ProfilePage displays the user's account details.
-// class Page extends StatelessWidget {
-//   const Page({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ProfilePageTemplate(
-//         title: "",
-//         contentHeightFactor: 0.85,
-//         child: Column(
-//           children:[
-//
-//           ],
-//         )
-//     );
-//   }
-// }
-
-//
-// CustomButton(
-// text: "Personal info",
-// onPressed: (){
-// },
-// ),
