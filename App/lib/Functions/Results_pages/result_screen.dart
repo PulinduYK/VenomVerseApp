@@ -7,41 +7,45 @@ import 'retake_button.dart';
 import 'test_data.dart'; // Import test data
 
 class ResultScreen extends StatefulWidget {
-  final String snakeName;
-  final String imagePath;
-  final int confidence;
-  final String description;
-  final List<String> firstAidTips;
+
 
   const ResultScreen({
     Key? key,
-    required this.snakeName,
-    required this.imagePath,
-    required this.confidence,
-    required this.description,
-    required this.firstAidTips,
+
   }) : super(key: key);
 
   @override
   _ResultScreenState createState() => _ResultScreenState();
+
+
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  String getLethalityLevel() {
-    if (widget.confidence <= 15) return "Low";
-    if (widget.confidence <= 60) return "Medium";
-    return "High";
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
+
+    String? name = "";
+    String? imagePath = "";
+    String? lethalityLevel = "";
+    String? description = "";
+    List<String> remedies = [];
+
+    String getLethalityLevel() {
+      if (lethalityLevel  == "None") return "None";
+      if (lethalityLevel == "Low") return "Low";
+      if (lethalityLevel == "Medium") return "Medium";
+      return "High";
+    }
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [
           // Background Image
           Positioned.fill(
-            child: Image.asset(widget.imagePath, fit: BoxFit.cover),
+            child: Image.asset(imagePath, fit: BoxFit.cover),
           ),
 
           // Back Button
@@ -87,15 +91,15 @@ class _ResultScreenState extends State<ResultScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          widget.snakeName,
+                          name,
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
 
                       // Lethality Badge
                       LethalityBadge(
-                        level: getLethalityLevel(),
-                        confidence: widget.confidence,
+                        confidenceTxt: getLethalityLevel(),
+                        confidence: getLethalityLevel(),
                       ),
                     ],
                   ),
@@ -110,7 +114,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   SizedBox(height: 5),
-                  ImmediateActionsSection(actions: widget.firstAidTips),
+                  ImmediateActionsSection(actions: remedies),
                   SizedBox(height: 15),
 
                   // Description Section
@@ -121,7 +125,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   SizedBox(height: 5),
-                  DescriptionSection(description: widget.description),
+                  DescriptionSection(description: description),
 
                   SizedBox(height: 15),
 

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class LethalityBadge extends StatelessWidget {
-  final String level;
-  final int confidence;
 
-  const LethalityBadge({Key? key, required this.level, required this.confidence})
+  final String confidence;
+  final String confidenceTxt;
+
+  const LethalityBadge({Key? key,  required this.confidence, required this.confidenceTxt})
       : super(key: key);
 
   Color _getLethalityColor() {
-    if (confidence <= 15) return Color(0xFF1F6D00); // Green (Low)
-    if (confidence <= 60) return Color(0xFFEDDB12); // Yellow (Medium)
+    if (confidence == "None") return Color(0xFF1F6D00);
+    if (confidence == "Low") return Color(0xFFEDDB12);// Green (Low)
+    if (confidence == "Medium") return Color(0xFFF3560E); // Yellow (Medium)
     return Color(0xFFFF0004); // Red (High)
   }
 
@@ -25,7 +27,7 @@ class LethalityBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            level.toUpperCase(),
+            confidence.toUpperCase(),
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -40,7 +42,7 @@ class LethalityBadge extends StatelessWidget {
           ),
           SizedBox(width: 6),
           Text(
-            "$confidence%",
+            "$confidenceTxt",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
