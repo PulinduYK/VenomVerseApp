@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1064181375337",
-    "project_id": "venomverse-959ec",
-    "storage_bucket": "venomverse-959ec.firebasestorage.app"
+    "project_number": "997958809242",
+    "project_id": "venomverse-baaf2",
+    "storage_bucket": "venomverse-baaf2.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1064181375337:android:0bb09d7575bb5b1f4b5df8",
+        "mobilesdk_app_id": "1:997958809242:android:8beb3785e85163ddd1d123",
         "android_client_info": {
           "package_name": "com.example.venomverse"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAxiNwwukHroB-VSkH30QSIfqFMJlGJYLU"
+          "current_key": "AIzaSyBbfxuy1jB2xoW5RbRQdgOfT8aLXKb68lw"
         }
       ],
       "services": {
