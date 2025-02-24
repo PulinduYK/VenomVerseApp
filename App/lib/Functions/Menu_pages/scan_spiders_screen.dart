@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-class ScanInsectsScreen extends StatelessWidget{
-  const ScanInsectsScreen({super.key});
+class ScanSpidersScreen extends StatelessWidget{
+  const ScanSpidersScreen({super.key});
 
 
   @override
