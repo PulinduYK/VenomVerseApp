@@ -100,4 +100,44 @@ class FirebaseService {
       }
     });
   }
+
+  /// Fetch only the remedies from Firestore for a given snake name.
+  Future<List<String>> getRemedies(String snakeName) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot =
+          await _firestore.collection('snakes').doc(snakeName).get();
+
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.data()!;
+        return data.entries
+            .where((entry) => entry.key.startsWith('remedi'))
+            .map((entry) => entry.value.toString())
+            .toList();
+      }
+    } catch (e) {
+      print("Error fetching remedies: $e");
+    }
+    return [];
+  }
+
+  /// Fetch general details of the snake.
+  Future<Map<String, String>> getSnakeDetails(String snakeName) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot =
+          await _firestore.collection('snakes').doc(snakeName).get();
+
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.data()!;
+        return {
+          "name": data["name"] ?? "",
+          "description": data["description"] ?? "",
+          "lethalityLevel": data["lethalityLevel"] ?? "Unknown",
+          "imagePath": data["imagePath"] ?? "",
+        };
+      }
+    } catch (e) {
+      print("Error fetching snake details: $e");
+    }
+    return {};
+  }
 }

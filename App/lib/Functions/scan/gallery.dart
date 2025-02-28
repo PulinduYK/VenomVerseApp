@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_manager/photo_manager.dart';
-import 'package:venomverse/Functions/scan/tsetOutcome.dart';
+
+import '../Results_pages/result_screen.dart';
 
 class UploadImagesPage extends StatefulWidget {
   @override
@@ -48,7 +49,7 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
     setState(() => _isUploading = true);
 
     var uri = Uri.parse(
-        'https://shaggy-eggs-knock.loca.lt/predict'); // Replace with your API endpoint
+        'http://142.93.212.199/predict'); // Replace with your API endpoint
     var request = http.MultipartRequest('POST', uri);
     request.files
         .add(await http.MultipartFile.fromPath('file', _selectedImage!.path));
@@ -76,7 +77,7 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => TestOutcome(
+            builder: (context) => ResultScreen(
               uploadedImageData: uploadedImageData,
             ),
           ),
