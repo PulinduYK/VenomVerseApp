@@ -4,48 +4,43 @@ import 'lethality_badge.dart';
 import 'immediate_actions.dart';
 import 'description_section.dart';
 import 'retake_button.dart';
-import 'test_data.dart'; // Import test data
 
 class ResultScreen extends StatefulWidget {
-
+  final String snakeName;
+  final String imagePath;
+  final int confidence;
+  final String description;
+  final List<String> firstAidTips;
 
   const ResultScreen({
     Key? key,
-
+    required this.snakeName,
+    required this.imagePath,
+    required this.confidence,
+    required this.description,
+    required this.firstAidTips,
   }) : super(key: key);
 
   @override
   _ResultScreenState createState() => _ResultScreenState();
-
-
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-
-
+  String getLethalityLevel() {
+    if (widget.confidence <= 15) return "Low";
+    if (widget.confidence <= 60) return "Medium";
+    return "High";
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    String? name = "";
-    String? imagePath = "";
-    String? lethalityLevel = "";
-    String? description = "";
-    List<String> remedies = [];
-
-    String getLethalityLevel() {
-      if (lethalityLevel  == "None") return "None";
-      if (lethalityLevel == "Low") return "Low";
-      if (lethalityLevel == "Medium") return "Medium";
-      return "High";
-    }
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [
           // Background Image
           Positioned.fill(
-            child: Image.asset(imagePath, fit: BoxFit.cover),
+            child: Image.asset(widget.imagePath, fit: BoxFit.cover),
           ),
 
           // Back Button
@@ -82,50 +77,30 @@ class _ResultScreenState extends State<ResultScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Snake Name Button
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          name,
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          widget.snakeName,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                       ),
-
-                      // Lethality Badge
-                      LethalityBadge(
-                        confidenceTxt: getLethalityLevel(),
-                        confidence: getLethalityLevel(),
-                      ),
+                      LethalityBadge(level: getLethalityLevel(), confidence: widget.confidence),
                     ],
                   ),
 
                   SizedBox(height: 15),
 
-                  // Immediate Actions
-                  Center(
-                    child: Text(
-                      "Immediate Actions",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  ImmediateActionsSection(actions: remedies),
+                  // Immediate Actions (Header + Bullet Points)
+                  ImmediateActionsSection(actions: widget.firstAidTips),
                   SizedBox(height: 15),
 
                   // Description Section
-                  Center(
-                    child: Text(
-                      "Description",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  DescriptionSection(description: description),
+                  DescriptionSection(description: widget.description),
 
                   SizedBox(height: 15),
 
