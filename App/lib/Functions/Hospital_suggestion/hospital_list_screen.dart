@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
 
 class HospitalListScreen extends StatelessWidget {
   final List<Map<String, String>> hospitals = [
@@ -233,31 +236,44 @@ class HospitalListScreen extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Phone Number Button (Currently Non-Functional)
-          Container(
-            padding: const EdgeInsets.all(16),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.blue.shade100,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.phone, color: Colors.blueGrey),
-                const SizedBox(width: 8),
-                Text(
-                  hospital['phone']!,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.blueGrey,
-                    fontWeight: FontWeight.bold,
-                  ),
+          GestureDetector(
+              onTap: () => _makePhoneCall(hospital['phone']!),
+              child:Container(
+                padding: const EdgeInsets.all(16),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade100,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              ],
-            ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.phone, color: Colors.blueGrey),
+                    const SizedBox(width: 8),
+                    Text(
+                      hospital['phone']!,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              )
           ),
         ],
       ),
     );
   }
+  // Function to Open Phone Dialer
+  void _makePhoneCall(String phoneNumber) async {
+    final Uri url = Uri.parse('tel:$phoneNumber');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 }
