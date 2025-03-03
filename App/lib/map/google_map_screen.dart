@@ -8,9 +8,18 @@ class GoogleMapScreen extends StatefulWidget {
   _GoogleMapScreenState createState() => _GoogleMapScreenState();
 }
 
+
+
 class _GoogleMapScreenState extends State<GoogleMapScreen> {
   GoogleMapController? _mapController;
-  LatLng _currentPosition = LatLng(6.9271, 79.8612); // Default to Colombo
+  LatLng _currentPosition = LatLng(6.9271, 79.8612); // Default Location is Colombo
+  int _selectedCategory = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkPermissions();
+  }
 
   // Request location permission
   Future<void> _checkPermissions() async {
@@ -37,11 +46,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _checkPermissions();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,42 +62,42 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: false,
+            zoomControlsEnabled: false,
+            zoomGesturesEnabled: true,
           ),
 
-          // Zoom In/Out Buttons
           Positioned(
-            bottom: 80,
-            right: 10,
+            bottom: 180,
+            right: 20,
             child: Column(
               children: [
                 FloatingActionButton(
                   heroTag: "zoomIn",
-                  onPressed: () {
+                  onPressed: (){
                     _mapController?.animateCamera(CameraUpdate.zoomIn());
+
                   },
-                  child: Icon(Icons.add),
-                ),
-                SizedBox(height: 10),
-                FloatingActionButton(
-                  heroTag: "zoomOut",
-                  onPressed: () {
-                    _mapController?.animateCamera(CameraUpdate.zoomOut());
-                  },
-                  child: Icon(Icons.remove),
-                ),
-              ],
-            ),
-          ),
+                  backgroundColor: Colors.blue,
+                  child: Icon(Icons.remove, color: Colors.white),
+                )
+              ]
+            )
+          )
+
+
+
 
           // Get Location Button
-          Positioned(
-            bottom: 20,
-            right: 10,
-            child: FloatingActionButton(
-              heroTag: "getLocation",
-              onPressed: _getCurrentLocation,
-              backgroundColor: Colors.blue,
-              child: Icon(Icons.my_location, color: Colors.white),
+          widget(
+            child: Positioned(
+              bottom: 120,
+              right: 20,
+              child: FloatingActionButton(
+                heroTag: "getLocation",
+                onPressed: _getCurrentLocation,
+                backgroundColor: Colors.blue,
+                child: Icon(Icons.my_location, color: Colors.white),
+              ),
             ),
           ),
         ],
