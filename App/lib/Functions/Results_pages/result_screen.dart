@@ -72,8 +72,9 @@ class _ResultScreenState extends State<ResultScreen> {
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [
-          // Background Image
-          Positioned.fill(
+          Container(
+            width: double.infinity,
+            height: 370,
             child: Image.asset(imagePath, fit: BoxFit.cover),
           ),
 
