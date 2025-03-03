@@ -13,7 +13,7 @@ class LethalityBadge extends StatelessWidget {
     if (confidence == "Low") return Color(0xFFEDDB12); // Yellow (Medium)
     if (confidence == "Medium") return Color(0xFFF3560E); // Orange (Medium)
     if (confidence == "High") return Color(0xFFFF0004); // Red (High)
-    return Color(0xFFFFFFFF); // Wight (Not specified)
+    return Color(0xFF3104DF); // Wight (Not specified)
   }
 
   @override
