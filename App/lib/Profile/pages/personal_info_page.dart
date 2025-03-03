@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
@@ -12,10 +14,62 @@ class PersonalInfoPage extends StatefulWidget {
 }
 
 class _PersonalInfoPageState extends State<PersonalInfoPage> {
-  String dob = " ";
-  String gender = " ";
-  String phoneNumber = " ";
-  String email = " ";
+  String? userId;
+  String dob = '';
+  String gender = '';
+  String phoneNumber = '';
+  String email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserPersonalData();
+  }
+
+  Future<void> fetchUserPersonalData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        userId = user.uid;
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .get();
+
+        if (userDoc.exists) {
+          setState(() {
+            dob = userDoc['dob'];
+            gender = userDoc['gender'];
+            phoneNumber = userDoc['phoneNumber'];
+            email = userDoc['email'];
+          });
+        } else {
+          setState(() {
+            dob = 'Not Available';
+            gender = 'Not Available';
+            phoneNumber = 'Not Available';
+            email = 'Not Available';
+          });
+        }
+      } else {
+        setState(() {
+          dob = 'User not logged in';
+          gender = '';
+          phoneNumber = '';
+          email = '';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        dob = 'Error';
+        gender = 'Error';
+        phoneNumber = 'Error';
+        email = 'Error';
+      });
+      print('Error retrieving name: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
