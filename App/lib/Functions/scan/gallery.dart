@@ -48,8 +48,7 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
 
     setState(() => _isUploading = true);
 
-    var uri = Uri.parse(
-        'http://142.93.212.199/predict'); // Replace with your API endpoint
+    var uri = Uri.parse('http://142.93.212.199/predict');
     var request = http.MultipartRequest('POST', uri);
     request.files
         .add(await http.MultipartFile.fromPath('file', _selectedImage!.path));
