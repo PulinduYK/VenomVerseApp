@@ -25,7 +25,7 @@ class _ResultScreenState extends State<ResultScreen> {
   final outcomeClass _outcomeClass = outcomeClass();
 
   String name = "";
-  String imagePath = "";
+  String imagePath = "assets/snake.png";
   String lethalityLevel = "";
   String description = "";
   List<String> remedies = [];
@@ -49,7 +49,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
     setState(() {
       name = snakeDetails['name'] ?? 'Unknown';
-      imagePath = snakeDetails['imagePath'] ?? 'Unknown';
+      imagePath = snakeDetails['imagePath']?.isNotEmpty == true
+          ? snakeDetails['imagePath']
+          : 'assets/snake.png';
       lethalityLevel = snakeDetails['lethalityLevel'] ?? 'Unknown';
       description = snakeDetails['description'] ?? 'Unknown';
       remedies = fetchedRemedies;

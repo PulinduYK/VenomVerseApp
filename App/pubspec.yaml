@@ -70,36 +70,23 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/
+    - assets/snakes_images/
     - assets/snake.png
     - assets/panic_button.png
     - assets/default_profile_picture.jpg
-    - assets/kingCobra.jpg
-    - assets/snakes_images/0.jpg
-    - assets/snakes_images/1.jpg
-    - assets/snakes_images/2.jpg
-    - assets/snakes_images/3.jpg
-    - assets/snakes_images/4.jpg
-    - assets/snakes_images/5.jpg
-    - assets/snakes_images/6.jpg
-    - assets/snakes_images/7.jpg
-    - assets/snakes_images/8.jpg
-    - assets/snakes_images/9.jpg
-    - assets/snakes_images/10.jpg
-    - assets/snakes_images/11.jpg
-    - assets/spiders_images/0.jpg
-    - assets/spiders_images/1.jpg
-    - assets/spiders_images/2.jpg
-    - assets/spiders_images/3.jpg
-    - assets/spiders_images/4.jpg
-    - assets/spiders_images/5.jpg
-    - assets/spiders_images/6.jpg
-    - assets/spiders_images/7.jpg
-    - assets/spiders_images/8.jpg
-    - assets/spiders_images/9.jpg
-    - assets/spiders_images/10.jpg
-    - assets/spiders_images/11.jpg
-    - assets/spiders_images/12.jpg
-    - assets/spiders_images/13.jpg
+    - assets/snakes_images/bk.jpg
+    - assets/snakes_images/ck.jpg
+    - assets/snakes_images/csb.jpg
+    - assets/snakes_images/gpv.jpg
+    - assets/snakes_images/gvs.jpg
+    - assets/snakes_images/hnv.jpg
+    - assets/snakes_images/ic.jpg
+    - assets/snakes_images/irp.jpg
+    - assets/snakes_images/rs.jpg
+    - assets/snakes_images/rv.jpg
+    - assets/snakes_images/ssv.jpg
+    - assets/snakes_images/scs.jpg
 
 
 

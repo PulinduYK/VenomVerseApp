@@ -131,7 +131,7 @@ class FirebaseService {
         return {
           "name": data["name"] ?? "",
           "description": data["description"] ?? "",
-          "lethalityLevel": data["lethalityLevel"] ?? "Unknown",
+          "lethalityLevel": data["lethalityLevel"] ?? "",
           "imagePath": data["imagePath"] ?? "",
         };
       }
