@@ -5,6 +5,8 @@ import 'package:photo_manager/photo_manager.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
+import '../Results_pages/result_screen.dart';
+
 class UploadImagesPage extends StatefulWidget {
   @override
   _UploadImagesPageState createState() => _UploadImagesPageState();
@@ -19,6 +21,7 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
   @override
   void initState() {
     super.initState();
+    _checkAndRequestPermissions();
     _loadGalleryImages();
   }
 
@@ -56,7 +59,7 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
     var uri = Uri.parse('http://142.93.212.199/predict');
     var request = http.MultipartRequest('POST', uri);
     request.files
-        .add(await http.MultipartFile.fromPath('image', _selectedImage!.path));
+        .add(await http.MultipartFile.fromPath('file', _selectedImage!.path));
 
     try {
       var response = await request.send();
@@ -180,13 +183,6 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
           ),
           _uploadButton(),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _selectedImage != null ? _uploadImage : null,
-        backgroundColor: Colors.redAccent,
-        child: _isUploading
-            ? const CircularProgressIndicator(color: Colors.white)
-            : const Icon(Icons.cloud_upload, color: Colors.white),
       ),
     );
   }
