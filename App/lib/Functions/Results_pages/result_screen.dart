@@ -102,6 +102,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   children: [
                     // Result Title
                     Center(
+                      heightFactor: 2,
                       child: Text(
                         "Result",
                         style:
@@ -142,7 +143,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
                     // Description Section
                     DescriptionSection(description: description),
-                    SizedBox(height: 15),
+                    SizedBox(height: 65),
                   ],
                 ),
               ),
@@ -165,7 +166,8 @@ class _ResultScreenState extends State<ResultScreen> {
               onPressed: () {
 
               },
-              child: Icon(Icons.emergency, color: Colors.white),
+              shape: const CircleBorder(),
+              child: Icon(Icons.wb_twighlight, color: Colors.white),
             ),
           ),
         ],

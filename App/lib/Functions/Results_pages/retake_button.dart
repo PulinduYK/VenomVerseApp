@@ -27,7 +27,7 @@ class RetakeButton extends StatelessWidget {
         onPressed: onPressed ?? () {}, // Default empty function if not provided
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          backgroundColor: Colors.transparent, // Transparent background to apply gradient
+          backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         ),
