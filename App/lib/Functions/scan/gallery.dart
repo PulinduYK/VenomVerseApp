@@ -242,8 +242,3 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         ),
       );
 }
-
-void main() =>
-    runApp(
-        MaterialApp(
-            debugShowCheckedModeBanner: false, home: UploadImagesPage()));
