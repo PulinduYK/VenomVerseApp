@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../../Profile/pages/settings_page.dart';
+import '../Menu_pages/scan_insects_screen.dart';
 import '../Menu_pages/scan_snakes_screen.dart';
+import '../Menu_pages/scan_spiders_screen.dart';
 import '../reusable_widgets/homepage_card.dart';
 
 class HomePageContent extends StatefulWidget {
@@ -121,16 +123,34 @@ class _HomePageContentState extends State<HomePageContent> {
                   SizedBox(
                     height: 28,
                   ),
-                  HomepageCard(
-                    imgPath: "assets/insect.png",
-                    option: "INSECTS SCAN",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ScanInsectsScreen()),
+                      );
+                    },
+                    child: HomepageCard(
+                      imgPath: "assets/insect.png",
+                      option: "INSECTS SCAN",
+                    ),
                   ),
                   SizedBox(
                     height: 28,
                   ),
-                  HomepageCard(
-                    imgPath: "assets/spider.png",
-                    option: "SPIDER SCAN",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ScanSpidersScreen()),
+                      );
+                    },
+                    child: HomepageCard(
+                      imgPath: "assets/spider.png",
+                      option: "SPIDER SCAN",
+                    ),
                   ),
                   SizedBox(
                     height: 37,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import 'back_button.dart';
 import 'description_section.dart';
@@ -23,28 +24,29 @@ class _ResultScreenState extends State<ResultScreen> {
   final FirebaseService _firebaseService = FirebaseService();
   final outcomeClass _outcomeClass = outcomeClass();
 
-  String name = "";
+  String name = "Loading.....";
   String imagePath = "assets/snake.png";
-  String lethalityLevel = "";
-  String description = "";
-  List<String> remedies = [];
+  String lethalityLevel = "Loading.....";
+  String description = "Loading.....";
+  List<String> remedies = ["Loading....."];
 
   @override
   void initState() {
     super.initState();
-    _fetchSnakeData();
+    _checkConfidence();
   }
 
   // Fetch data from Firebase
   void _fetchSnakeData() async {
+    await Future.delayed(Duration(seconds: 2));
     int classNumber =
         widget.uploadedImageData['prediction']?.toDouble()?.toInt() ?? 0;
     String resultName = _outcomeClass.snakeClass(classNumber);
 
     Map<String, dynamic> snakeDetails =
-    await _firebaseService.getSnakeDetails(resultName);
+        await _firebaseService.getSnakeDetails(resultName);
     List<String> fetchedRemedies =
-    await _firebaseService.getRemedies(resultName);
+        await _firebaseService.getRemedies(resultName);
 
     setState(() {
       name = snakeDetails['name'] ?? 'Unknown';
@@ -55,6 +57,36 @@ class _ResultScreenState extends State<ResultScreen> {
       description = snakeDetails['description'] ?? 'Unknown';
       remedies = fetchedRemedies;
     });
+  }
+
+  void _checkConfidence() {
+    double confidence = widget.uploadedImageData['confidence']?.toDouble() ?? 0;
+    confidence = confidence * 100;
+    if (confidence < 90) {
+      Future.delayed(Duration.zero, () {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Center(
+              child: Text("Low Accuracy"),
+            ),
+            content: Text(
+                "Image uploaded Successfully But The accuracy of the detection is low. Please retake the image for better results."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text("OK"),
+              ),
+            ],
+          ),
+        );
+      });
+    } else {
+      _fetchSnakeData();
+    }
   }
 
   String getLethalityLevel() {
@@ -105,8 +137,8 @@ class _ResultScreenState extends State<ResultScreen> {
                       heightFactor: 2,
                       child: Text(
                         "Result",
-                        style:
-                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -117,7 +149,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       children: [
                         Container(
                           padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(color: Colors.black),
@@ -137,7 +169,6 @@ class _ResultScreenState extends State<ResultScreen> {
 
                     SizedBox(height: 15),
 
-
                     ImmediateActionsSection(actions: remedies),
                     SizedBox(height: 15),
 
@@ -150,22 +181,18 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ),
 
-
           Positioned(
             left: 20,
             bottom: 20, // Pin to the bottom
             child: RetakeButton(),
           ),
 
-
           Positioned(
             right: 20,
             bottom: 20,
             child: FloatingActionButton(
               backgroundColor: Colors.red,
-              onPressed: () {
-
-              },
+              onPressed: () {},
               shape: const CircleBorder(),
               child: Icon(Icons.wb_twighlight, color: Colors.white),
             ),

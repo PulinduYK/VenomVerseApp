@@ -1,14 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:photo_manager/photo_manager.dart';
-import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:photo_manager/photo_manager.dart';
 
 import '../Results_pages/result_screen.dart';
 
 class UploadImagesPage extends StatefulWidget {
-
   final int modelNum;
 
   const UploadImagesPage({super.key, required this.modelNum});
@@ -19,7 +19,7 @@ class UploadImagesPage extends StatefulWidget {
 
 class _UploadImagesPageState extends State<UploadImagesPage> {
   List<AssetEntity> _galleryImages =
-  []; // This is Where the received images of gallery is saved
+      []; // This is Where the received images of gallery is saved
   File? _selectedImage;
   bool _isUploading = false;
 
@@ -32,7 +32,7 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
 
   Future<void> _checkAndRequestPermissions() async {
     final PermissionState permission =
-    await PhotoManager.requestPermissionExtend();
+        await PhotoManager.requestPermissionExtend();
 
     if (permission.isAuth) {
       _loadGalleryImages();
@@ -67,7 +67,7 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         .add(await http.MultipartFile.fromPath('file', _selectedImage!.path));
 
     //Add the model number to the json
-    request.fields['mno'] = widget.modelNum?.toString() ?? "";
+    request.fields['model_id'] = widget.modelNum.toString();
 
     try {
       var response = await request.send();
@@ -87,17 +87,15 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         // Example of using the stored variable
         print('Uploaded Image Data: $uploadedImageData');
 
-        setState(() =>
-        _selectedImage =
-        null); // Clear the selection after uploading it to the server
+        setState(() => _selectedImage =
+            null); // Clear the selection after uploading it to the server
 
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ResultScreen(
-                  uploadedImageData: uploadedImageData,
-                ),
+            builder: (context) => ResultScreen(
+              uploadedImageData: uploadedImageData,
+            ),
           ),
         );
       } else {
@@ -122,7 +120,10 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.blueAccent, Colors.purpleAccent],
+              colors: [
+                Color(0xFF1C16B9),
+                Color(0xFFDC9FDA),
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -158,30 +159,30 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
                         final file = snapshot.data;
                         final isSelected = file?.path == _selectedImage?.path;
                         return snapshot.connectionState ==
-                            ConnectionState.done &&
-                            file != null
+                                    ConnectionState.done &&
+                                file != null
                             ? Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.file(file,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover),
-                            ),
-                            if (isSelected)
-                              const Positioned(
-                                top: 5,
-                                right: 5,
-                                child: CircleAvatar(
-                                  radius: 14,
-                                  backgroundColor: Colors.green,
-                                  child: Icon(Icons.check,
-                                      color: Colors.white),
-                                ),
-                              ),
-                          ],
-                        )
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.file(file,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        fit: BoxFit.cover),
+                                  ),
+                                  if (isSelected)
+                                    const Positioned(
+                                      top: 5,
+                                      right: 5,
+                                      child: CircleAvatar(
+                                        radius: 14,
+                                        backgroundColor: Colors.green,
+                                        child: Icon(Icons.check,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                ],
+                              )
                             : _placeholderImage();
                       },
                     ),
@@ -196,36 +197,37 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
     );
   }
 
-  Widget _placeholderImage() =>
-      Container(
+  Widget _placeholderImage() => Container(
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(12),
         ),
       );
 
-  Widget _uploadButton() =>
-      Padding(
+  Widget _uploadButton() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         child: ElevatedButton(
           onPressed:
-          _selectedImage != null && !_isUploading ? _uploadImage : null,
+              _selectedImage != null && !_isUploading ? _uploadImage : null,
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24.0)),
             disabledBackgroundColor: Colors.grey.shade300,
             foregroundColor:
-            _selectedImage != null ? Colors.white : Colors.grey.shade600,
+                _selectedImage != null ? Colors.white : Colors.grey.shade600,
           ),
           child: Ink(
             decoration: BoxDecoration(
               gradient: _selectedImage != null
                   ? const LinearGradient(
-                colors: [Colors.blueAccent, Colors.purpleAccent],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              )
+                      colors: [
+                        Color(0xFF1C16B9),
+                        Color(0xFFDC9FDA),
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    )
                   : null,
               borderRadius: BorderRadius.circular(24.0),
             ),
@@ -235,8 +237,8 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
               child: _isUploading
                   ? const CircularProgressIndicator(color: Colors.white)
                   : Text('Upload',
-                  style: GoogleFonts.roboto(
-                      fontSize: 16, fontWeight: FontWeight.bold)),
+                      style: GoogleFonts.roboto(
+                          fontSize: 16, fontWeight: FontWeight.bold)),
             ),
           ),
         ),

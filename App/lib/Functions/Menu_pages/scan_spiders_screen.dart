@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
 
-class ScanSnakesScreen extends StatelessWidget {
-  const ScanSnakesScreen({super.key});
+class ScanSpidersScreen extends StatelessWidget {
+  const ScanSpidersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class ScanSnakesScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(30),
+                    padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                         color: Colors.grey[100],
                         borderRadius: BorderRadius.circular(20),
@@ -60,9 +60,7 @@ class ScanSnakesScreen extends StatelessWidget {
                           )
                         ]),
                     child: Container(
-
                       padding: EdgeInsets.all(20),
-
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -83,7 +81,10 @@ class ScanSnakesScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25 , vertical: 15, ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 15,
+                    ),
                     child: Column(
                       children: [
                         _buildGradientButton("Scan Now", () {}),
@@ -92,7 +93,9 @@ class ScanSnakesScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => UploadImagesPage()),
+                                builder: (context) => UploadImagesPage(
+                                      modelNum: 2,
+                                    )),
                           );
                         }),
                         const SizedBox(height: 20),
@@ -128,10 +131,8 @@ class ScanSnakesScreen extends StatelessWidget {
             BoxShadow(
                 color: Colors.black.withOpacity(0.2),
                 blurRadius: 1,
-                offset: const Offset(0, 3)
-            )
-          ]
-      ),
+                offset: const Offset(0, 3))
+          ]),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
@@ -159,15 +160,12 @@ class ScanSnakesScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 25,
-
-
           backgroundColor: Colors.purple[400],
           child: Text(
             number.toString(),
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-
             ),
           ),
         ),
