@@ -8,6 +8,11 @@ import 'package:http/http.dart' as http;
 import '../Results_pages/result_screen.dart';
 
 class UploadImagesPage extends StatefulWidget {
+
+  final int modelNum;
+
+  const UploadImagesPage({super.key, required this.modelNum});
+
   @override
   _UploadImagesPageState createState() => _UploadImagesPageState();
 }
@@ -61,6 +66,9 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
     request.files
         .add(await http.MultipartFile.fromPath('file', _selectedImage!.path));
 
+    //Add the model number to the json
+    request.fields['mno'] = widget.modelNum?.toString() ?? "";
+
     try {
       var response = await request.send();
 
@@ -79,18 +87,19 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         // Example of using the stored variable
         print('Uploaded Image Data: $uploadedImageData');
 
-        setState(() => _selectedImage =
+        setState(() =>
+        _selectedImage =
         null); // Clear the selection after uploading it to the server
 
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ResultScreen(
-              uploadedImageData: uploadedImageData,
-            ),
+            builder: (context) =>
+                ResultScreen(
+                  uploadedImageData: uploadedImageData,
+                ),
           ),
         );
-
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to upload image.')),
@@ -187,50 +196,54 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
     );
   }
 
-  Widget _placeholderImage() => Container(
-    decoration: BoxDecoration(
-      color: Colors.grey[300],
-      borderRadius: BorderRadius.circular(12),
-    ),
-  );
-
-  Widget _uploadButton() => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-    child: ElevatedButton(
-      onPressed:
-      _selectedImage != null && !_isUploading ? _uploadImage : null,
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0)),
-        disabledBackgroundColor: Colors.grey.shade300,
-        foregroundColor:
-        _selectedImage != null ? Colors.white : Colors.grey.shade600,
-      ),
-      child: Ink(
+  Widget _placeholderImage() =>
+      Container(
         decoration: BoxDecoration(
-          gradient: _selectedImage != null
-              ? const LinearGradient(
-            colors: [Colors.blueAccent, Colors.purpleAccent],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          )
-              : null,
-          borderRadius: BorderRadius.circular(24.0),
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: Container(
-          alignment: Alignment.center,
-          height: 50,
-          child: _isUploading
-              ? const CircularProgressIndicator(color: Colors.white)
-              : Text('Upload',
-              style: GoogleFonts.roboto(
-                  fontSize: 16, fontWeight: FontWeight.bold)),
+      );
+
+  Widget _uploadButton() =>
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: ElevatedButton(
+          onPressed:
+          _selectedImage != null && !_isUploading ? _uploadImage : null,
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24.0)),
+            disabledBackgroundColor: Colors.grey.shade300,
+            foregroundColor:
+            _selectedImage != null ? Colors.white : Colors.grey.shade600,
+          ),
+          child: Ink(
+            decoration: BoxDecoration(
+              gradient: _selectedImage != null
+                  ? const LinearGradient(
+                colors: [Colors.blueAccent, Colors.purpleAccent],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              )
+                  : null,
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: Container(
+              alignment: Alignment.center,
+              height: 50,
+              child: _isUploading
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : Text('Upload',
+                  style: GoogleFonts.roboto(
+                      fontSize: 16, fontWeight: FontWeight.bold)),
+            ),
+          ),
         ),
-      ),
-    ),
-  );
+      );
 }
 
-void main() => runApp(
-    MaterialApp(debugShowCheckedModeBanner: false, home: UploadImagesPage()));
+void main() =>
+    runApp(
+        MaterialApp(
+            debugShowCheckedModeBanner: false, home: UploadImagesPage()));
