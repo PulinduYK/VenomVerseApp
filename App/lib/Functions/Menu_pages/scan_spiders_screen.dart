@@ -1,110 +1,112 @@
 import 'package:flutter/material.dart';
-class ScanSpidersScreen extends StatelessWidget{
-  const ScanSpidersScreen({super.key});
 
+import '../Results_pages/back_button.dart';
+import '../scan/gallery.dart';
+
+class ScanSnakesScreen extends StatelessWidget {
+  const ScanSnakesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-          children: [
-            Container(
+      body: Stack(
+        children: [
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color(0xff1C16B9),
+                Color(0xff6D5FD5),
+                Color(0xff8A7FD6),
+              ]),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.only(top: 87.0, left: 70),
+              child: Text(
+                "Scan Spiders",
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 180.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                color: Colors.white,
+              ),
               height: double.infinity,
               width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [
-                      Color(0xff1C16B9),
-                      Color(0xff6D5FD5),
-                      Color(0xff8A7FD6),
-                    ]
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.only(top: 60.0,left: 22),
-                child: Text(
-                  "Scan Spider",
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
+                          )
+                        ]),
+                    child: Container(
 
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 200.0),
-              child: Container(
-                decoration:BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight:Radius.circular(40) ,
-                  ),
-                  color: Colors.white,
-                ),
-                height: double.infinity,
-                width: double.infinity,
+                      padding: EdgeInsets.all(20),
 
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(30),
                       decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 8,
-                              offset: Offset(0,4),
-                            )
-                          ]
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Container(
-                        padding:EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildInstructionStep(1, "Choose Your Scan Method",
-                                "Take a live photo or upload existing or via text."),
-                            const SizedBox(height: 20),
-                            _buildInstructionStep(2, "Identify the Insect",
-                                "Press the 'Scan' button to begin processing."),
-                            const SizedBox(height: 20),
-                            _buildInstructionStep(3, "View the results",
-                                "App will display the insect's details, possible species, and recommendations."),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildGradientButton("Scan Now", () {}),
+                          _buildInstructionStep(1, "Choose Your Scan Method",
+                              "Take a live photo or upload existing or via text."),
                           const SizedBox(height: 20),
-                          _buildGradientButton("Upload Image", () {
-
-                          }),
+                          _buildInstructionStep(2, "Identify the Insect",
+                              "Press the 'Scan' button to begin processing."),
                           const SizedBox(height: 20),
-                          _buildGradientButton("Via Text", () {
-
-                          }),
+                          _buildInstructionStep(3, "View the results",
+                              "App will display the insect's details, possible species, and recommendations."),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25 , vertical: 15, ),
+                    child: Column(
+                      children: [
+                        _buildGradientButton("Scan Now", () {}),
+                        const SizedBox(height: 20),
+                        _buildGradientButton("Upload Image", () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UploadImagesPage()),
+                          );
+                        }),
+                        const SizedBox(height: 20),
+                        _buildGradientButton("Via Text", () {}),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          Positioned(top: 80, left: 20, child: CustomBackButton()),
+        ],
+      ),
     );
   }
 
@@ -113,16 +115,22 @@ class ScanSpidersScreen extends StatelessWidget{
       width: 380,
       height: 60,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFF1C16B9),
-            Color(0xFFDC9FDA),
-
-          ],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-        borderRadius: BorderRadius.circular(30),
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFF1C16B9),
+              Color(0xFFDC9FDA),
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 1,
+                offset: const Offset(0, 3)
+            )
+          ]
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -145,21 +153,21 @@ class ScanSpidersScreen extends StatelessWidget{
     );
   }
 
-
-
   Widget _buildInstructionStep(int number, String title, String subtitle) {
     return Row(
-
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CircleAvatar(
+          radius: 25,
 
-          backgroundColor: Colors.purple[300],
+
+          backgroundColor: Colors.purple[400],
           child: Text(
             number.toString(),
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
+
             ),
           ),
         ),
@@ -171,7 +179,7 @@ class ScanSpidersScreen extends StatelessWidget{
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -180,7 +188,7 @@ class ScanSpidersScreen extends StatelessWidget{
               Text(
                 subtitle,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   color: Colors.grey,
                 ),
               ),
@@ -190,8 +198,4 @@ class ScanSpidersScreen extends StatelessWidget{
       ],
     );
   }
-
-
-
-
 }

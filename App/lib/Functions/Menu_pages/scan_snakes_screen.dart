@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
 
 class ScanSnakesScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class ScanSnakesScreen extends StatelessWidget {
               ]),
             ),
             child: const Padding(
-              padding: EdgeInsets.only(top: 60.0, left: 22),
+              padding: EdgeInsets.only(top: 87.0, left: 70),
               child: Text(
                 "Scan Snakes",
                 style: TextStyle(
@@ -32,7 +33,7 @@ class ScanSnakesScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 200.0),
+            padding: const EdgeInsets.only(top: 180.0),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -59,7 +60,9 @@ class ScanSnakesScreen extends StatelessWidget {
                           )
                         ]),
                     child: Container(
+
                       padding: EdgeInsets.all(20),
+
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -80,7 +83,7 @@ class ScanSnakesScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 25 , vertical: 15, ),
                     child: Column(
                       children: [
                         _buildGradientButton("Scan Now", () {}),
@@ -101,6 +104,7 @@ class ScanSnakesScreen extends StatelessWidget {
               ),
             ),
           ),
+          Positioned(top: 80, left: 20, child: CustomBackButton()),
         ],
       ),
     );
@@ -119,7 +123,14 @@ class ScanSnakesScreen extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 1,
+            offset: const Offset(0, 3)
+          )
+        ]
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -147,12 +158,16 @@ class ScanSnakesScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CircleAvatar(
-          backgroundColor: Colors.purple[300],
+          radius: 25,
+
+
+          backgroundColor: Colors.purple[400],
           child: Text(
             number.toString(),
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
+
             ),
           ),
         ),
@@ -164,7 +179,7 @@ class ScanSnakesScreen extends StatelessWidget {
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -173,7 +188,7 @@ class ScanSnakesScreen extends StatelessWidget {
               Text(
                 subtitle,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   color: Colors.grey,
                 ),
               ),
