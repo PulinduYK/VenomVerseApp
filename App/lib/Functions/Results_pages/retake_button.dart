@@ -15,6 +15,13 @@ class RetakeButton extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: ElevatedButton(
         onPressed: onPressed ?? () {}, // Default empty function if not provided
