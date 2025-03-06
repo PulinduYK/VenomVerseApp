@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import 'back_button.dart';
 import 'description_section.dart';
@@ -43,9 +42,9 @@ class _ResultScreenState extends State<ResultScreen> {
     String resultName = _outcomeClass.snakeClass(classNumber);
 
     Map<String, dynamic> snakeDetails =
-        await _firebaseService.getSnakeDetails(resultName);
+    await _firebaseService.getSnakeDetails(resultName);
     List<String> fetchedRemedies =
-        await _firebaseService.getRemedies(resultName);
+    await _firebaseService.getRemedies(resultName);
 
     setState(() {
       name = snakeDetails['name'] ?? 'Unknown';
@@ -72,20 +71,21 @@ class _ResultScreenState extends State<ResultScreen> {
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [
+          // Background Image
           Container(
             width: double.infinity,
             height: 370,
             child: Image.asset(imagePath, fit: BoxFit.cover),
           ),
 
-          // Back Button
-          Positioned(top: 40, left: 10, child: CustomBackButton()),
+          // Back Button (Top-Left)
+          Positioned(top: 50, left: 15, child: CustomBackButton()),
 
-          // Result Card
+          // Result Card (Bottom Section)
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.67,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -102,10 +102,11 @@ class _ResultScreenState extends State<ResultScreen> {
                   children: [
                     // Result Title
                     Center(
+                      heightFactor: 2,
                       child: Text(
                         "Result",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
+                        style:
+                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -116,7 +117,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       children: [
                         Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(color: Colors.black),
@@ -136,30 +137,37 @@ class _ResultScreenState extends State<ResultScreen> {
 
                     SizedBox(height: 15),
 
-                    // Immediate Actions (Header + Bullet Points)
+
                     ImmediateActionsSection(actions: remedies),
                     SizedBox(height: 15),
 
                     // Description Section
                     DescriptionSection(description: description),
-
-                    SizedBox(height: 15),
-
-                    // Retake & Emergency Button
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RetakeButton(),
-                        FloatingActionButton(
-                          backgroundColor: Colors.red,
-                          onPressed: () {},
-                          child: Icon(Icons.emergency, color: Colors.white),
-                        ),
-                      ],
-                    ),
+                    SizedBox(height: 65),
                   ],
                 ),
               ),
+            ),
+          ),
+
+
+          Positioned(
+            left: 20,
+            bottom: 20, // Pin to the bottom
+            child: RetakeButton(),
+          ),
+
+
+          Positioned(
+            right: 20,
+            bottom: 20,
+            child: FloatingActionButton(
+              backgroundColor: Colors.red,
+              onPressed: () {
+
+              },
+              shape: const CircleBorder(),
+              child: Icon(Icons.wb_twighlight, color: Colors.white),
             ),
           ),
         ],

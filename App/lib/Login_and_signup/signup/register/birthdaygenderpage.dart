@@ -61,9 +61,9 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
         ),
         child: Column(
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 18),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 50),
               child: Row(
                 children: [
                   IconButton(
@@ -92,12 +92,12 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                     const Text(
                       'Complete Your Profile',
                       style: TextStyle(
-                        fontSize: 32,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 50),
                     // Full Name Input Field (No Border)
                     Container(
                       padding:
@@ -153,10 +153,10 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                     // Modern Gender Selection
                     Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(50),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,7 +200,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 60),
                     // Create Account Button
                     SizedBox(
                       width: double.infinity,
@@ -208,7 +208,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(40),
                           ),
                           padding: const EdgeInsets.all(0),
                         ),
@@ -218,7 +218,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("Please enter your full name"),
-                                backgroundColor: Colors.red,
+                                backgroundColor: Colors.white10,
                               ),
                             );
                             return;
@@ -249,8 +249,9 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                             child: Text(
                               'Create Account',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 22,
                                 color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),

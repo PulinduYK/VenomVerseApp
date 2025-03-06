@@ -11,7 +11,7 @@ class ImmediateActionsSection extends StatelessWidget {
       children: [
         // Centered Header: Immediate Actions
         Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
+          padding: const EdgeInsets.only(bottom: 8.0, top: 5.0),
           child: Center(
             child: Text(
               "Immediate Actions",
@@ -26,10 +26,10 @@ class ImmediateActionsSection extends StatelessWidget {
 
         // Bullet Points (List of Actions)
         Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(30),
           width: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(30),
             border: Border.all(color: Colors.grey[300]!),
           ),
           child: Column(

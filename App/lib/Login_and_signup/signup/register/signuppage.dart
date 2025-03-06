@@ -52,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
         return AlertDialog(
           title: const Text("Terms and Conditions"),
           content: const SingleChildScrollView(
-            child: Text("ily."),
+            child: Text("app on testing mode haven't any terms and conditions ."),
           ),
           actions: [
             TextButton(
@@ -93,10 +93,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: IntrinsicHeight(
                   child: Column(
                     children: [
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 20.0),
+                            horizontal: 15.0, vertical: 50.0),
                         child: Row(
                           children: [
                             IconButton(
@@ -131,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   color: Colors.black,
                                 ),
                               ),
-                              const SizedBox(height: 40),
+                              const SizedBox(height: 60),
                               TextField(
                                 controller: _emailController,
                                 decoration: InputDecoration(
@@ -201,25 +201,52 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 35),
                               ElevatedButton(
                                 onPressed: (_isEmailValid &&
-                                        _isPasswordValid &&
-                                        _doPasswordsMatch &&
-                                        _isAgreeChecked)
+                                    _isPasswordValid &&
+                                    _doPasswordsMatch &&
+                                    _isAgreeChecked)
                                     ? () async {
-                                        await _auth
-                                            .createUserWithEmailAndPassword(
-                                                _emailController.text,
-                                                _confirmPasswordController
-                                                    .text);
-                                        if (mounted) {
-                                          Navigator.of(context).popUntil(
-                                              (route) => route.isFirst);
-                                        }
-                                      }
+                                  await _auth.createUserWithEmailAndPassword(
+                                      _emailController.text, _confirmPasswordController.text);
+                                  if (mounted) {
+                                    Navigator.of(context).popUntil((route) => route.isFirst);
+                                  }
+                                }
                                     : null,
-                                child: const Text("Continue"),
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero, // Remove default padding
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30), // Match design
+                                  ),
+                                  elevation: 5, // Optional: Adds shadow effect
+                                ),
+                                child: Ink(
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFF1C16B9),
+                                        Color(0xFF6D5FD5),
+                                        Color(0xFF8A7FD6),
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(30), // Same as button shape
+                                  ),
+                                  child: Container(
+                                    width: double.infinity, // Makes button full width
+                                    height: 55, // Adjust height
+                                    alignment: Alignment.center,
+                                    child: const Text(
+                                      'Create Account',
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),

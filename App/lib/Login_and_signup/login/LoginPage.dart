@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
               child: IntrinsicHeight(
                 child: Column(
                   children: [
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 50.0),
@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 35),
+                            horizontal: 24, vertical: 50),
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.black,
                               ),
                             ),
-                            const SizedBox(height: 40),
+                            const SizedBox(height: 70),
                             // Email TextField
                             TextField(
                               controller: _emailController,
@@ -193,7 +193,8 @@ class _LoginPageState extends State<LoginPage> {
                                     child: const Text(
                                       'Log in',
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -201,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 30),
+                            const SizedBox(height: 20),
                             TextButton(
                               onPressed: () {},
                               child: const Text(
@@ -209,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(color: Colors.black54),
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 150),
                             // Sign Up Button
                             TextButton(
                               onPressed: () {
