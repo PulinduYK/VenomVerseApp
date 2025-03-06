@@ -42,21 +42,11 @@ class _LoginPageState extends State<LoginPage> {
               child: IntrinsicHeight(
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 40),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 50.0),
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(Icons.arrow_back,
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
+
                     ),
                     Expanded(
                       child: Container(
@@ -210,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(color: Colors.black54),
                               ),
                             ),
-                            const SizedBox(height: 150),
+                            const SizedBox(height: 100),
                             // Sign Up Button
                             TextButton(
                               onPressed: () {
