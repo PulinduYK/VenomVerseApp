@@ -21,7 +21,7 @@ class SuccessPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const SizedBox(height: 5),
+            const SizedBox(height: 15),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 50.0),
