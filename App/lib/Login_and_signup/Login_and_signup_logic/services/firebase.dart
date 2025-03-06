@@ -101,6 +101,21 @@ class FirebaseService {
     });
   }
 
+  Stream<String> getUserName() {
+    return _firestore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+        return data['name'] ?? 'No Name';
+      } else {
+        return 'No Data'; // If no data is found
+      }
+    });
+  }
+
   /// Fetch only the remedies from Firestore for a given snake name.
   Future<List<String>> getRemedies(String snakeName) async {
     try {

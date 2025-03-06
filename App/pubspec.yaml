@@ -74,6 +74,8 @@ flutter:
   assets:
     - assets/
     - assets/snakes_images/
+    - assets/insect.png
+    - assets/spider.png
     - assets/snake.png
     - assets/panic_button.png
     - assets/default_profile_picture.jpg

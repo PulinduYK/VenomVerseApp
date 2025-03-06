@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../../Profile/pages/settings_page.dart';
 import '../Menu_pages/scan_snakes_screen.dart';
 import '../reusable_widgets/homepage_card.dart';
@@ -12,6 +13,9 @@ class HomePageContent extends StatefulWidget {
 }
 
 class _HomePageContentState extends State<HomePageContent> {
+  final FirebaseService _firebaseService = FirebaseService();
+  String userName = "";
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,12 +27,33 @@ class _HomePageContentState extends State<HomePageContent> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Hi! User Name,",
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                  ),
+                StreamBuilder<String>(
+                  stream: _firebaseService.getUserName(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData) {
+                      userName = snapshot.data ?? "default name";
+                      return Text(
+                        "Hi ${snapshot.data},", // Displaying the user's name
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      );
+                    } else {
+                      return const Text(
+                        "Hi User Name,",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      );
+                    }
+                  },
                 ),
                 GestureDetector(
                   onTap: () {
@@ -36,7 +61,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => SettingsPage(
-                          name: "taka",
+                          name: userName,
                           username: "tuka",
                         ),
                       ),
@@ -62,7 +87,7 @@ class _HomePageContentState extends State<HomePageContent> {
             ),
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 29.0),
+                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 29.0),
               child: Column(
                 children: [
                   Row(
@@ -71,7 +96,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       Text(
                         "Scan Options",
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 24,
                         ),
                       ),
                       Icon(Icons.notification_add),
@@ -90,43 +115,51 @@ class _HomePageContentState extends State<HomePageContent> {
                     },
                     child: HomepageCard(
                       imgPath: "assets/snake.png",
-                      option: "Insects Scan",
+                      option: "SNAKE SCAN",
                     ),
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 28,
                   ),
                   HomepageCard(
-                    imgPath: "assets/snake.png",
-                    option: "Snake Scan",
+                    imgPath: "assets/insect.png",
+                    option: "INSECTS SCAN",
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 28,
                   ),
                   HomepageCard(
-                    imgPath: "assets/snake.png",
-                    option: "Symptoms Scan",
+                    imgPath: "assets/spider.png",
+                    option: "SPIDER SCAN",
                   ),
                   SizedBox(
-                    height: 45,
+                    height: 37,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: 280,
+                        width: 265,
                         decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black38,
+                              blurRadius: 4,
+                              offset: Offset(4, 4),
+                            ),
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
                           ),
-                          borderRadius: BorderRadius.circular(30.00),
+                          borderRadius: BorderRadius.circular(10.00),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text(
                             "journey to venom world",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                             textAlign: TextAlign.center,
@@ -134,13 +167,24 @@ class _HomePageContentState extends State<HomePageContent> {
                         ),
                       ),
                       Container(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black38,
+                              blurRadius: 4,
+                              offset: Offset(4, 4),
+                            ),
+                          ],
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(30.00),
                         ),
-                        child: Icon(Icons.announcement_rounded),
+                        child: Icon(
+                          Icons.wb_twighlight,
+                          color: Colors.white,
+                          size: 35,
+                        ),
                       )
                     ],
                   )
