@@ -122,7 +122,8 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
             gradient: LinearGradient(
               colors: [
                 Color(0xFF1C16B9),
-                Color(0xFFDC9FDA),
+                Color(0xff6D5FD5),
+                Color(0xff8A7FD6),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,

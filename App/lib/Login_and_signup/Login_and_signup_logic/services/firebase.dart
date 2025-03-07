@@ -117,10 +117,12 @@ class FirebaseService {
   }
 
   /// Fetch only the remedies from Firestore for a given snake name.
-  Future<List<String>> getRemedies(String snakeName) async {
+  Future<List<String>> getRemedies(int type, String venomName) async {
+    List<String> catList = ["snakes", "spiders", "insects"];
+    String category = catList[type - 1];
     try {
       DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await _firestore.collection('snakes').doc(snakeName).get();
+          await _firestore.collection(category).doc(venomName).get();
 
       if (snapshot.exists) {
         Map<String, dynamic> data = snapshot.data()!;
@@ -136,10 +138,13 @@ class FirebaseService {
   }
 
   /// Fetch general details of the snake.
-  Future<Map<String, String>> getSnakeDetails(String snakeName) async {
+  Future<Map<String, String>> getVenomDetails(
+      int type, String venomName) async {
+    List<String> catList = ["snakes", "spiders", "insects"];
+    String category = catList[type - 1];
     try {
       DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await _firestore.collection('snakes').doc(snakeName).get();
+          await _firestore.collection(category).doc(venomName).get();
 
       if (snapshot.exists) {
         Map<String, dynamic> data = snapshot.data()!;

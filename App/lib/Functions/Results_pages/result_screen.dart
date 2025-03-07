@@ -26,7 +26,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   String name = "Loading.....";
   String imagePath = "assets/snake.png";
-  String lethalityLevel = "Loading.....";
+  String lethalityLevel = "Loading.";
   String description = "Loading.....";
   List<String> remedies = ["Loading....."];
 
@@ -39,14 +39,16 @@ class _ResultScreenState extends State<ResultScreen> {
   // Fetch data from Firebase
   void _fetchSnakeData() async {
     await Future.delayed(Duration(seconds: 2));
-    int classNumber =
+    int classNo =
         widget.uploadedImageData['prediction']?.toDouble()?.toInt() ?? 0;
-    String resultName = _outcomeClass.snakeClass(classNumber);
+    int modelNo =
+        widget.uploadedImageData['model_id']?.toDouble()?.toInt() ?? 0;
+    String resultName = _outcomeClass.venomClass(modelNo, classNo);
 
     Map<String, dynamic> snakeDetails =
-        await _firebaseService.getSnakeDetails(resultName);
+        await _firebaseService.getVenomDetails(modelNo, resultName);
     List<String> fetchedRemedies =
-        await _firebaseService.getRemedies(resultName);
+        await _firebaseService.getRemedies(modelNo, resultName);
 
     setState(() {
       name = snakeDetails['name'] ?? 'Unknown';
@@ -87,14 +89,6 @@ class _ResultScreenState extends State<ResultScreen> {
     } else {
       _fetchSnakeData();
     }
-  }
-
-  String getLethalityLevel() {
-    if (lethalityLevel == "None") return "None";
-    if (lethalityLevel == "Low") return "Low";
-    if (lethalityLevel == "Medium") return "Medium";
-    if (lethalityLevel == "High") return "High";
-    return "Not Specified";
   }
 
   @override
@@ -148,6 +142,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
+                          width: 190, // Set a fixed width
                           padding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           decoration: BoxDecoration(
@@ -156,14 +151,17 @@ class _ResultScreenState extends State<ResultScreen> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            name,
+                            "Name:- ${name}",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w500),
+                            softWrap: true, // Ensures text wraps
+                            overflow: TextOverflow
+                                .visible, // Ensures text doesn't get cut off
                           ),
                         ),
                         LethalityBadge(
-                            confidence: getLethalityLevel(),
-                            confidenceTxt: lethalityLevel),
+                          confidence: lethalityLevel,
+                        ),
                       ],
                     ),
 
