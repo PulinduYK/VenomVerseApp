@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:venomverse/Profile/widgets/profile_page_template.dart';
-
+import 'package:venomverse/widgets/profile_page_template.dart';
 
 // PersonalInfoPage displays the user's personal details.
 class PersonalInfoPage extends StatefulWidget {
@@ -14,6 +13,7 @@ class PersonalInfoPage extends StatefulWidget {
 }
 
 class _PersonalInfoPageState extends State<PersonalInfoPage> {
+  final FirebaseService _firebaseService = FirebaseService();
   String? userId;
   String dob = '';
   String gender = '';
@@ -28,38 +28,14 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
 
   Future<void> fetchUserPersonalData() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
+      Map<String, String> userData = await _firebaseService.getUserData(); // Fetch all data
 
-      if (user != null) {
-        userId = user.uid;
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .get();
-
-        if (userDoc.exists) {
-          setState(() {
-            dob = userDoc['dob'];
-            gender = userDoc['gender'];
-            phoneNumber = userDoc['phoneNumber'];
-            email = userDoc['email'];
-          });
-        } else {
-          setState(() {
-            dob = 'Not Available';
-            gender = 'Not Available';
-            phoneNumber = 'Not Available';
-            email = 'Not Available';
-          });
-        }
-      } else {
-        setState(() {
-          dob = 'User not logged in';
-          gender = '';
-          phoneNumber = '';
-          email = '';
-        });
-      }
+      setState(() {
+        dob = userData['dob'] ?? 'Not Available';
+        gender = userData['gender'] ?? 'Not Available';
+        phoneNumber = userData['phoneNumber'] ?? 'Not Available';
+        email = userData['email'] ?? 'Not Available';
+      });
     } catch (e) {
       setState(() {
         dob = 'Error';
@@ -67,7 +43,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
         phoneNumber = 'Error';
         email = 'Error';
       });
-      print('Error retrieving name: $e');
+      print('Error retrieving user data: $e');
     }
   }
 

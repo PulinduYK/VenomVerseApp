@@ -1,27 +1,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:venomverse/Login_and_signup/Login_and_signup_logic/services/firebase.dart';
+import 'package:venomverse/pages/help_page.dart';
+import 'package:venomverse/pages/history_page.dart';
+import 'package:venomverse/pages/account_details_page.dart';
+import 'package:venomverse/pages/settings_edit_page.dart';
+import 'package:venomverse/widgets/profile_page_template.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:venomverse/Profile/pages/account_details_page.dart';
-import 'package:venomverse/Profile/pages/help_page.dart';
-import 'package:venomverse/Profile/pages/history_page.dart';
-import 'package:venomverse/Profile/pages/settings_edit_page.dart';
-import 'package:venomverse/Profile/widgets/profile_page_template.dart';
 
 
 
 // SettingsPage displays the settings details.
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key,});
+  final String username;
+  const SettingsPage({
+    super.key,
+    required this.username,
+  });
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  String? userId;
-  String name = '';
+  final FirebaseService _firebaseService = FirebaseService();
   String email = '';
   String profileImage = '';
   @override
@@ -32,38 +35,16 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> fetchUserData() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
+      Map<String, String> userData = await _firebaseService.getUserData(); // Fetch all data
 
-      if (user != null) {
-        userId = user.uid;
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .get();
-
-        if (userDoc.exists) {
-          setState(() {
-            name = userDoc['name'];
-            email = userDoc['email'];
-          });
-        } else {
-          setState(() {
-            name = 'No Name Found';
-            email = 'No Email Found';
-          });
-        }
-      } else {
-        setState(() {
-          name = 'User not logged in';
-          email = '';
-        });
-      }
+      setState(() {
+        email = userData['email'] ?? 'Not Available';
+      });
     } catch (e) {
       setState(() {
-        name = 'Error Fetching Name';
-        email = 'Error Fetching Email';
+        email = 'Error';
       });
-      print('Error retrieving name: $e');
+      print('Error retrieving user data: $e');
     }
   }
 
@@ -84,10 +65,10 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           SizedBox(height: 20), // For Space
           Text(
-            name,
+            widget.username,
             style: GoogleFonts.inriaSans(
               color: Colors.black,
-              fontSize:  MediaQuery.of(context).size.width > 350 ? 26 : 24,
+              fontSize:  MediaQuery.of(context).size.width > 350 ? 24 : 22,
               fontWeight: FontWeight.bold,
             ),
           ),
