@@ -77,8 +77,33 @@ class FirebaseService {
     }
   }
 
-  // Stream function to get user data as string variables
-  Stream<Map<String, String>> getUserData() {
+  Future<Map<String, String>> getUserData() async {
+    DocumentSnapshot snapshot =
+        await _firestore.collection('users').doc(_auth.currentUser?.uid).get();
+
+    if (snapshot.exists) {
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+      return {
+        'dob': data['dob'] ?? 'No dob',
+        'name': data['name'] ?? 'No Name',
+        'email': data['email'] ?? 'No Email',
+        'profileImage': data['profileImage'] ?? '',
+        'gender': data['gender'] ?? 'Not Available',
+        'phoneNumber': data['phoneNumber'] ?? 'Not Available',
+      };
+    } else {
+      return {
+        'dob': 'No Date',
+        'name': 'No Data',
+        'email': 'No Data',
+        'profileImage': '', // Default empty string for no image
+        'gender': 'No Data',
+        'phoneNumber': 'No Data',
+      };
+    }
+  }
+
+  Stream<String> getUserName() {
     return _firestore
         .collection('users')
         .doc(_auth.currentUser?.uid)
@@ -86,26 +111,20 @@ class FirebaseService {
         .map((snapshot) {
       if (snapshot.exists) {
         Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-        return {
-          'name': data['name'] ?? 'No Name',
-          'email': data['email'] ?? 'No Email',
-          'profileImage': data['profileImage'] ?? '',
-        };
+        return data['name'] ?? 'No Name';
       } else {
-        return {
-          'name': 'No Data',
-          'email': 'No Data',
-          'profileImage': '', // Default empty string for no image
-        };
+        return 'No Data'; // If no data is found
       }
     });
   }
 
   /// Fetch only the remedies from Firestore for a given snake name.
-  Future<List<String>> getRemedies(String snakeName) async {
+  Future<List<String>> getRemedies(int type, String venomName) async {
+    List<String> catList = ["snakes", "spiders", "insects"];
+    String category = catList[type - 1];
     try {
       DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await _firestore.collection('snakes').doc(snakeName).get();
+          await _firestore.collection(category).doc(venomName).get();
 
       if (snapshot.exists) {
         Map<String, dynamic> data = snapshot.data()!;
@@ -121,10 +140,13 @@ class FirebaseService {
   }
 
   /// Fetch general details of the snake.
-  Future<Map<String, String>> getSnakeDetails(String snakeName) async {
+  Future<Map<String, String>> getVenomDetails(
+      int type, String venomName) async {
+    List<String> catList = ["snakes", "spiders", "insects"];
+    String category = catList[type - 1];
     try {
       DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await _firestore.collection('snakes').doc(snakeName).get();
+          await _firestore.collection(category).doc(venomName).get();
 
       if (snapshot.exists) {
         Map<String, dynamic> data = snapshot.data()!;

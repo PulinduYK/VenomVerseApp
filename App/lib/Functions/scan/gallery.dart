@@ -9,36 +9,49 @@ import 'package:photo_manager/photo_manager.dart';
 import '../Results_pages/result_screen.dart';
 
 class UploadImagesPage extends StatefulWidget {
+  final int modelNum;
+
+  const UploadImagesPage({super.key, required this.modelNum});
+
   @override
   _UploadImagesPageState createState() => _UploadImagesPageState();
 }
 
 class _UploadImagesPageState extends State<UploadImagesPage> {
-  List<AssetEntity> _galleryImages = [];
+  List<AssetEntity> _galleryImages =
+      []; // This is Where the received images of gallery is saved
   File? _selectedImage;
   bool _isUploading = false;
 
   @override
   void initState() {
     super.initState();
+    _checkAndRequestPermissions();
     _loadGalleryImages();
   }
 
-  Future<void> _loadGalleryImages() async {
-    if ((await PhotoManager.requestPermissionExtend()).isAuth) {
-      final albums =
-          await PhotoManager.getAssetPathList(type: RequestType.image);
-      if (albums.isNotEmpty) {
-        _galleryImages =
-            await albums.first.getAssetListPaged(page: 0, size: 50);
-        setState(() {});
-      }
+  Future<void> _checkAndRequestPermissions() async {
+    final PermissionState permission =
+        await PhotoManager.requestPermissionExtend();
+
+    if (permission.isAuth) {
+      _loadGalleryImages();
     } else {
-      debugPrint("Permission Denied");
+      debugPrint("Permission denied. Please allow access to media.");
+      PhotoManager.openSetting();
+    }
+  }
+
+  Future<void> _loadGalleryImages() async {
+    final albums = await PhotoManager.getAssetPathList(type: RequestType.image);
+    if (albums.isNotEmpty) {
+      _galleryImages = await albums.first.getAssetListPaged(page: 0, size: 50);
+      setState(() {});
     }
   }
 
   Future<void> _selectImage(AssetEntity asset) async {
+    // Selecting an image from the gallery and storing it as a image
     final file = await asset.file;
     if (file != null) setState(() => _selectedImage = file);
   }
@@ -52,6 +65,9 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
     var request = http.MultipartRequest('POST', uri);
     request.files
         .add(await http.MultipartFile.fromPath('file', _selectedImage!.path));
+
+    //Add the model number to the json
+    request.fields['model_id'] = widget.modelNum.toString();
 
     try {
       var response = await request.send();
@@ -71,7 +87,8 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         // Example of using the stored variable
         print('Uploaded Image Data: $uploadedImageData');
 
-        setState(() => _selectedImage = null); // Clear selection after upload
+        setState(() => _selectedImage =
+            null); // Clear the selection after uploading it to the server
 
         Navigator.push(
           context,
@@ -103,7 +120,11 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.blueAccent, Colors.purpleAccent],
+              colors: [
+                Color(0xFF1C16B9),
+                Color(0xff6D5FD5),
+                Color(0xff8A7FD6),
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -174,13 +195,6 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
           _uploadButton(),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _selectedImage != null ? _uploadImage : null,
-        backgroundColor: Colors.redAccent,
-        child: _isUploading
-            ? const CircularProgressIndicator(color: Colors.white)
-            : const Icon(Icons.cloud_upload, color: Colors.white),
-      ),
     );
   }
 
@@ -208,7 +222,10 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
             decoration: BoxDecoration(
               gradient: _selectedImage != null
                   ? const LinearGradient(
-                      colors: [Colors.blueAccent, Colors.purpleAccent],
+                      colors: [
+                        Color(0xFF1C16B9),
+                        Color(0xFFDC9FDA),
+                      ],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     )
@@ -228,6 +245,3 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         ),
       );
 }
-
-void main() => runApp(
-    MaterialApp(debugShowCheckedModeBanner: false, home: UploadImagesPage()));

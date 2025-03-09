@@ -16,8 +16,8 @@ class HomepageCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black38,
-            blurRadius: 8,
-            offset: Offset(5, 5),
+            blurRadius: 6,
+            offset: Offset(3, 3),
           ),
         ],
       ),
@@ -26,7 +26,8 @@ class HomepageCard extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: 120,
+              padding: EdgeInsets.all(7.0),
+              width: 115,
               height: double.infinity,
               decoration: BoxDecoration(
                 color: Color(0xFF756EF3),
@@ -43,6 +44,7 @@ class HomepageCard extends StatelessWidget {
               option,
               style: TextStyle(
                 fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             )
           ],

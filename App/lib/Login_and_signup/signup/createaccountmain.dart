@@ -34,7 +34,7 @@ class CreateAccountMain extends StatelessWidget {
                 child: IntrinsicHeight(
                   child: Column(
                     children: [
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 10),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 50.0),
@@ -86,14 +86,13 @@ class CreateAccountMain extends StatelessWidget {
                               const SizedBox(height: 20),
                               // Welcome Text
                               const Text(
-                                'Nice to see you!',
+                                'Nice to see you !',
                                 style: TextStyle(
                                   fontSize: 26,
-                                  fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
                               ),
-                              const SizedBox(height: 80),
+                              const SizedBox(height: 70),
                               // Create Account Button
                               Container(
                                 width: double.infinity,
@@ -141,7 +140,7 @@ class CreateAccountMain extends StatelessWidget {
                                       child: const Text(
                                         'Create Account',
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 22,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -150,78 +149,88 @@ class CreateAccountMain extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 100),
-                              // Row of White Buttons for Google and Phone Login
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  // Google Button
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.15),
-                                          offset: const Offset(0, 4),
-                                          blurRadius: 8,
-                                        ),
-                                      ],
-                                      shape: BoxShape.circle,
+                          const SizedBox(height: 160),
+// Row of White Buttons for Google and Phone Login
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              // Google Button
+                              Container(
+                                width: 120, // Adjust width as needed
+                                height: 60, // Adjust height as needed
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Background color
+                                  borderRadius: BorderRadius.circular(40), // Adjust corner radius
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      offset: Offset(0, 4),
+                                      blurRadius: 8,
                                     ),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
-                                          ModernPageRoute(
-                                              page: const StarterPage()),
-                                          (route) =>
-                                              false, // Removes all previous routes // Custom transition to SignUpPage
-                                        );
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        shape: const CircleBorder(),
-                                        padding: const EdgeInsets.all(15),
-                                      ),
-                                      child: const Icon(
-                                        Icons.g_mobiledata,
-                                        size: 40,
-                                        color: Colors.black,
-                                      ),
+                                  ],
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      ModernPageRoute(page: const StarterPage()),
+                                          (route) => false, // Removes all previous routes
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.transparent, // Transparent to keep Container color
+                                    shadowColor: Colors.transparent, // Remove default button shadow
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15), // Matches container for rounded box effect
                                     ),
                                   ),
-                                  // Phone Button
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.15),
-                                          offset: const Offset(0, 4),
-                                          blurRadius: 8,
-                                        ),
-                                      ],
-                                      shape: BoxShape.circle,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.g_mobiledata, size: 40, color: Colors.black),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              // Phone Button
+                              Container(
+                                width: 120, // Adjust width as needed
+                                height: 60, // Adjust height as needed
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(40), // Adjust corner radius
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      offset: Offset(0, 4),
+                                      blurRadius: 8,
                                     ),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        // Handle phone login
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        shape: const CircleBorder(),
-                                        padding: const EdgeInsets.all(15),
-                                      ),
-                                      child: const Icon(
-                                        Icons.phone,
-                                        size: 40,
-                                        color: Colors.black,
-                                      ),
+                                  ],
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    // Handle phone login
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
                                   ),
-                                ],
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.phone, size: 30, color: Colors.black),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ],
                           ),
+                            ]
+
+                        ),
                         ),
                       ),
                     ],

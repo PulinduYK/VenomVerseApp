@@ -10,9 +10,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.man), label: "home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_on), label: "Heat Map"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.history_rounded), label: "History"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person), label: "Personal Info"),
         ],
       ),
       body: Container(

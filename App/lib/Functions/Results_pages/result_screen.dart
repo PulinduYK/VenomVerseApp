@@ -24,28 +24,31 @@ class _ResultScreenState extends State<ResultScreen> {
   final FirebaseService _firebaseService = FirebaseService();
   final outcomeClass _outcomeClass = outcomeClass();
 
-  String name = "";
+  String name = "Loading.....";
   String imagePath = "assets/snake.png";
-  String lethalityLevel = "";
-  String description = "";
-  List<String> remedies = [];
+  String lethalityLevel = "Loading.";
+  String description = "Loading.....";
+  List<String> remedies = ["Loading....."];
 
   @override
   void initState() {
     super.initState();
-    _fetchSnakeData();
+    _checkConfidence();
   }
 
   // Fetch data from Firebase
   void _fetchSnakeData() async {
-    int classNumber =
+    await Future.delayed(Duration(seconds: 2));
+    int classNo =
         widget.uploadedImageData['prediction']?.toDouble()?.toInt() ?? 0;
-    String resultName = _outcomeClass.snakeClass(classNumber);
+    int modelNo =
+        widget.uploadedImageData['model_id']?.toDouble()?.toInt() ?? 0;
+    String resultName = _outcomeClass.venomClass(modelNo, classNo);
 
     Map<String, dynamic> snakeDetails =
-        await _firebaseService.getSnakeDetails(resultName);
+        await _firebaseService.getVenomDetails(modelNo, resultName);
     List<String> fetchedRemedies =
-        await _firebaseService.getRemedies(resultName);
+        await _firebaseService.getRemedies(modelNo, resultName);
 
     setState(() {
       name = snakeDetails['name'] ?? 'Unknown';
@@ -58,12 +61,34 @@ class _ResultScreenState extends State<ResultScreen> {
     });
   }
 
-  String getLethalityLevel() {
-    if (lethalityLevel == "None") return "None";
-    if (lethalityLevel == "Low") return "Low";
-    if (lethalityLevel == "Medium") return "Medium";
-    if (lethalityLevel == "High") return "High";
-    return "Not Specified";
+  void _checkConfidence() {
+    double confidence = widget.uploadedImageData['confidence']?.toDouble() ?? 0;
+    confidence = confidence * 100;
+    if (confidence < 90) {
+      Future.delayed(Duration.zero, () {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Center(
+              child: Text("Low Accuracy"),
+            ),
+            content: Text(
+                "Image uploaded Successfully But The accuracy of the detection is low. Please retake the image for better results."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text("OK"),
+              ),
+            ],
+          ),
+        );
+      });
+    } else {
+      _fetchSnakeData();
+    }
   }
 
   @override
@@ -73,18 +98,20 @@ class _ResultScreenState extends State<ResultScreen> {
       body: Stack(
         children: [
           // Background Image
-          Positioned.fill(
+          Container(
+            width: double.infinity,
+            height: 370,
             child: Image.asset(imagePath, fit: BoxFit.cover),
           ),
 
-          // Back Button
-          Positioned(top: 40, left: 10, child: CustomBackButton()),
+          // Back Button (Top-Left)
+          Positioned(top: 50, left: 15, child: CustomBackButton()),
 
-          // Result Card
+          // Result Card (Bottom Section)
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.67,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -101,6 +128,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   children: [
                     // Result Title
                     Center(
+                      heightFactor: 2,
                       child: Text(
                         "Result",
                         style: TextStyle(
@@ -114,6 +142,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
+                          width: 190, // Set a fixed width
                           padding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           decoration: BoxDecoration(
@@ -122,43 +151,48 @@ class _ResultScreenState extends State<ResultScreen> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            name,
+                            "Name:- ${name}",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w500),
+                            softWrap: true, // Ensures text wraps
+                            overflow: TextOverflow
+                                .visible, // Ensures text doesn't get cut off
                           ),
                         ),
                         LethalityBadge(
-                            confidence: getLethalityLevel(),
-                            confidenceTxt: lethalityLevel),
+                          confidence: lethalityLevel,
+                        ),
                       ],
                     ),
 
                     SizedBox(height: 15),
 
-                    // Immediate Actions (Header + Bullet Points)
                     ImmediateActionsSection(actions: remedies),
                     SizedBox(height: 15),
 
                     // Description Section
                     DescriptionSection(description: description),
-
-                    SizedBox(height: 15),
-
-                    // Retake & Emergency Button
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RetakeButton(),
-                        FloatingActionButton(
-                          backgroundColor: Colors.red,
-                          onPressed: () {},
-                          child: Icon(Icons.emergency, color: Colors.white),
-                        ),
-                      ],
-                    ),
+                    SizedBox(height: 65),
                   ],
                 ),
               ),
+            ),
+          ),
+
+          Positioned(
+            left: 20,
+            bottom: 20, // Pin to the bottom
+            child: RetakeButton(),
+          ),
+
+          Positioned(
+            right: 20,
+            bottom: 20,
+            child: FloatingActionButton(
+              backgroundColor: Colors.red,
+              onPressed: () {},
+              shape: const CircleBorder(),
+              child: Icon(Icons.wb_twighlight, color: Colors.white),
             ),
           ),
         ],

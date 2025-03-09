@@ -2,23 +2,24 @@ import 'package:flutter/material.dart';
 
 class LethalityBadge extends StatelessWidget {
   final String confidence;
-  final String confidenceTxt;
 
-  const LethalityBadge(
-      {Key? key, required this.confidence, required this.confidenceTxt})
-      : super(key: key);
+  const LethalityBadge({
+    Key? key,
+    required this.confidence,
+  }) : super(key: key);
 
   Color _getLethalityColor() {
     if (confidence == "None") return Color(0xFF1F6D00); // Green (None)
     if (confidence == "Low") return Color(0xFFEDDB12); // Yellow (Medium)
     if (confidence == "Medium") return Color(0xFFF3560E); // Orange (Medium)
     if (confidence == "High") return Color(0xFFFF0004); // Red (High)
-    return Color(0xFFFFFFFF); // Wight (Not specified)
+    return Color(0xFF3104DF); // Wight (Not specified)
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(maxWidth: 190), // Set max width
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: _getLethalityColor(),
@@ -27,12 +28,16 @@ class LethalityBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            confidence.toUpperCase(),
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
+          Flexible(
+            // Ensures text wraps properly
+            child: Text(
+              "Venomous Level",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+              softWrap: true,
             ),
           ),
           SizedBox(width: 6),
@@ -42,12 +47,15 @@ class LethalityBadge extends StatelessWidget {
             color: Colors.white, // White divider
           ),
           SizedBox(width: 6),
-          Text(
-            "$confidenceTxt",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
+          Flexible(
+            child: Text(
+              "$confidence",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+              softWrap: true,
             ),
           ),
         ],
