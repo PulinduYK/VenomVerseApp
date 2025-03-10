@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../Camera/ImageCapture.dart';
 import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
 
@@ -92,16 +94,25 @@ class ScanSnakesScreen extends StatelessWidget {
 
                   // Buttons Section
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
                     child: Column(
                       children: [
-                        _buildGradientButton("Scan Now", () {}),
+                        _buildGradientButton("Scan Now", () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageCapture(modelNum: 1),
+                            ),
+                          );
+                        }),
                         const SizedBox(height: 20),
                         _buildGradientButton("Upload Image", () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => UploadImagesPage(modelNum: 1),
+                              builder: (context) =>
+                                  UploadImagesPage(modelNum: 1),
                             ),
                           );
                         }),
