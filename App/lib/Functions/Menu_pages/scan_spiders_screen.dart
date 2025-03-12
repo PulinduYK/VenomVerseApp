@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
+import '../Camera/camMethodClass.dart';
+import '../Camera/camPage.dart';
 import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
 
 class ScanSpidersScreen extends StatelessWidget {
-  const ScanSpidersScreen({super.key});
+  ScanSpidersScreen({super.key});
+  final camMethodClass camM = camMethodClass();
 
   @override
   Widget build(BuildContext context) {
@@ -92,16 +98,32 @@ class ScanSpidersScreen extends StatelessWidget {
 
                   // Buttons Section
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
                     child: Column(
                       children: [
-                        _buildGradientButton("Scan Now", () {}),
+                        _buildGradientButton("Scan Now", () async {
+                          File? pickedFile = await camM.pickImage(context);
+                          if (pickedFile != null) {
+                            // Navigate to ImageCapture with the selected image
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CamPage(
+                                  modelNum: 2,
+                                  imageFile: pickedFile,
+                                ),
+                              ),
+                            );
+                          }
+                        }),
                         const SizedBox(height: 20),
                         _buildGradientButton("Upload Image", () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => UploadImagesPage(modelNum: 2),
+                              builder: (context) =>
+                                  UploadImagesPage(modelNum: 2),
                             ),
                           );
                         }),

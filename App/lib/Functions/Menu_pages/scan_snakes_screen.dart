@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
-import '../Camera/ImageCapture.dart';
+import '../Camera/camMethodClass.dart';
+import '../Camera/camPage.dart';
 import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
 
 class ScanSnakesScreen extends StatelessWidget {
-  const ScanSnakesScreen({super.key});
+  ScanSnakesScreen({super.key});
+  final camMethodClass camM = camMethodClass();
 
   @override
   Widget build(BuildContext context) {
@@ -98,13 +102,20 @@ class ScanSnakesScreen extends StatelessWidget {
                         horizontal: 25, vertical: 15),
                     child: Column(
                       children: [
-                        _buildGradientButton("Scan Now", () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ImageCapture(modelNum: 1),
-                            ),
-                          );
+                        _buildGradientButton("Scan Now", () async {
+                          File? pickedFile = await camM.pickImage(context);
+                          if (pickedFile != null) {
+                            // Navigate to ImageCapture with the selected image
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CamPage(
+                                  modelNum: 1,
+                                  imageFile: pickedFile,
+                                ),
+                              ),
+                            );
+                          }
                         }),
                         const SizedBox(height: 20),
                         _buildGradientButton("Upload Image", () {

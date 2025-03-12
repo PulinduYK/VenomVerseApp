@@ -61,7 +61,7 @@ class _ResultScreenState extends State<ResultScreen> {
     });
   }
 
-  void _checkConfidence() {
+  Future<void> _checkConfidence() async {
     double confidence = widget.uploadedImageData['confidence']?.toDouble() ?? 0;
     confidence = confidence * 100;
     if (confidence < 90) {
