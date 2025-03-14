@@ -1,17 +1,43 @@
 import 'package:flutter/material.dart';
 
+import '../../History/historyPage.dart';
 import 'home_page_content.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0; // Tracks the selected tab
+
+  // List of pages to switch between
+  final List<Widget> _pages = [
+    HomePageContent(),
+    HistoryPage(),
+    Scaffold(
+      appBar: AppBar(
+        title: Text("test"),
+      ),
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index; // Update the selected tab
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.location_on), label: "Heat Map"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.history_rounded), label: "History"),
           BottomNavigationBarItem(
@@ -30,7 +56,10 @@ class HomePage extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: HomePageContent(),
+          child: IndexedStack(
+            index: _selectedIndex, // Keeps state of each page
+            children: _pages,
+          ),
         ),
       ),
     );

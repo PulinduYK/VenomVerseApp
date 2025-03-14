@@ -45,6 +45,8 @@ class _ResultScreenState extends State<ResultScreen> {
         widget.uploadedImageData['model_id']?.toDouble()?.toInt() ?? 0;
     String resultName = _outcomeClass.venomClass(modelNo, classNo);
 
+    await _firebaseService.insertHistory(modelNo, true, true);
+
     Map<String, dynamic> snakeDetails =
         await _firebaseService.getVenomDetails(modelNo, resultName);
     List<String> fetchedRemedies =
@@ -63,8 +65,11 @@ class _ResultScreenState extends State<ResultScreen> {
 
   Future<void> _checkConfidence() async {
     double confidence = widget.uploadedImageData['confidence']?.toDouble() ?? 0;
+    int modelNoForHistory =
+        widget.uploadedImageData['model_id']?.toDouble()?.toInt() ?? 4;
     confidence = confidence * 100;
     if (confidence < 90) {
+      await _firebaseService.insertHistory(modelNoForHistory, true, false);
       Future.delayed(Duration.zero, () {
         showDialog(
           context: context,

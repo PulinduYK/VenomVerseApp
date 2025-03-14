@@ -8,9 +8,11 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../Results_pages/result_screen.dart';
 
 class camMethodClass {
+  final FirebaseService _firebaseService = FirebaseService();
   File? imageFile;
 
   // Function to check and request camera permission
@@ -93,6 +95,7 @@ class camMethodClass {
 
         print(jsonResponse);
       } else {
+        await _firebaseService.insertHistory(modelNum, false, false);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Failed to upload image")),
         );

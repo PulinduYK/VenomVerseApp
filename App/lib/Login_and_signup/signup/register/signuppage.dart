@@ -52,7 +52,8 @@ class _SignUpPageState extends State<SignUpPage> {
         return AlertDialog(
           title: const Text("Terms and Conditions"),
           content: const SingleChildScrollView(
-            child: Text("app on testing mode haven't any terms and conditions ."),
+            child:
+                Text("app on testing mode haven't any terms and conditions ."),
           ),
           actions: [
             TextButton(
@@ -69,6 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -111,6 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       Expanded(
                         child: Container(
+                          width: screenWidth > 600 ? 500 : double.infinity,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 30),
                           decoration: const BoxDecoration(
@@ -204,21 +207,27 @@ class _SignUpPageState extends State<SignUpPage> {
                               const SizedBox(height: 35),
                               ElevatedButton(
                                 onPressed: (_isEmailValid &&
-                                    _isPasswordValid &&
-                                    _doPasswordsMatch &&
-                                    _isAgreeChecked)
+                                        _isPasswordValid &&
+                                        _doPasswordsMatch &&
+                                        _isAgreeChecked)
                                     ? () async {
-                                  await _auth.createUserWithEmailAndPassword(
-                                      _emailController.text, _confirmPasswordController.text);
-                                  if (mounted) {
-                                    Navigator.of(context).popUntil((route) => route.isFirst);
-                                  }
-                                }
+                                        await _auth
+                                            .createUserWithEmailAndPassword(
+                                                _emailController.text,
+                                                _confirmPasswordController
+                                                    .text);
+                                        if (mounted) {
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
+                                        }
+                                      }
                                     : null,
                                 style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.zero, // Remove default padding
+                                  padding:
+                                      EdgeInsets.zero, // Remove default padding
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30), // Match design
+                                    borderRadius: BorderRadius.circular(
+                                        30), // Match design
                                   ),
                                   elevation: 5, // Optional: Adds shadow effect
                                 ),
@@ -231,10 +240,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                         Color(0xFF8A7FD6),
                                       ],
                                     ),
-                                    borderRadius: BorderRadius.circular(30), // Same as button shape
+                                    borderRadius: BorderRadius.circular(
+                                        30), // Same as button shape
                                   ),
                                   child: Container(
-                                    width: double.infinity, // Makes button full width
+                                    width: double
+                                        .infinity, // Makes button full width
                                     height: 55, // Adjust height
                                     alignment: Alignment.center,
                                     child: const Text(

@@ -6,6 +6,7 @@ class SuccessPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -38,6 +39,7 @@ class SuccessPage extends StatelessWidget {
             ),
             Expanded(
               child: Container(
+                width: screenWidth > 600 ? 500 : double.infinity,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
                 decoration: const BoxDecoration(

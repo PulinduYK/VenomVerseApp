@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_manager/photo_manager.dart';
 
+import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../Results_pages/result_screen.dart';
 
 class UploadImagesPage extends StatefulWidget {
@@ -18,6 +19,7 @@ class UploadImagesPage extends StatefulWidget {
 }
 
 class _UploadImagesPageState extends State<UploadImagesPage> {
+  final FirebaseService _firebaseService = FirebaseService();
   List<AssetEntity> _galleryImages =
       []; // This is Where the received images of gallery is saved
   File? _selectedImage;
@@ -99,6 +101,7 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
           ),
         );
       } else {
+        await _firebaseService.insertHistory(widget.modelNum, false, false);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to upload image.')),
         );

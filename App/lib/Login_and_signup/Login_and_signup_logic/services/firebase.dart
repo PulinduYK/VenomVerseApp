@@ -162,4 +162,104 @@ class FirebaseService {
     }
     return {};
   }
+
+  Future<int> insertHistory(
+      int UserSelectedType, bool success, bool previewStatus) async {
+    String? userId = _auth.currentUser?.uid;
+    if (userId == null) return 0;
+    String Utype;
+    List<String> type = [
+      "Snake Category",
+      "Spider Category",
+      "Insect Category"
+    ];
+    if (UserSelectedType == 1) {
+      Utype = type[UserSelectedType - 1];
+    } else if (UserSelectedType == 2) {
+      Utype = type[UserSelectedType - 1];
+    } else if (UserSelectedType == 3) {
+      Utype = type[UserSelectedType - 1];
+    } else {
+      Utype = "Error while saving history";
+    }
+    try {
+      await _firestore
+          .collection('usersHistory')
+          .doc(userId)
+          .collection('history')
+          .add({
+        'UserPreferredType': Utype,
+        'status': success ? 'Success' : 'Failure',
+        'previewStatus': previewStatus ? 'Shown' : 'Restricted',
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      return 1; // Success
+    } catch (e) {
+      print("Error inserting history: $e");
+      return 0; // Failure
+    }
+  }
+
+  Stream<List<Map<String, dynamic>>> getHistoryStream() {
+    String? userId = _auth.currentUser?.uid;
+    if (userId == null) {
+      return Stream.value([]); // Return an empty stream if userId is null
+    }
+
+    try {
+      return _firestore
+          .collection('usersHistory')
+          .doc(userId)
+          .collection('history')
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((doc) {
+                return {
+                  'id': doc.id,
+                  'UserPreferredType': doc['UserPreferredType'],
+                  'status': doc['status'],
+                  'previewStatus': doc['previewStatus'],
+                  'timestamp':
+                      doc['timestamp']?.toDate().toString() ?? "Unknown",
+                };
+              }).toList());
+    } catch (e) {
+      print("Error fetching history stream: $e");
+      return Stream.value([]); // Return an empty stream on error
+    }
+  }
+
+  Future<void> clearHistory() async {
+    String? userId = _auth.currentUser?.uid;
+    if (userId != null) {
+      try {
+        var collection = _firestore
+            .collection('usersHistory')
+            .doc(userId)
+            .collection('history');
+        var snapshots = await collection.get();
+        for (var doc in snapshots.docs) {
+          await doc.reference.delete();
+        }
+      } catch (e) {
+        print("Error clearing history: $e");
+      }
+    }
+  }
+
+  Future<void> deleteHistory(String historyId) async {
+    String? userId = _auth.currentUser?.uid;
+    if (userId == null) return;
+
+    try {
+      await _firestore
+          .collection('usersHistory')
+          .doc(userId)
+          .collection('history')
+          .doc(historyId)
+          .delete();
+    } catch (e) {
+      print("Error deleting history: $e");
+    }
+  }
 }
