@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geolocator/geolocator.dart';
+
+import '../../../Functions/Hospital_suggestion/hospital_list.dart';
 
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -116,6 +119,30 @@ class FirebaseService {
         return 'No Data'; // If no data is found
       }
     });
+  }
+
+  Future<List<Hospital>> fetchHospitals(Position userLocation) async {
+    try {
+      QuerySnapshot snapshot = await _firestore.collection('hospitals').get();
+
+      List<Hospital> hospitals = snapshot.docs.map((doc) {
+        Hospital hospital = Hospital.fromFirestore(doc);
+        hospital.distance = Geolocator.distanceBetween(
+              userLocation.latitude,
+              userLocation.longitude,
+              hospital.latitude,
+              hospital.longitude,
+            ) /
+            1000; // Convert to km
+        return hospital;
+      }).toList();
+
+      hospitals.sort((a, b) => (a.distance ?? 0).compareTo(b.distance ?? 0));
+
+      return hospitals;
+    } catch (e) {
+      throw Exception("Error fetching hospitals: ${e.toString()}");
+    }
   }
 
   /// Fetch only the remedies from Firestore for a given snake name.

@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 
 class Hospital {
   final String id;
@@ -44,6 +47,7 @@ class HospitalListScreen extends StatefulWidget {
 }
 
 class _HospitalListScreenState extends State<HospitalListScreen> {
+  final FirebaseService _firebaseService = FirebaseService();
   List<Hospital> hospitals = [];
   bool isLoading = true;
   String? error;
@@ -52,31 +56,45 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeData();
+    _loadHospitals();
   }
 
-  Future<void> _initializeData() async {
+  Future<void> _loadHospitals() async {
     try {
-      userLocation = await Geolocator.getCurrentPosition();
-      QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection('hospitals')
-          .get();
-      hospitals = snapshot.docs.map((doc) {
-        Hospital hospital = Hospital.fromFirestore(doc);
-        hospital.distance = Geolocator.distanceBetween(
-          userLocation!.latitude,
-          userLocation!.longitude,
-          hospital.latitude,
-          hospital.longitude,
-        ) /
-            1000;
-        return hospital;
-      }).toList();
-      hospitals.sort((a, b) => (a.distance ?? 0).compareTo(b.distance ?? 0));
+      LocationPermission permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          setState(() {
+            error =
+                "Location permission is required to fetch nearby hospitals.";
+            isLoading = false;
+          });
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        await openAppSettings();
+        setState(() {
+          error =
+              "Location permissions are permanently denied. Enable them from settings.";
+          isLoading = false;
+        });
+        return;
+      }
+
+      Position userLocation = await Geolocator.getCurrentPosition();
+      List<Hospital> fetchedHospitals =
+          await _firebaseService.fetchHospitals(userLocation);
+
       setState(() {
+        hospitals = fetchedHospitals;
         isLoading = false;
       });
     } catch (e) {
+      print("Error fetching hospitals: ${e.toString()}");
       setState(() {
         error = "Error loading hospitals: ${e.toString()}";
         isLoading = false;
@@ -113,7 +131,8 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
               child: Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                    icon: const Icon(Icons.arrow_back,
+                        color: Colors.white, size: 28),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 10),
@@ -155,7 +174,8 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   itemCount: hospitals.length,
                   itemBuilder: (context, index) {
                     final hospital = hospitals[index];
@@ -211,25 +231,28 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child:Text(
+                        child: Text(
                           hospital.hname,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.blue.shade100,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           "${hospital.distance?.toStringAsFixed(1)} km away",
-                          style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 5),
                   Text(
                     hospital.address,
@@ -243,7 +266,6 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
       ),
     );
   }
-
 
   Widget _buildHospitalDetails(BuildContext context, Hospital hospital) {
     return Container(
@@ -259,8 +281,9 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-              hospital.hname, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          Text(hospital.hname,
+              style:
+                  const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
 
           // Address Row
@@ -281,7 +304,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
           // Phone Number Button (Currently Non-Functional)
           GestureDetector(
               onTap: () => _makePhoneCall(hospital.phone),
-              child:Container(
+              child: Container(
                 padding: const EdgeInsets.all(16),
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -303,10 +326,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                     ),
                   ],
                 ),
-              )
-          ),
-
-
+              )),
         ],
       ),
     );
