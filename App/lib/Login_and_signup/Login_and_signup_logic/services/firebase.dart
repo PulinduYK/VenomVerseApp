@@ -139,6 +139,27 @@ class FirebaseService {
     return [];
   }
 
+  /// Fetch only the remedies from Firestore for a given snake name.
+  Future<List<String>> getRemediesByName(int type, String venomName) async {
+    List<String> catList = ["snakes", "spiders", "insects"];
+    String category = catList[type - 1];
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot =
+          await _firestore.collection(category).doc(venomName).get();
+
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.data()!;
+        return data.entries
+            .where((entry) => entry.key.startsWith('remedi'))
+            .map((entry) => entry.value.toString())
+            .toList();
+      }
+    } catch (e) {
+      print("Error fetching remedies: $e");
+    }
+    return [];
+  }
+
   /// Fetch general details of the snake.
   Future<Map<String, String>> getVenomDetails(
       int type, String venomName) async {
@@ -161,6 +182,65 @@ class FirebaseService {
       print("Error fetching snake details: $e");
     }
     return {};
+  }
+
+  /// Fetch general details of the snake.
+  Future<Map<String, String>> getVenomDetailsByName(
+      int type, String venomName) async {
+    List<String> catList = ["snakes", "spiders", "insects"];
+    String category = catList[type - 1];
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot =
+          await _firestore.collection(category).doc(venomName).get();
+
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.data()!;
+        return {
+          "name": data["name"] ?? "",
+          "description": data["description"] ?? "",
+          "lethalityLevel": data["lethalityLevel"] ?? "",
+          "imagePath": data["imagePath"] ?? "",
+        };
+      }
+    } catch (e) {
+      print("Error fetching snake details: $e");
+    }
+    return {};
+  }
+
+  // Fetch all snake species
+  Future<List<Map<String, dynamic>>> getAllSnakes() async {
+    return await getSpeciesWithImages("snakes");
+  }
+
+  // Fetch all spider species
+  Future<List<Map<String, dynamic>>> getAllSpiders() async {
+    return await getSpeciesWithImages("spiders");
+  }
+
+  // Fetch all insect species
+  Future<List<Map<String, dynamic>>> getAllInsects() async {
+    return await getSpeciesWithImages("insects");
+  }
+
+  // Fetch all species names & image paths for a given category
+  Future<List<Map<String, dynamic>>> getSpeciesWithImages(
+      String category) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await _firestore.collection(category).get();
+
+      return snapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data();
+        return {
+          "name": data["name"] ?? "",
+          "imagePath": data["imagePath"] ?? "",
+        };
+      }).toList();
+    } catch (e) {
+      print("Error fetching $category: $e");
+      return [];
+    }
   }
 
   Future<int> insertHistory(

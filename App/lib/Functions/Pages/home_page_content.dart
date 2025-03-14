@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../Library/libraryHome.dart';
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../../Profile/pages/settings_page.dart';
 import '../Menu_pages/scan_insects_screen.dart';
@@ -158,31 +159,40 @@ class _HomePageContentState extends State<HomePageContent> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: 265,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 4,
-                              offset: Offset(4, 4),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => libraryHome()),
+                          );
+                        },
+                        child: Container(
+                          width: 265,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black38,
+                                blurRadius: 4,
+                                offset: Offset(4, 4),
+                              ),
+                            ],
+                            gradient: LinearGradient(
+                              colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
                             ),
-                          ],
-                          gradient: LinearGradient(
-                            colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
+                            borderRadius: BorderRadius.circular(10.00),
                           ),
-                          borderRadius: BorderRadius.circular(10.00),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            "journey to venom world",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              "journey to venom world",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
