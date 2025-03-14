@@ -1,39 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+class Hospital {
+  final String id;
+  final String hname;
+  final String address;
+  final String phone;
+  final String imageUrl;
+  final double latitude;
+  final double longitude;
+  double? distance;
 
+  Hospital({
+    required this.id,
+    required this.hname,
+    required this.address,
+    required this.phone,
+    required this.imageUrl,
+    required this.latitude,
+    required this.longitude,
+    this.distance,
+  });
 
-class HospitalListScreenT extends StatelessWidget {
-  final List<Map<String, String>> hospitals = [
-    {
-      'name': 'City General Hospital',
-      'address': '123 Healthcare Ave, City Center',
-      'phone': '+1234567890',
-      'distance': '2.5 km',
-      'image': 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?q=80&w=2940&auto=format&fit=crop'
-    },
-    {
-      'name': 'Emergency Care Center',
-      'address': '456 Medical Blvd, Downtown',
-      'phone': '+1234567891',
-      'distance': '3.8 km',
-      'image': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
-    },
-    {
-      'name': 'Emergency Care Center',
-      'address': '456 Medical Blvd, Downtown',
-      'phone': '+1234567891',
-      'distance': '3.8 km',
-      'image': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
-    },
-    {
-      'name': 'Emergency Care Center',
-      'address': '456 Medical Blvd, Downtown',
-      'phone': '+1234567891',
-      'distance': '3.8 km',
-      'image': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
-    },
-  ];
+  factory Hospital.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map;
+    return Hospital(
+      id: doc.id,
+      hname: data['hname'] ?? '',
+      address: data['address'] ?? '',
+      phone: data['phone'] ?? '',
+      imageUrl: data['imageUrl'] ?? '',
+      latitude: (data['latitude'] ?? 0).toDouble(),
+      longitude: (data['longitude'] ?? 0).toDouble(),
+    );
+  }
+}
+
+class HospitalListScreen extends StatefulWidget {
+  @override
+  _HospitalListScreenState createState() => _HospitalListScreenState();
+}
+
+class _HospitalListScreenState extends State<HospitalListScreen> {
+  List<Hospital> hospitals = [];
+  bool isLoading = true;
+  String? error;
+  Position? userLocation;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    try {
+      userLocation = await Geolocator.getCurrentPosition();
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('hospitals')
+          .get();
+      hospitals = snapshot.docs.map((doc) {
+        Hospital hospital = Hospital.fromFirestore(doc);
+        hospital.distance = Geolocator.distanceBetween(
+          userLocation!.latitude,
+          userLocation!.longitude,
+          hospital.latitude,
+          hospital.longitude,
+        ) /
+            1000;
+        return hospital;
+      }).toList();
+      hospitals.sort((a, b) => (a.distance ?? 0).compareTo(b.distance ?? 0));
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        error = "Error loading hospitals: ${e.toString()}";
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,14 +171,13 @@ class HospitalListScreenT extends StatelessWidget {
   }
 
   // Hospital Card Widget
-  Widget _buildHospitalCard(BuildContext context, Map<String, String> hospital) {
+  Widget _buildHospitalCard(BuildContext context, Hospital hospital) {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: () {
-          // Open bottom sheet when clicking a hospital
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -147,8 +195,8 @@ class HospitalListScreenT extends StatelessWidget {
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
               ),
-              child: Image.network(
-                hospital['image']!,
+              child: Image.asset(
+                hospital.imageUrl,
                 height: 180,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -163,8 +211,8 @@ class HospitalListScreenT extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(
-                          hospital['name']!,
+                        child:Text(
+                          hospital.hname,
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -175,15 +223,16 @@ class HospitalListScreenT extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          hospital['distance']!,
-                          style: const TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                          "${hospital.distance?.toStringAsFixed(1)} km away",
+                          style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 5),
                   Text(
-                    hospital['address']!,
+                    hospital.address,
                     style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                   ),
                 ],
@@ -195,8 +244,8 @@ class HospitalListScreenT extends StatelessWidget {
     );
   }
 
-  // Bottom Sheet for Hospital Details
-  Widget _buildHospitalDetails(BuildContext context, Map<String, String> hospital) {
+
+  Widget _buildHospitalDetails(BuildContext context, Hospital hospital) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
@@ -210,14 +259,8 @@ class HospitalListScreenT extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Hospital Name
           Text(
-            hospital['name']!,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+              hospital.hname, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
 
           // Address Row
@@ -227,7 +270,7 @@ class HospitalListScreenT extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  hospital['address']!,
+                  hospital.address,
                   style: const TextStyle(fontSize: 16),
                 ),
               ),
@@ -237,7 +280,7 @@ class HospitalListScreenT extends StatelessWidget {
 
           // Phone Number Button (Currently Non-Functional)
           GestureDetector(
-              onTap: () => _makePhoneCall(hospital['phone']!),
+              onTap: () => _makePhoneCall(hospital.phone),
               child:Container(
                 padding: const EdgeInsets.all(16),
                 width: double.infinity,
@@ -251,7 +294,7 @@ class HospitalListScreenT extends StatelessWidget {
                     const Icon(Icons.phone, color: Colors.blueGrey),
                     const SizedBox(width: 8),
                     Text(
-                      hospital['phone']!,
+                      hospital.phone,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.blueGrey,
@@ -262,10 +305,13 @@ class HospitalListScreenT extends StatelessWidget {
                 ),
               )
           ),
+
+
         ],
       ),
     );
   }
+
   // Function to Open Phone Dialer
   void _makePhoneCall(String phoneNumber) async {
     final Uri url = Uri.parse('tel:$phoneNumber');
@@ -275,5 +321,4 @@ class HospitalListScreenT extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
-
 }

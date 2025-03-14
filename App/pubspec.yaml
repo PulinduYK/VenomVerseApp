@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   url_launcher: ^6.1.14  # Use the latest version available
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -50,6 +51,8 @@ dependencies:
   image_cropper: ^9.0.0
   permission_handler: ^11.4.0
   quickalert: ^1.1.0
+  geolocator: ^10.1.0
+  google_maps_flutter: ^2.5.3
 
 
 dev_dependencies:
@@ -115,6 +118,10 @@ flutter:
     - assets/spiders_images/rwa.jpeg
     - assets/spiders_images/slo.jpg
     - assets/spiders_images/tst.jpg
+    - assets/hospital_images/h1.jpg
+    - assets/hospital_images/h2.jpeg
+    - assets/hospital_images/h3.jpg
+    - assets/hospital_images/h4.jpg
 
 
 

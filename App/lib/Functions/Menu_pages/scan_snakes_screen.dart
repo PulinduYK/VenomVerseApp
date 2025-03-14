@@ -1,15 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-
-import '../Camera/camMethodClass.dart';
-import '../Camera/camPage.dart';
+import '../Hospital_suggestion/hospital_list.dart';
 import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
 
+
 class ScanSnakesScreen extends StatelessWidget {
-  ScanSnakesScreen({super.key});
-  final camMethodClass camM = camMethodClass();
+  const ScanSnakesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -98,32 +94,16 @@ class ScanSnakesScreen extends StatelessWidget {
 
                   // Buttons Section
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                     child: Column(
                       children: [
-                        _buildGradientButton("Scan Now", () async {
-                          File? pickedFile = await camM.pickImage(context);
-                          if (pickedFile != null) {
-                            // Navigate to ImageCapture with the selected image
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CamPage(
-                                  modelNum: 1,
-                                  imageFile: pickedFile,
-                                ),
-                              ),
-                            );
-                          }
-                        }),
+                        _buildGradientButton("Scan Now", () {}),
                         const SizedBox(height: 20),
                         _buildGradientButton("Upload Image", () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  UploadImagesPage(modelNum: 1),
+                              builder: (context) => UploadImagesPage(modelNum: 1),
                             ),
                           );
                         }),
@@ -195,12 +175,15 @@ class ScanSnakesScreen extends StatelessWidget {
     );
   }
 
-  // Panic Button with PNG Image
   Widget _buildPanicButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("Panic Button Pressed!");
-        // You can add navigation or alert logic here
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HospitalListScreen(), // Navigate to the hospital list
+          ),
+        );
       },
       child: Container(
         width: 65,
@@ -217,7 +200,7 @@ class ScanSnakesScreen extends StatelessWidget {
         ),
         child: ClipOval(
           child: Image.asset(
-            "assets/panic_button.png", // Update this with your image path
+            "assets/panic_button.png", // Ensure this image exists
             fit: BoxFit.cover,
           ),
         ),
