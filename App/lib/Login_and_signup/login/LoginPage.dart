@@ -88,8 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   onChanged: (value) {
                                     setState(() {
-                                      _isEmailValid =
-                                          value.endsWith('@gmail.com');
+                                      _isEmailValid = true;
                                     });
                                   },
                                 ),
@@ -157,6 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                                     onPressed: () async {
                                       if (_isEmailValid) {
                                         await _auth.sgnInWithEmailAndPassword(
+                                            context,
                                             _emailController.text,
                                             _passwordController.text);
                                         // Pulindu Firebase login logic here (Firebase auth)

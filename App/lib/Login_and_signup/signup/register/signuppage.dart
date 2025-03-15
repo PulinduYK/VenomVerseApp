@@ -29,7 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _validateEmail(String email) {
     setState(() {
-      _isEmailValid = RegExp(r"^[a-zA-Z0-9._%+-]+@gmail\.com$").hasMatch(email);
+      _isEmailValid = true;
     });
   }
 
@@ -213,6 +213,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ? () async {
                                         await _auth
                                             .createUserWithEmailAndPassword(
+                                                context,
                                                 _emailController.text,
                                                 _confirmPasswordController
                                                     .text);

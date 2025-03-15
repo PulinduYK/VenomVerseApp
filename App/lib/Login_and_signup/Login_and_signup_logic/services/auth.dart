@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../models/userModel.dart';
 import 'firebase.dart';
@@ -10,6 +11,22 @@ class AuthServices {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseService firebaseService = FirebaseService();
+
+  User getUser() {
+    return _auth.currentUser!;
+  }
+
+  bool VerifyUser() {
+    if (_auth.currentUser!.emailVerified) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future reloadUser() async {
+    await _auth.currentUser!.reload();
+  }
 
   UserModel? _userWithFirebaseUserID(User? user) {
     return user != null ? UserModel(uid: user.uid) : null;
@@ -32,7 +49,8 @@ class AuthServices {
   }
 
   //email and pass SignIn in create
-  Future createUserWithEmailAndPassword(String email, String password) async {
+  Future createUserWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -41,14 +59,31 @@ class AuthServices {
       User? user = result.user;
       await firebaseService.saveUser(user);
       return _userWithFirebaseUserID(user);
-    } catch (err) {
-      //print(err.toString());
+    } on FirebaseAuthException catch (err) {
+      String errorMessage = "An error occurred. Please try again.";
+
+      if (err.code == 'email-already-exists') {
+        errorMessage = "This email is already in use.";
+      } else if (err.code == 'invalid-email') {
+        errorMessage = "Invalid email format.";
+      } else if (err.code == 'weak-password') {
+        errorMessage = "Your password is too weak.";
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          backgroundColor: Colors.red,
+        ),
+      );
+
       return null;
     }
   }
 
   //email and pass SignIn in
-  Future sgnInWithEmailAndPassword(String email, String password) async {
+  Future sgnInWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -56,8 +91,21 @@ class AuthServices {
       );
       User? user = result.user;
       return _userWithFirebaseUserID(user);
-    } catch (err) {
-      //print(err.toString());
+    } on FirebaseAuthException catch (err) {
+      String errorMessage = "An error occurred. Please try again.";
+      if (err.code == 'invalid-credential') {
+        errorMessage = "Invalid credential check credential again";
+      } else {
+        print(err.code);
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          backgroundColor: Colors.red,
+        ),
+      );
+
       return null;
     }
   }
