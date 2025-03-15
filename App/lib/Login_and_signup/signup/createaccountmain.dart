@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:venomverse/Login_and_signup/signup/register/signuppage.dart';
-
-import '../custom page route widget/CustomPageRoute.dart';
-import '../login/StarterPage.dart';
 
 class CreateAccountMain extends StatelessWidget {
   const CreateAccountMain({super.key});
@@ -181,12 +180,23 @@ class CreateAccountMain extends StatelessWidget {
                                       ),
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
-                                            ModernPageRoute(
-                                                page: const StarterPage()),
-                                            (route) =>
-                                                false, // Removes all previous routes
+                                          QuickAlert.show(
+                                            context: context,
+                                            type: QuickAlertType.custom,
+                                            barrierDismissible: true,
+                                            confirmBtnText: 'Got it',
+                                            confirmBtnColor:
+                                                Colors.deepPurpleAccent,
+                                            customAsset: 'assets/warning.gif',
+                                            widget: Center(
+                                              child: Text(
+                                                "Sorry method not available",
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
                                           );
                                         },
                                         style: ElevatedButton.styleFrom(
@@ -209,7 +219,6 @@ class CreateAccountMain extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-
                                     // Phone Button
                                     Container(
                                       width: 120, // Adjust width as needed
@@ -229,7 +238,24 @@ class CreateAccountMain extends StatelessWidget {
                                       ),
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          // Handle phone login
+                                          QuickAlert.show(
+                                            context: context,
+                                            type: QuickAlertType.custom,
+                                            barrierDismissible: true,
+                                            confirmBtnText: 'Got it',
+                                            confirmBtnColor:
+                                                Colors.deepPurpleAccent,
+                                            customAsset: 'assets/warning.gif',
+                                            widget: Center(
+                                              child: Text(
+                                                "Sorry method not available",
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          );
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.transparent,

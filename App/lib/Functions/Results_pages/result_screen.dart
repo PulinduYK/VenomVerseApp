@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import 'back_button.dart';
@@ -38,7 +40,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   // Fetch data from Firebase
   void _fetchSnakeData() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
     int classNo =
         widget.uploadedImageData['prediction']?.toDouble()?.toInt() ?? 0;
     int modelNo =
@@ -70,27 +72,37 @@ class _ResultScreenState extends State<ResultScreen> {
     confidence = confidence * 100;
     if (confidence < 90) {
       await _firebaseService.insertHistory(modelNoForHistory, true, false);
-      Future.delayed(Duration.zero, () {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Center(
-              child: Text("Low Accuracy"),
-            ),
-            content: Text(
-                "Image uploaded Successfully But The accuracy of the detection is low. Please retake the image for better results."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: Text("OK"),
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.custom,
+        barrierDismissible: true,
+        confirmBtnText: 'Got it',
+        onConfirmBtnTap: () {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+        confirmBtnColor: Colors.deepPurpleAccent,
+        customAsset: 'assets/warning.gif',
+        widget: Center(
+          child: Column(
+            children: [
+              Text(
+                "Low Accuracy",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Image uploaded Successfully But The accuracy of the detection is low. Please retake the image for better results.",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
               ),
             ],
           ),
-        );
-      });
+        ),
+      );
     } else {
       _fetchSnakeData();
     }
