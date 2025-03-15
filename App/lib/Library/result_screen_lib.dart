@@ -5,7 +5,6 @@ import '../Functions/Results_pages/back_button.dart';
 import '../Functions/Results_pages/description_section.dart';
 import '../Functions/Results_pages/immediate_actions.dart';
 import '../Functions/Results_pages/lethality_badge.dart';
-import '../Functions/Results_pages/outcomeClass.dart';
 import '../Functions/Results_pages/retake_button.dart';
 
 class ResultScreenLib extends StatefulWidget {
@@ -26,7 +25,6 @@ class ResultScreenLib extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreenLib> {
   final FirebaseService _firebaseService = FirebaseService();
-  final outcomeClass _outcomeClass = outcomeClass();
 
   String name = "Loading.....";
   String imagePath = "assets/snake.png";
