@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../History/historyPage.dart';
+import '../Heat Map/google_map_screen.dart';
 import 'home_page_content.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,17 +18,21 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     HomePageContent(),
     HistoryPage(),
-    Scaffold(
-      appBar: AppBar(
-        title: Text("test"),
-      ),
-    ),
+    GoogleMapScreen(),
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index; // Update the selected tab
-    });
+    if (index == 2) {
+      // Navigate to GoogleMapScreen instead of switching tabs
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => GoogleMapScreen()),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index; // Update the selected tab normally
+      });
+    }
   }
 
   @override
@@ -40,8 +45,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.history_rounded), label: "History"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), label: "Personal Info"),
+          BottomNavigationBarItem(icon: Icon(Icons.location_on), label: "Map"),
         ],
       ),
       body: Container(
