@@ -68,21 +68,17 @@ class CreateAccountMain extends StatelessWidget {
                               children: [
                                 // Logo Placeholder
                                 Container(
-                                  width: 100,
-                                  height: 100,
+                                  width: 150,
+                                  height: 150,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[300],
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Logo',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black54,
-                                      ),
-                                    ),
+                                  clipBehavior: Clip
+                                      .hardEdge, // Ensures the image follows the border radius
+                                  child: Image.asset(
+                                    'assets/playstore.png', // Replace with your actual image path
+                                    fit: BoxFit
+                                        .cover, // Adjusts how the image fits inside
                                   ),
                                 ),
                                 const SizedBox(height: 20),
@@ -94,7 +90,16 @@ class CreateAccountMain extends StatelessWidget {
                                     color: Colors.black,
                                   ),
                                 ),
-                                const SizedBox(height: 70),
+                                const SizedBox(height: 40),
+                                const Text(
+                                  textAlign: TextAlign.center,
+                                  "You're few steps away from our app",
+                                  style: TextStyle(
+                                    fontSize: 26,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 40),
                                 // Create Account Button
                                 Container(
                                   width: double.infinity,
@@ -151,7 +156,7 @@ class CreateAccountMain extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 160),
+                                const SizedBox(height: 80),
 // Row of White Buttons for Google and Phone Login
                                 Row(
                                   mainAxisAlignment:
