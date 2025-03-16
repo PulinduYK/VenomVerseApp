@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // create custom widget to reuse same background template
@@ -153,6 +154,18 @@ class CustomTextBox extends StatelessWidget {
         ],
       ),
       child: child,
+    );
+  }
+}
+
+class ToastPopup{
+  static void showToast(String message, {ToastGravity gravity = ToastGravity.BOTTOM}) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: gravity,
+      backgroundColor: Color(0xFF8A7FD6),
+      textColor: Colors.white,
     );
   }
 }

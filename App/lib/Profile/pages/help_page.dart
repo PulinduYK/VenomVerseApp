@@ -16,43 +16,50 @@ class HelpPage extends StatelessWidget {
           SizedBox(height: 50),
           CustomButton(
             text: "Emergency Contact",
-            onPressed: (){
+            onPressed: () {
+              ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),
           SizedBox(height: 20),
           CustomButton(
             text: "FAQs",
-            onPressed: (){
+            onPressed: () {
+              ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),
           SizedBox(height: 20),
           CustomButton(
             text: "Customer support",
-            onPressed: (){
+            onPressed: () {
+              ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),
           SizedBox(height: 20),
           CustomButton(
-            text: "Password Management",
-            onPressed: (){
+            text: "Password Manager",
+            onPressed: () {
+              ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),
           SizedBox(height: 20),
           CustomButton(
             text: "2-Factor Auth",
-            onPressed: (){
+            onPressed: () {
+              ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),
           SizedBox(height: 20),
           CustomButton(
             text: "Device Manager",
-            onPressed: (){
+            onPressed: () {
+              ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),
           SizedBox(height: 20),
           CustomButton(
             text: "Privacy Settings",
-            onPressed: (){
+            onPressed: () {
+              ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),
 
