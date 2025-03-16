@@ -53,6 +53,9 @@ dependencies:
   quickalert: ^1.1.0
   geolocator: ^10.1.0
   google_maps_flutter: ^2.5.3
+  flutter_social_button: ^1.1.6+1
+  fluttertoast: ^8.2.12
+
 
 
 dev_dependencies:

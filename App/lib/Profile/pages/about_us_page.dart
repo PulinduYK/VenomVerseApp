@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:venomverse/widgets/profile_page_template.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+
+import '../widgets/profile_page_template.dart';
 
 class TeamMember {
   final String name;
@@ -22,7 +24,8 @@ class TeamMember {
   // Function to fetch GitHub profile image URL using the GitHub API
   Future<String?> fetchGitHubProfileImage() async {
     try {
-      final response = await http.get(Uri.parse('https://api.github.com/users/$github'));
+      final response =
+          await http.get(Uri.parse('https://api.github.com/users/$github'));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -57,35 +60,35 @@ class AboutUsPage extends StatelessWidget {
         name: "Pulindu Kulathilaka",
         role: "Software Engineer Undergraduate",
         description: "Leads the company with strategic vision.",
-        github: "PulinduYK",  // GitHub username
+        github: "PulinduYK", // GitHub username
         linkedin: "https://www.linkedin.com/in/pulindu-k-686a5a293",
       ),
       TeamMember(
         name: "Dewmi Wenushika",
         role: "Software Engineer Undergraduate",
         description: "Oversees technology and innovation.",
-        github: "Dewmiiii",  // GitHub username
+        github: "Dewmiiii", // GitHub username
         linkedin: "https://www.linkedin.com/in/dewmi-wenushika-0367a7297",
       ),
       TeamMember(
         name: "Thevindu Guruge",
         role: "Software Engineer Undergraduate",
         description: "Manages development and coding standards.",
-        github: "gurugetnm",  // GitHub username
+        github: "gurugetnm", // GitHub username
         linkedin: "https://linkedin.com/in/thevindu-guruge",
       ),
       TeamMember(
         name: "Nipun Karunarathna",
         role: "Software Engineer Undergraduate",
         description: "Manages development and coding standards.",
-        github: "NipunChamodya",  // GitHub username
+        github: "NipunChamodya", // GitHub username
         linkedin: "https://www.linkedin.com/in/nipun-karunarathna2002",
       ),
       TeamMember(
         name: "Prabhashan Madurawala",
         role: "Software Engineer Undergraduate",
         description: "Manages development and coding standards.",
-        github: "Prabhashan19",  // GitHub username
+        github: "Prabhashan19", // GitHub username
         linkedin: "https://www.linkedin.com/in/prabhashan-madurawala",
       ),
     ];
@@ -105,7 +108,8 @@ class AboutUsPage extends StatelessWidget {
                   return Card(
                     elevation: 0,
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -113,23 +117,27 @@ class AboutUsPage extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            child: CircularProgressIndicator(),  // Show loading indicator while fetching image
+                            child:
+                                CircularProgressIndicator(), // Show loading indicator while fetching image
                           ),
                           const SizedBox(height: 12),
                           Text(
                             teamMembers[index].name,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             teamMembers[index].role,
-                            style: const TextStyle(fontSize: 16, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.grey),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             teamMembers[index].description,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14, color: Colors.black87),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.black87),
                           ),
                           const SizedBox(height: 12),
                         ],
@@ -140,7 +148,8 @@ class AboutUsPage extends StatelessWidget {
                   return Card(
                     elevation: 0,
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -149,23 +158,27 @@ class AboutUsPage extends StatelessWidget {
                           CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.grey,
-                            child: Icon(Icons.error),  // Show error icon when fetching fails
+                            child: Icon(Icons
+                                .error), // Show error icon when fetching fails
                           ),
                           const SizedBox(height: 12),
                           Text(
                             teamMembers[index].name,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             teamMembers[index].role,
-                            style: const TextStyle(fontSize: 16, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.grey),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             teamMembers[index].description,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14, color: Colors.black87),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.black87),
                           ),
                           const SizedBox(height: 12),
                         ],
@@ -176,7 +189,8 @@ class AboutUsPage extends StatelessWidget {
                   return Card(
                     elevation: 0,
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -190,30 +204,37 @@ class AboutUsPage extends StatelessWidget {
                           Text(
                             teamMembers[index].name,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             teamMembers[index].role,
-                            style: const TextStyle(fontSize: 16, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.grey),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             teamMembers[index].description,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14, color: Colors.black87),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.black87),
                           ),
                           const SizedBox(height: 12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               IconButton(
-                                icon: Image.asset("assets/github_icon.png", width: 30),
-                                onPressed: () => _launchURL(teamMembers[index].github),
+                                icon: Image.asset("assets/github_icon.png",
+                                    width: 30),
+                                onPressed: () =>
+                                    _launchURL(teamMembers[index].github),
                               ),
                               const SizedBox(width: 15),
                               IconButton(
-                                icon: Image.asset("assets/linkedin_icon.png", width: 30),
-                                onPressed: () => _launchURL(teamMembers[index].linkedin),
+                                icon: Image.asset("assets/linkedin_icon.png",
+                                    width: 30),
+                                onPressed: () =>
+                                    _launchURL(teamMembers[index].linkedin),
                               ),
                             ],
                           ),
@@ -225,7 +246,8 @@ class AboutUsPage extends StatelessWidget {
                   return Card(
                     elevation: 0,
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -239,30 +261,37 @@ class AboutUsPage extends StatelessWidget {
                           Text(
                             teamMembers[index].name,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             teamMembers[index].role,
-                            style: const TextStyle(fontSize: 16, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.grey),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             teamMembers[index].description,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14, color: Colors.black87),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.black87),
                           ),
                           const SizedBox(height: 12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               IconButton(
-                                icon: Image.asset("assets/github_icon.png", width: 30),
-                                onPressed: () => _launchURL(teamMembers[index].github),
+                                icon: Image.asset("assets/github_icon.png",
+                                    width: 30),
+                                onPressed: () =>
+                                    _launchURL(teamMembers[index].github),
                               ),
                               const SizedBox(width: 15),
                               IconButton(
-                                icon: Image.asset("assets/linkedin_icon.png", width: 30),
-                                onPressed: () => _launchURL(teamMembers[index].linkedin),
+                                icon: Image.asset("assets/linkedin_icon.png",
+                                    width: 30),
+                                onPressed: () =>
+                                    _launchURL(teamMembers[index].linkedin),
                               ),
                             ],
                           ),

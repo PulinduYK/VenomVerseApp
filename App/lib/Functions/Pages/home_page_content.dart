@@ -64,8 +64,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => SettingsPage(
-                          name: userName,
-                          username: "tuka",
+                          username: userName,
                         ),
                       ),
                     );
