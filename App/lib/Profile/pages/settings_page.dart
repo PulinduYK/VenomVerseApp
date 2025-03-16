@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venomverse/Login_and_signup/Login_and_signup_logic/services/firebase.dart';
@@ -7,12 +8,15 @@ import 'package:venomverse/Profile/pages/help_page.dart';
 import 'package:venomverse/Profile/pages/settings_edit_page.dart';
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
 
+import '../../Login_and_signup/Login_and_signup_logic/authentication/wrapper.dart';
+
 // SettingsPage displays the settings details.
 class SettingsPage extends StatefulWidget {
-  final String username;
+  final Stream<String> usernameStream;
+  //final String username;
   const SettingsPage({
     super.key,
-    required this.username,
+    required this.usernameStream,
   });
 
   @override
@@ -30,7 +34,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> fetchUserDataFromService() async {
-    Map<String, String> userData = await _firebaseService.fetchUserData(); // Call fetchUserData from FirebaseService
+    Map<String, String> userData = await _firebaseService
+        .fetchUserData(); // Call fetchUserData from FirebaseService
 
     setState(() {
       email = userData['email'] ?? 'Not Available';
@@ -84,13 +89,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 : const AssetImage('assets/default_profile_picture.jpg'),
           ),
           SizedBox(height: 20), // For Space
-          Text(
-            widget.username,
-            style: GoogleFonts.inriaSans(
-              color: Colors.black,
-              fontSize: MediaQuery.of(context).size.width > 350 ? 24 : 22,
-              fontWeight: FontWeight.bold,
-            ),
+          // StreamBuilder for username
+          StreamBuilder<String>(
+            stream: widget.usernameStream,
+            builder: (context, snapshot) {
+              String username = snapshot.data ?? "Guest User";
+              return Text(
+                username,
+                style: GoogleFonts.inriaSans(
+                  color: Colors.black,
+                  fontSize: MediaQuery.of(context).size.width > 350 ? 24 : 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            },
           ),
           Text(
             email,
@@ -216,7 +228,15 @@ class _SettingsPageState extends State<SettingsPage> {
                   backgroundColor: Colors.transparent,
                   foregroundColor: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  if (mounted) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => Wrapper()),
+                      (route) => false,
+                    ); // Clears all previous routes);
+                  }
+                },
                 child: Text(
                   "Log out",
                   textAlign: TextAlign.left,

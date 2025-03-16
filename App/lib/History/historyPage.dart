@@ -91,7 +91,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 30.0, horizontal: 29.0),
+                        vertical: 10.0, horizontal: 29.0),
                     child: StreamBuilder<List<Map<String, dynamic>>>(
                       stream: _firebaseService.getHistoryStream(),
                       builder: (context, snapshot) {

@@ -64,7 +64,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => SettingsPage(
-                          username: userName,
+                          usernameStream: _firebaseService.getUserName(),
                         ),
                       ),
                     );

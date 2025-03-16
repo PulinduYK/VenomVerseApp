@@ -31,7 +31,16 @@ class outcomeClass {
     "Sri Lankan Ornamental Tarantula",
     "Two-striped Telamonia",
   ];
-  List<String> insects = [];
+  List<String> insects = [
+    "Common Mormon",
+    "Crimson Rose",
+    "Giant Centipede",
+    "Hottentotta tamulus",
+    "Lime Butterfly",
+    "Mud Dauber Wasp",
+    "Red Weaver Ant",
+    "Scutigera coleoptrata",
+  ];
 
   String venomClass(int modelNumber, int classNumber) {
     if (modelNumber == 1) {

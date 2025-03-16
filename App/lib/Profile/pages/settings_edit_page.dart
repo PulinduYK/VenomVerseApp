@@ -1,30 +1,25 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
+
+import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 
 // Settings edit page displays the edit version of the settings page.
 class SettingsEditPage extends StatefulWidget {
   const SettingsEditPage({super.key});
 
-
-
-
   @override
   State<SettingsEditPage> createState() => _SettingsEditPageState();
-
-
 }
 
-
 class _SettingsEditPageState extends State<SettingsEditPage> {
+  final FirebaseService _firebaseService = FirebaseService();
   File? _image;
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  //final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   bool _isEmailValid = true;
@@ -36,66 +31,38 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
 
   Future<void> _pickImage() async {
     final pickedFile =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
       });
     }
   }
+
+  // Call updateUserData from FirebaseService
   Future<void> _updateUserData() async {
+    await _firebaseService.updateUserData(
+      name: _nameController.text,
+      //email: _emailController.text,
+      phone: _phoneController.text,
+      dob: _dobController.text,
+    );
 
-    if (true) {
-      // Delete previous data and set new data in Firebase Firestore (including profile picture)
-      await FirebaseFirestore.instance.collection('users').doc("BSvS7nBHbr4WvLvQHXLu").set({
-        'name': _nameController.text,
-        'email': _emailController.text,
-        'phone': _phoneController.text,
-        'dob': _dobController.text,
-      }).then((value) {
-        // Optional: You can show a success message
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('User data updated successfully!')),
-        );
-      }).catchError((error) {
-        // Optional: Handle any errors during the update
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error updating data: $error')),
-        );
-      });
-    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('User data updated successfully!')),
+    );
   }
+
+  // Load user data from FirebaseService
   Future<void> _loadUserData() async {
-    User? currentUser = FirebaseAuth.instance.currentUser;
+    Map<String, String> userData = await _firebaseService.getUserData();
 
-    if (currentUser != null) {
-      print("User ID: ${currentUser.uid}"); // Debugging: Check if user is logged in
-
-      try {
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc("BSvS7nBHbr4WvLvQHXLu") // Replace with currentUser.uid if needed
-            .get();
-
-        if (userDoc.exists) {
-          Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
-          print("User Data: $data"); // Debugging: Print fetched data
-
-          setState(() {
-            _nameController.text = data['name'] ?? '';
-            _emailController.text = data['email'] ?? '';
-            _phoneController.text = data['phone'] ?? '';
-            _dobController.text = data['dob'] ?? '';
-          });
-        } else {
-          print("User document does not exist.");
-        }
-      } catch (e) {
-        print("Error fetching user data: $e");
-      }
-    } else {
-      print("No user is logged in.");
-    }
+    setState(() {
+      _nameController.text = userData['name'] ?? '';
+      //_emailController.text = userData['email'] ?? '';
+      _phoneController.text = userData['phoneNumber'] ?? '';
+      _dobController.text = userData['dob'] ?? '';
+    });
   }
 
   void _validateEmail(String email) {
@@ -111,7 +78,8 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
       contentHeightFactor: 0.85,
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width * 0.05), // For Space
+          SizedBox(
+              height: MediaQuery.of(context).size.width * 0.05), // For Space
 
           // Profile Picture Section
           GestureDetector(
@@ -124,7 +92,8 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                   backgroundColor: const Color(0xFFD9D9D9),
                   backgroundImage: _image != null
                       ? FileImage(_image!)
-                      : const AssetImage('assets/default_profile_picture.jpg') as ImageProvider,
+                      : const AssetImage('assets/default_profile_picture.jpg')
+                          as ImageProvider,
                 ),
                 if (_image == null)
                   const Positioned(
@@ -133,7 +102,8 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                     child: CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.black54,
-                      child: Icon(Icons.camera_alt, size: 24, color: Colors.white),
+                      child:
+                          Icon(Icons.camera_alt, size: 24, color: Colors.white),
                     ),
                   ),
                 if (_image != null)
@@ -161,13 +131,13 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                       ),
                     ),
                   ),
-
               ],
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.05),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.85, // 85% of screen width
+            width:
+                MediaQuery.of(context).size.width * 0.85, // 85% of screen width
             height: MediaQuery.of(context).size.height * 0.075,
             child: TextField(
               controller: _nameController,
@@ -181,37 +151,39 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
               ),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.width * 0.05),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.85, // 85% of screen width
-                child: Container(
-                  constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height * 0.075
-                  ), // Set minimum height
-                  child: TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      prefixIcon: const Icon(Icons.email),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      errorText: _isEmailValid
-                          ? null
-                          : "Invalid email. Must end with @gmail.com",
-                    ),
-                    onChanged: _validateEmail,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          //SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     SizedBox(
+          //       width: MediaQuery.of(context).size.width *
+          //           0.85, // 85% of screen width
+          //       child: Container(
+          //         constraints: BoxConstraints(
+          //             minHeight: MediaQuery.of(context).size.height *
+          //                 0.075), // Set minimum height
+          //         child: TextField(
+          //           controller: _emailController,
+          //           decoration: InputDecoration(
+          //             hintText: 'Email',
+          //             prefixIcon: const Icon(Icons.email),
+          //             border: OutlineInputBorder(
+          //               borderRadius: BorderRadius.circular(30),
+          //             ),
+          //             errorText: _isEmailValid
+          //                 ? null
+          //                 : "Invalid email. Must end with @gmail.com",
+          //           ),
+          //           onChanged: _validateEmail,
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.05),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.85, // 85% of screen width
+            width:
+                MediaQuery.of(context).size.width * 0.85, // 85% of screen width
             height: MediaQuery.of(context).size.height * 0.075,
             child: TextField(
               controller: _phoneController,
@@ -254,7 +226,8 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
           // ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.05),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.85, // 85% of screen width
+            width:
+                MediaQuery.of(context).size.width * 0.85, // 85% of screen width
             height: MediaQuery.of(context).size.height * 0.075,
             child: GestureDetector(
               onTap: () async {
@@ -267,7 +240,8 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                 if (pickedDate != null) {
                   // Format and set the selected date to the TextField
                   setState(() {
-                    _dobController.text = '${pickedDate.toLocal()}'.split(' ')[0]; // format to yyyy-mm-dd
+                    _dobController.text = '${pickedDate.toLocal()}'
+                        .split(' ')[0]; // format to yyyy-mm-dd
                   });
                 }
               },
@@ -299,15 +273,16 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                       color: Colors.black.withAlpha((0.3 * 255).toInt()),
                       // offset: const Offset(0, 5),
                       blurRadius: 10,
-
                     ),
                   ],
                 ),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(MediaQuery.of(context).size.width * 0.25, 50),
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width * 0.25, 50),
                       textStyle: GoogleFonts.inriaSans(
-                        fontSize:  MediaQuery.of(context).size.width > 350 ? 20 : 18,
+                        fontSize:
+                            MediaQuery.of(context).size.width > 350 ? 20 : 18,
                         fontWeight: FontWeight.bold,
                       ),
                       elevation: 5,
@@ -321,8 +296,7 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                     child: Text(
                       "Discard",
                       textAlign: TextAlign.left,
-                    )
-                ),
+                    )),
               ),
               SizedBox(width: 15), // For Space between buttons
 
@@ -336,22 +310,22 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.topRight,
-
                   ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withAlpha((0.3 * 255).toInt()),
                       offset: const Offset(0, 5),
                       blurRadius: 10,
-
                     ),
                   ],
                 ),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(MediaQuery.of(context).size.width * 0.25, 50),
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width * 0.25, 50),
                       textStyle: GoogleFonts.inriaSans(
-                        fontSize:  MediaQuery.of(context).size.width > 350 ? 20 : 18,
+                        fontSize:
+                            MediaQuery.of(context).size.width > 350 ? 20 : 18,
                         fontWeight: FontWeight.bold,
                       ),
                       elevation: 5,
@@ -361,14 +335,14 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                     onPressed: () {
                       _updateUserData();
                       ToastPopup.showToast("Saved Successfully");
-                      ToastPopup.showToast("Profile picture update not available in this version!");
+                      ToastPopup.showToast(
+                          "Profile picture update not available in this version!");
                       Navigator.pop(context);
                     },
                     child: Text(
                       "Save",
                       textAlign: TextAlign.left,
-                    )
-                ),
+                    )),
               ),
             ],
           ),

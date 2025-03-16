@@ -136,6 +136,27 @@ class FirebaseService {
     }
   }
 
+  // Update user data
+  Future<void> updateUserData({
+    required String name,
+    //required String email,
+    required String phone,
+    required String dob,
+  }) async {
+    try {
+      await _firestore.collection('users').doc(_auth.currentUser?.uid).set({
+        'name': name,
+        //'email': email,
+        'phone': phone,
+        'dob': dob,
+      }, SetOptions(merge: true));
+
+      print("User data updated successfully!");
+    } catch (e) {
+      print("Error updating user data: $e");
+    }
+  }
+
   Stream<String> getUserName() {
     return _firestore
         .collection('users')
@@ -341,31 +362,37 @@ class FirebaseService {
   Stream<List<Map<String, dynamic>>> getHistoryStream() {
     String? userId = _auth.currentUser?.uid;
     if (userId == null) {
-      return Stream.value([]); // Return an empty stream if userId is null
+      return Stream.value(
+          []); // Return an empty stream if user is not logged in
     }
 
-    try {
-      return _firestore
-          .collection('usersHistory')
-          .doc(userId)
-          .collection('history')
-          .orderBy('timestamp', descending: true)
-          .snapshots()
-          .map((snapshot) => snapshot.docs.map((doc) {
-                return {
+    return _firestore
+        .collection('usersHistory')
+        .doc(userId)
+        .collection('history')
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => {
                   'id': doc.id,
-                  'UserPreferredType': doc['UserPreferredType'],
-                  'status': doc['status'],
-                  'previewStatus': doc['previewStatus'],
-                  'detectedName': ['name'],
-                  'timestamp':
-                      doc['timestamp']?.toDate().toString() ?? "Unknown",
-                };
-              }).toList());
-    } catch (e) {
-      print("Error fetching history stream: $e");
-      return Stream.value([]); // Return an empty stream on error
-    }
+                  'UserPreferredType':
+                      doc.data().containsKey('UserPreferredType')
+                          ? doc['UserPreferredType']
+                          : "None",
+                  'status':
+                      doc.data().containsKey('status') ? doc['status'] : "None",
+                  'previewStatus': doc.data().containsKey('previewStatus')
+                      ? doc['previewStatus']
+                      : "None",
+                  'detectedName': doc.data().containsKey('detectedName')
+                      ? doc['detectedName']
+                      : "None",
+                  'timestamp': (doc.data().containsKey('timestamp') &&
+                          doc['timestamp'] is Timestamp)
+                      ? (doc['timestamp'] as Timestamp).toDate().toString()
+                      : "None",
+                })
+            .toList());
   }
 
   Future<void> clearHistory() async {
