@@ -22,6 +22,36 @@ class FirebaseService {
     }
   }
 
+  // Fetch user data
+  Future<Map<String, String>> fetchUserData() async {
+    try {
+      // Assuming the user is logged in, you fetch their document from Firestore
+      var user = _auth.currentUser;
+
+      if (user != null) {
+        // Get user data from Firestore using the user's UID
+        DocumentSnapshot userDataSnapshot =
+            await _firestore.collection('users').doc(user.uid).get();
+
+        if (userDataSnapshot.exists) {
+          // Return the user data as a map
+          var userData = userDataSnapshot.data() as Map<String, dynamic>;
+          return {
+            'email': userData['email'] ?? 'Not Available',
+            //'profileImage': userData['profileImage'] ?? 'default_image_url',
+          };
+        } else {
+          return {'email': 'No user data available'};
+        }
+      } else {
+        return {'email': 'User not logged in'};
+      }
+    } catch (e) {
+      print('Error retrieving user data: $e');
+      return {'email': 'Error'};
+    }
+  }
+
   Future<void> updateFirst(String newName, String dob, String gender) async {
     try {
       User? user = _auth.currentUser;

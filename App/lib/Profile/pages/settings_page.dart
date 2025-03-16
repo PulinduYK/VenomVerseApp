@@ -26,23 +26,18 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    fetchUserDataFromService();
   }
 
-  Future<void> fetchUserData() async {
-    try {
-      Map<String, String> userData = await _firebaseService.getUserData(); // Fetch all data
+  Future<void> fetchUserDataFromService() async {
+    Map<String, String> userData = await _firebaseService.fetchUserData(); // Call fetchUserData from FirebaseService
 
-      setState(() {
-        email = userData['email'] ?? 'Not Available';
-      });
-    } catch (e) {
-      setState(() {
-        email = 'Error';
-      });
-      print('Error retrieving user data: $e');
-    }
+    setState(() {
+      email = userData['email'] ?? 'Not Available';
+      //profileImage = userData['profileImage'] ?? ''; // You can set this to the profile image if available
+    });
   }
+
   void _showAddAccountDialog() {
     showDialog(
       context: context,
@@ -77,8 +72,10 @@ class _SettingsPageState extends State<SettingsPage> {
       title: "Settings",
       contentHeightFactor: 0.85,
       child: Column(
-        children:[
-          SizedBox(height: MediaQuery.of(context).size.width * 0.10),// For Space// For Space
+        children: [
+          SizedBox(
+              height: MediaQuery.of(context).size.width *
+                  0.10), // For Space// For Space
           CircleAvatar(
             radius: 62.5, // 125 / 2
             backgroundColor: Color(0xFFD9D9D9), // Placeholder color
@@ -91,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage> {
             widget.username,
             style: GoogleFonts.inriaSans(
               color: Colors.black,
-              fontSize:  MediaQuery.of(context).size.width > 350 ? 24 : 22,
+              fontSize: MediaQuery.of(context).size.width > 350 ? 24 : 22,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -99,21 +96,23 @@ class _SettingsPageState extends State<SettingsPage> {
             email,
             style: GoogleFonts.inriaSans(
               color: Colors.black,
-              fontSize:  MediaQuery.of(context).size.width > 350 ? 16 : 14,
+              fontSize: MediaQuery.of(context).size.width > 350 ? 16 : 14,
               fontWeight: FontWeight.normal,
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.width * 0.05), // For Space
+          SizedBox(
+              height: MediaQuery.of(context).size.width * 0.05), // For Space
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(MediaQuery.of(context).size.width * 0.3, MediaQuery.of(context).size.height * 0.06),
+                    minimumSize: Size(MediaQuery.of(context).size.width * 0.3,
+                        MediaQuery.of(context).size.height * 0.06),
                     textStyle: GoogleFonts.inriaSans(
-                        fontSize:  MediaQuery.of(context).size.width > 350 ? 24 : 18,
-                        fontWeight: FontWeight.bold
-                    ),
+                        fontSize:
+                            MediaQuery.of(context).size.width > 350 ? 24 : 18,
+                        fontWeight: FontWeight.bold),
                     elevation: 5,
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
@@ -121,17 +120,18 @@ class _SettingsPageState extends State<SettingsPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SettingsEditPage()),
+                      MaterialPageRoute(
+                          builder: (context) => SettingsEditPage()),
                     );
                   },
                   child: Text(
                     "Edit",
-                  )
-              ),
+                  )),
               SizedBox(width: 10), // For Space between buttons
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(40, 40), // Adjusted size for better visibility
+                  minimumSize:
+                      const Size(40, 40), // Adjusted size for better visibility
                   maximumSize: const Size(40, 40),
                   padding: EdgeInsets.zero, // Remove extra padding
                   shape: const CircleBorder(), // Makes it a perfect circle
@@ -151,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
           SizedBox(height: MediaQuery.of(context).size.width * 0.05),
           CustomButton(
             text: "Account details",
-            onPressed: (){
+            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AccountDetailsPage()),
@@ -161,7 +161,7 @@ class _SettingsPageState extends State<SettingsPage> {
           SizedBox(height: MediaQuery.of(context).size.width * 0.05),
           CustomButton(
             text: "Security and Help",
-            onPressed: (){
+            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HelpPage()),
@@ -171,7 +171,7 @@ class _SettingsPageState extends State<SettingsPage> {
           SizedBox(height: MediaQuery.of(context).size.width * 0.05),
           CustomButton(
             text: "About Us",
-            onPressed: (){
+            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AboutUsPage()),
@@ -190,39 +190,37 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.topRight,
-
               ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withAlpha((0.3 * 255).toInt()),
                   offset: const Offset(0, 5),
                   blurRadius: 10,
-
                 ),
               ],
-              border: Border.all( // Adding stroke
+              border: Border.all(
+                // Adding stroke
                 color: Colors.redAccent, // Change to desired stroke color
                 width: 2, // Adjust thickness
               ),
             ),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 50),
+                  minimumSize:
+                      Size(MediaQuery.of(context).size.width * 0.3, 50),
                   textStyle: GoogleFonts.inriaSans(
-                    fontSize:  MediaQuery.of(context).size.width > 350 ? 20 : 18,
+                    fontSize: MediaQuery.of(context).size.width > 350 ? 20 : 18,
                     fontWeight: FontWeight.bold,
                   ),
                   elevation: 5,
                   backgroundColor: Colors.transparent,
                   foregroundColor: Colors.white,
                 ),
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: Text(
                   "Log out",
                   textAlign: TextAlign.left,
-                )
-            ),
+                )),
           ),
         ],
       ),
