@@ -95,7 +95,7 @@ class camMethodClass {
 
         print(jsonResponse);
       } else {
-        await _firebaseService.insertHistory(modelNum, false, false);
+        await _firebaseService.insertHistory(modelNum, false, false, "none");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Failed to upload image")),
         );

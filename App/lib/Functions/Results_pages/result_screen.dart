@@ -47,7 +47,7 @@ class _ResultScreenState extends State<ResultScreen> {
         widget.uploadedImageData['model_id']?.toDouble()?.toInt() ?? 0;
     String resultName = _outcomeClass.venomClass(modelNo, classNo);
 
-    await _firebaseService.insertHistory(modelNo, true, true);
+    await _firebaseService.insertHistory(modelNo, true, true, resultName);
 
     Map<String, dynamic> snakeDetails =
         await _firebaseService.getVenomDetails(modelNo, resultName);
@@ -71,7 +71,8 @@ class _ResultScreenState extends State<ResultScreen> {
         widget.uploadedImageData['model_id']?.toDouble()?.toInt() ?? 4;
     confidence = confidence * 100;
     if (confidence < 90) {
-      await _firebaseService.insertHistory(modelNoForHistory, true, false);
+      await _firebaseService.insertHistory(
+          modelNoForHistory, true, false, "none");
       QuickAlert.show(
         context: context,
         type: QuickAlertType.custom,

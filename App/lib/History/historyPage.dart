@@ -153,6 +153,10 @@ class _HistoryPageState extends State<HistoryPage> {
                                         style: TextStyle(color: Colors.black87),
                                       ),
                                       Text(
+                                        "Name: ${item['detectedName']}",
+                                        style: TextStyle(color: Colors.black87),
+                                      ),
+                                      Text(
                                         "Time: ${item['timestamp']}",
                                         style: TextStyle(color: Colors.grey),
                                       ),

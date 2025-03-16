@@ -270,8 +270,8 @@ class FirebaseService {
     }
   }
 
-  Future<int> insertHistory(
-      int UserSelectedType, bool success, bool previewStatus) async {
+  Future<int> insertHistory(int UserSelectedType, bool success,
+      bool previewStatus, String name) async {
     String? userId = _auth.currentUser?.uid;
     if (userId == null) return 0;
     String Utype;
@@ -298,6 +298,7 @@ class FirebaseService {
         'UserPreferredType': Utype,
         'status': success ? 'Success' : 'Failure',
         'previewStatus': previewStatus ? 'Shown' : 'Restricted',
+        'detectedName': name,
         'timestamp': FieldValue.serverTimestamp(),
       });
       return 1; // Success
@@ -326,6 +327,7 @@ class FirebaseService {
                   'UserPreferredType': doc['UserPreferredType'],
                   'status': doc['status'],
                   'previewStatus': doc['previewStatus'],
+                  'detectedName': ['name'],
                   'timestamp':
                       doc['timestamp']?.toDate().toString() ?? "Unknown",
                 };

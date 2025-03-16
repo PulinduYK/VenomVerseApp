@@ -101,7 +101,8 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
           ),
         );
       } else {
-        await _firebaseService.insertHistory(widget.modelNum, false, false);
+        await _firebaseService.insertHistory(
+            widget.modelNum, false, false, "none");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to upload image.')),
         );
