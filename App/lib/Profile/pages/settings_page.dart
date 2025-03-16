@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venomverse/Login_and_signup/Login_and_signup_logic/services/firebase.dart';
+import 'package:venomverse/Profile/pages/about_us_page.dart';
 import 'package:venomverse/Profile/pages/account_details_page.dart';
 import 'package:venomverse/Profile/pages/help_page.dart';
 import 'package:venomverse/Profile/pages/settings_edit_page.dart';
