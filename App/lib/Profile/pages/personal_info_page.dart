@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:venomverse/Profile/widgets/profile_page_template.dart';
-
+import 'package:venomverse/widgets/profile_page_template.dart';
 
 // PersonalInfoPage displays the user's personal details.
 class PersonalInfoPage extends StatefulWidget {
@@ -12,10 +13,39 @@ class PersonalInfoPage extends StatefulWidget {
 }
 
 class _PersonalInfoPageState extends State<PersonalInfoPage> {
-  String dob = " ";
-  String gender = " ";
-  String phoneNumber = " ";
-  String email = " ";
+  final FirebaseService _firebaseService = FirebaseService();
+  String? userId;
+  String dob = '';
+  String gender = '';
+  String phoneNumber = '';
+  String email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserPersonalData();
+  }
+
+  Future<void> fetchUserPersonalData() async {
+    try {
+      Map<String, String> userData = await _firebaseService.getUserData(); // Fetch all data
+
+      setState(() {
+        dob = userData['dob'] ?? 'Not Available';
+        gender = userData['gender'] ?? 'Not Available';
+        phoneNumber = userData['phoneNumber'] ?? 'Not Available';
+        email = userData['email'] ?? 'Not Available';
+      });
+    } catch (e) {
+      setState(() {
+        dob = 'Error';
+        gender = 'Error';
+        phoneNumber = 'Error';
+        email = 'Error';
+      });
+      print('Error retrieving user data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
