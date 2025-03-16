@@ -30,21 +30,25 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
 
   Future<void> fetchUserPersonalData() async {
     try {
-      Map<String, String> userData =
-          await _firebaseService.getUserData(); // Fetch all data
+      // Using the method from FirebaseService to fetch user data
+      Map<String, String> userData = await _firebaseService.getUserData();
 
       setState(() {
         dob = userData['dob'] ?? 'Not Available';
+        //name = userData['name'] ?? 'Not Available';
         gender = userData['gender'] ?? 'Not Available';
         phoneNumber = userData['phoneNumber'] ?? 'Not Available';
         email = userData['email'] ?? 'Not Available';
+        //profileImage = userData['profileImage'] ?? ''; // Default empty string if no profile image
       });
     } catch (e) {
       setState(() {
         dob = 'Error';
+        //name = 'Error';
         gender = 'Error';
         phoneNumber = 'Error';
         email = 'Error';
+        //profileImage = ''; // Default to empty string for error case
       });
       print('Error retrieving user data: $e');
     }
@@ -71,12 +75,18 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   ),
                 ),
                 SizedBox(width: 5),
-                Text(
-                  dob,
-                  style: GoogleFonts.inriaSans(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width > 350 ? 18 : 16,
-                    fontWeight: FontWeight.normal,
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      dob,
+                      style: GoogleFonts.inriaSans(
+                        color: Colors.black,
+                        fontSize:
+                            MediaQuery.of(context).size.width > 350 ? 18 : 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -95,12 +105,18 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   ),
                 ),
                 SizedBox(width: 5),
-                Text(
-                  gender,
-                  style: GoogleFonts.inriaSans(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width > 350 ? 18 : 16,
-                    fontWeight: FontWeight.normal,
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      gender,
+                      style: GoogleFonts.inriaSans(
+                        color: Colors.black,
+                        fontSize:
+                            MediaQuery.of(context).size.width > 350 ? 18 : 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -119,12 +135,18 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   ),
                 ),
                 SizedBox(width: 5),
-                Text(
-                  phoneNumber,
-                  style: GoogleFonts.inriaSans(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width > 350 ? 18 : 16,
-                    fontWeight: FontWeight.normal,
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      phoneNumber,
+                      style: GoogleFonts.inriaSans(
+                        color: Colors.black,
+                        fontSize:
+                            MediaQuery.of(context).size.width > 350 ? 18 : 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -143,12 +165,18 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                   ),
                 ),
                 SizedBox(width: 5),
-                Text(
-                  email,
-                  style: GoogleFonts.inriaSans(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width > 350 ? 18 : 16,
-                    fontWeight: FontWeight.normal,
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      email,
+                      style: GoogleFonts.inriaSans(
+                        color: Colors.black,
+                        fontSize:
+                            MediaQuery.of(context).size.width > 350 ? 18 : 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ),
               ],
