@@ -1,15 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venomverse/Login_and_signup/Login_and_signup_logic/services/firebase.dart';
-import 'package:venomverse/pages/help_page.dart';
-import 'package:venomverse/pages/history_page.dart';
-import 'package:venomverse/pages/account_details_page.dart';
-import 'package:venomverse/pages/settings_edit_page.dart';
-import 'package:venomverse/widgets/profile_page_template.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-
+import 'package:venomverse/Profile/pages/account_details_page.dart';
+import 'package:venomverse/Profile/pages/help_page.dart';
+import 'package:venomverse/Profile/pages/settings_edit_page.dart';
+import 'package:venomverse/Profile/widgets/profile_page_template.dart';
 
 // SettingsPage displays the settings details.
 class SettingsPage extends StatefulWidget {
@@ -46,6 +41,33 @@ class _SettingsPageState extends State<SettingsPage> {
       });
       print('Error retrieving user data: $e');
     }
+  }
+  void _showAddAccountDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Create New Account"),
+          content: Text("Would you like to create a new account?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignupPage()),
+                // );
+              },
+              child: Text("Proceed"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -86,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(MediaQuery.of(context).size.width * 0.25, 40),
+                    minimumSize: Size(MediaQuery.of(context).size.width * 0.3, MediaQuery.of(context).size.height * 0.06),
                     textStyle: GoogleFonts.inriaSans(
                         fontSize:  MediaQuery.of(context).size.width > 350 ? 24 : 18,
                         fontWeight: FontWeight.bold
@@ -116,7 +138,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   backgroundColor: Colors.white,
                   // foregroundColor: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: _showAddAccountDialog,
                 child: const Icon(
                   Icons.add,
                   size: 26,
@@ -147,11 +169,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.05),
           CustomButton(
-            text: "History",
+            text: "About Us",
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HistoryPage()),
+                MaterialPageRoute(builder: (context) => AboutUsPage()),
               );
             },
           ),
