@@ -49,9 +49,11 @@ class HospitalListScreen extends StatefulWidget {
 class _HospitalListScreenState extends State<HospitalListScreen> {
   final FirebaseService _firebaseService = FirebaseService();
   List<Hospital> hospitals = [];
+  List<Hospital> filteredHospitals = []; //  Added for search functionality
   bool isLoading = true;
   String? error;
   Position? userLocation;
+  TextEditingController searchController = TextEditingController(); //  Search controller
 
   @override
   void initState() {
@@ -91,6 +93,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
 
       setState(() {
         hospitals = fetchedHospitals;
+        filteredHospitals = hospitals; //  Initially set filtered list
         isLoading = false;
       });
     } catch (e) {
@@ -100,6 +103,18 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
         isLoading = false;
       });
     }
+  }
+  //  Search Functionality
+  void _filterHospitals(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredHospitals = hospitals;
+      } else {
+        filteredHospitals = hospitals
+            .where((hospital) => hospital.hname.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    });
   }
 
   @override
@@ -171,16 +186,38 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: ListView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  itemCount: hospitals.length,
-                  itemBuilder: (context, index) {
-                    final hospital = hospitals[index];
-                    return _buildHospitalCard(context, hospital);
-                  },
-                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                    children: [
+                      // 🔹 Search Bar
+                      TextField(
+                        controller: searchController,
+                        onChanged: _filterHospitals,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search, color: Colors.grey),
+                          hintText: "Search hospitals...",
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(40),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10), // Spacing
+
+                      // Hospital List
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: filteredHospitals.length,
+                          itemBuilder: (context, index) {
+                            final hospital = filteredHospitals[index];
+                            return _buildHospitalCard(context, hospital);
+                          },
+                        ),
+                      ),
+                    ]
+                )
               ),
             ),
           ),
