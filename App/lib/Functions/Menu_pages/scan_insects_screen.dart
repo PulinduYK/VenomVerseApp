@@ -65,7 +65,7 @@ class ScanInsectsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: const [
                         BoxShadow(
-                          color: Colors.black12,
+                          color: Color(0xffB7AEF3),
                           blurRadius: 8,
                           offset: Offset(0, 4),
                         ),
@@ -79,7 +79,7 @@ class ScanInsectsScreen extends StatelessWidget {
                           "Choose Your Scan Method",
                           "Take a live photo or upload existing or via text.",
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         _buildInstructionStep(
                           2,
                           "Identify the Insect",
@@ -91,10 +91,16 @@ class ScanInsectsScreen extends StatelessWidget {
                           "View the results",
                           "App will display the insect's details, possible species, and recommendations.",
                         ),
+                        const SizedBox(height: 20),
+                        _buildInstructionStep(
+                          4,
+                          "Click panic button for emergencies",
+                          "App will display the nearest hospitals.",
+                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
 
                   // Buttons Section
                   Padding(
@@ -232,7 +238,7 @@ class ScanInsectsScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 18,
-          backgroundColor: Colors.purple[400],
+          backgroundColor: Color(0xff8A7FD6),
           child: Text(
             number.toString(),
             style: const TextStyle(
@@ -249,7 +255,7 @@ class ScanInsectsScreen extends StatelessWidget {
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -259,7 +265,7 @@ class ScanInsectsScreen extends StatelessWidget {
                 subtitle,
                 style: const TextStyle(
                   fontSize: 16,
-                  color: Colors.grey,
+                  color: Colors.black45,
                 ),
               ),
             ],
