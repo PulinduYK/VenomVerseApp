@@ -118,8 +118,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                   Color(0xff6D5FD5),
                   Color(0xff8A7FD6),
                 ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+
               ),
             ),
           ),
@@ -210,6 +209,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Hospital Image
             ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
@@ -228,32 +228,42 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Hospital Name (Expands while distance remains fixed)
                       Expanded(
                         child: Text(
                           hospital.hname,
                           style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis, // Prevents text overflow
+                          maxLines: 1, // Ensures it stays in a single line
                         ),
                       ),
+                      const SizedBox(width: 8), // Spacing
+                      // Fixed Position Distance Badge
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
-                          color: Colors.blue.shade100,
+                          color: Color(0xffB7AEF3),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          "${hospital.distance?.toStringAsFixed(1)} km away",
-                          style: TextStyle(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.bold),
+                          "${hospital.distance?.toStringAsFixed(1)} km",
+                          style: const TextStyle(
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 5),
+                  // Hospital Address
                   Text(
                     hospital.address,
                     style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
@@ -266,6 +276,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
       ),
     );
   }
+
 
   Widget _buildHospitalDetails(BuildContext context, Hospital hospital) {
     return Container(
@@ -308,19 +319,19 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                 padding: const EdgeInsets.all(16),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.blue.shade100,
+                  color: Color(0xffB7AEF3),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.phone, color: Colors.blueGrey),
+                    const Icon(Icons.phone, color: Colors.black45),
                     const SizedBox(width: 8),
                     Text(
                       hospital.phone,
                       style: const TextStyle(
                         fontSize: 18,
-                        color: Colors.blueGrey,
+                        color: Colors.black45,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
