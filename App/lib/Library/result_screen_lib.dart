@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
+import '../Functions/Hospital_suggestion/hospital_list.dart';
 import '../Functions/Results_pages/back_button.dart';
 import '../Functions/Results_pages/description_section.dart';
 import '../Functions/Results_pages/immediate_actions.dart';
@@ -135,31 +136,36 @@ class _ResultScreenState extends State<ResultScreenLib> {
                     SizedBox(height: 10),
 
                     // Snake Name & Lethality Badge
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 190, // Set a fixed width
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(20),
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 190, // Set a fixed width
+                            padding:
+                                EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              "Name:- ${name}",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                              softWrap: true, // Ensures text wraps
+                              overflow: TextOverflow
+                                  .visible, // Ensures text doesn't get cut off
+                            ),
                           ),
-                          child: Text(
-                            "Name:- ${name}",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                            softWrap: true, // Ensures text wraps
-                            overflow: TextOverflow
-                                .visible, // Ensures text doesn't get cut off
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        LethalityBadge(
-                          confidence: lethalityLevel,
-                        ),
-                      ],
+                          LethalityBadge(
+                            confidence: lethalityLevel,
+                          ),
+                        ],
+                      ),
                     ),
 
                     SizedBox(height: 15),
@@ -187,7 +193,15 @@ class _ResultScreenState extends State<ResultScreenLib> {
             bottom: 20,
             child: FloatingActionButton(
               backgroundColor: Colors.red,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        HospitalListScreen(), // Navigate to the hospital list
+                  ),
+                );
+              },
               shape: const CircleBorder(),
               child: Icon(Icons.wb_twighlight, color: Colors.white),
             ),

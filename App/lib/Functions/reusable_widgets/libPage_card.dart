@@ -8,11 +8,13 @@ class libPageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      height: 120,
+      height: screenWidth * 0.3,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(60),
+        borderRadius: BorderRadius.circular(screenWidth * 0.15),
         boxShadow: [
           BoxShadow(
             color: Colors.black38,
@@ -22,28 +24,28 @@ class libPageCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(screenWidth * 0.05),
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(7.0),
-              width: 115,
+              padding: EdgeInsets.all(screenWidth * 0.02),
+              width: screenWidth * 0.3,
               height: double.infinity,
               decoration: BoxDecoration(
                 color: Color(0xFF756EF3),
-                borderRadius: BorderRadius.circular(60),
+                borderRadius: BorderRadius.circular(screenWidth * 0.15),
               ),
               child: Image.asset(
                 imgPath,
               ),
             ),
             SizedBox(
-              width: 25,
+                width: screenWidth * 0.05,
             ),
             Text(
               option,
               style: TextStyle(
-                fontSize: 20,
+                fontSize: screenWidth * 0.05,
                 fontWeight: FontWeight.bold,
               ),
             )

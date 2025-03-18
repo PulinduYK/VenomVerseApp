@@ -156,31 +156,36 @@ class _ResultScreenState extends State<ResultScreen> {
                     SizedBox(height: 10),
 
                     // Snake Name & Lethality Badge
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 190, // Set a fixed width
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(20),
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 190, // Set a fixed width
+                            padding:
+                                EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              "Name:- ${name}",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                              softWrap: true, // Ensures text wraps
+                              overflow: TextOverflow
+                                  .visible, // Ensures text doesn't get cut off
+                            ),
                           ),
-                          child: Text(
-                            "Name:- ${name}",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                            softWrap: true, // Ensures text wraps
-                            overflow: TextOverflow
-                                .visible, // Ensures text doesn't get cut off
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        LethalityBadge(
-                          confidence: lethalityLevel,
-                        ),
-                      ],
+                          LethalityBadge(
+                            confidence: lethalityLevel,
+                          ),
+                        ],
+                      ),
                     ),
 
                     SizedBox(height: 15),

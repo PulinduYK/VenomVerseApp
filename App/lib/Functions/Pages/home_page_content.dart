@@ -21,12 +21,15 @@ class _HomePageContentState extends State<HomePageContent> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 29.0),
           child: SizedBox(
-            height: 150,
+            height: screenHeight * 0.18,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -42,16 +45,16 @@ class _HomePageContentState extends State<HomePageContent> {
                       return Text(
                         "Hi ${snapshot.data},", // Displaying the user's name
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: screenWidth * 0.06,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       );
                     } else {
-                      return const Text(
+                      return Text(
                         "Hi User Name,",
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: screenWidth * 0.06,
                           color: Colors.white,
                         ),
                       );
@@ -71,7 +74,7 @@ class _HomePageContentState extends State<HomePageContent> {
                   },
                   child: Icon(
                     Icons.settings,
-                    size: 40,
+                    size: screenWidth * 0.1,
                     color: Colors.white,
                   ),
                 ),
@@ -84,90 +87,121 @@ class _HomePageContentState extends State<HomePageContent> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(
-                top: Radius.circular(40.00),
+                top: Radius.circular(screenWidth * 0.1),
               ),
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 29.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Scan Options",
-                        style: TextStyle(
-                          fontSize: 24,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding:
+                    EdgeInsets.symmetric(vertical: screenHeight * 0.04, horizontal: screenWidth * 0.08),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Scan Options",
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.06,
+                          ),
                         ),
+                        Icon(Icons.notification_add),
+                      ],
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.03,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScanSnakesScreen()),
+                        );
+                      },
+                      child: HomepageCard(
+                        imgPath: "assets/snake.png",
+                        option: "SNAKE SCAN",
                       ),
-                      Icon(Icons.notification_add),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ScanSnakesScreen()),
-                      );
-                    },
-                    child: HomepageCard(
-                      imgPath: "assets/snake.png",
-                      option: "SNAKE SCAN",
                     ),
-                  ),
-                  SizedBox(
-                    height: 28,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ScanInsectsScreen()),
-                      );
-                    },
-                    child: HomepageCard(
-                      imgPath: "assets/insect.png",
-                      option: "INSECTS SCAN",
+                    SizedBox(
+                      height: screenHeight * 0.03,
                     ),
-                  ),
-                  SizedBox(
-                    height: 28,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ScanSpidersScreen()),
-                      );
-                    },
-                    child: HomepageCard(
-                      imgPath: "assets/spider.png",
-                      option: "SPIDER SCAN",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScanInsectsScreen()),
+                        );
+                      },
+                      child: HomepageCard(
+                        imgPath: "assets/insect.png",
+                        option: "INSECTS SCAN",
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 37,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => libraryHome()),
-                          );
-                        },
-                        child: Container(
-                          width: 265,
+                    SizedBox(
+                      height: screenHeight * 0.03,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScanSpidersScreen()),
+                        );
+                      },
+                      child: HomepageCard(
+                        imgPath: "assets/spider.png",
+                        option: "SPIDER SCAN",
+                      ),
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.05,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => libraryHome()),
+                            );
+                          },
+                          child: Container(
+                            width: screenWidth * 0.6,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black38,
+                                  blurRadius: 4,
+                                  offset: Offset(4, 4),
+                                ),
+                              ],
+                              gradient: LinearGradient(
+                                colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
+                              ),
+                              borderRadius: BorderRadius.circular(10.00),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(screenWidth * 0.03),
+                              child: Text(
+                                "journey to venom world",
+                                style: TextStyle(
+                                  fontSize: screenWidth * 0.045,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth * 0.15,
+                          height: screenWidth * 0.15,
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
@@ -176,48 +210,19 @@ class _HomePageContentState extends State<HomePageContent> {
                                 offset: Offset(4, 4),
                               ),
                             ],
-                            gradient: LinearGradient(
-                              colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
-                            ),
-                            borderRadius: BorderRadius.circular(10.00),
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(screenWidth * 0.15 / 2),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "journey to venom world",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                          child: Icon(
+                            Icons.wb_twighlight,
+                            color: Colors.white,
+                            size: screenWidth * 0.08,
                           ),
-                        ),
-                      ),
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 4,
-                              offset: Offset(4, 4),
-                            ),
-                          ],
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(30.00),
-                        ),
-                        child: Icon(
-                          Icons.wb_twighlight,
-                          color: Colors.white,
-                          size: 35,
-                        ),
-                      )
-                    ],
-                  )
-                ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

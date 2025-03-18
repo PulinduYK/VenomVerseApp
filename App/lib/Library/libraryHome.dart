@@ -14,6 +14,9 @@ class libraryHome extends StatefulWidget {
 class _libraryHomeState extends State<libraryHome> {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
         //height: double.infinity,
@@ -32,17 +35,17 @@ class _libraryHomeState extends State<libraryHome> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 29.0),
                 child: SizedBox(
-                  height: 150,
+                  height: screenHeight * 0.15,
                   child: Row(
                     children: [
                       CustomBackButton(),
                       SizedBox(
-                        width: 20,
+                          width: screenWidth * 0.05,
                       ),
                       Text(
                         "Library",
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: screenWidth * 0.06,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -60,8 +63,9 @@ class _libraryHomeState extends State<libraryHome> {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 30.0, horizontal: 29.0),
+                    padding: EdgeInsets.symmetric(
+                      vertical: screenHeight * 0.04,
+                      horizontal: screenWidth * 0.08,),
                     child: Column(
                       children: [
                         Row(
@@ -70,14 +74,14 @@ class _libraryHomeState extends State<libraryHome> {
                             Text(
                               "Category",
                               style: TextStyle(
-                                fontSize: 24,
+                                fontSize: screenWidth * 0.06,
                               ),
                             ),
                             Icon(Icons.help),
                           ],
                         ),
                         SizedBox(
-                          height: 25,
+                            height: screenHeight * 0.03,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -96,7 +100,7 @@ class _libraryHomeState extends State<libraryHome> {
                           ),
                         ),
                         SizedBox(
-                          height: 28,
+                            height: screenHeight * 0.035,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -115,7 +119,7 @@ class _libraryHomeState extends State<libraryHome> {
                           ),
                         ),
                         SizedBox(
-                          height: 28,
+                            height: screenHeight * 0.035,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -134,13 +138,13 @@ class _libraryHomeState extends State<libraryHome> {
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                            height: screenHeight * 0.05,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: 265,
+                              width: screenWidth * 0.6,
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
@@ -162,7 +166,7 @@ class _libraryHomeState extends State<libraryHome> {
                                 child: Text(
                                   "CHAT BOT",
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: screenWidth * 0.05,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
@@ -171,8 +175,8 @@ class _libraryHomeState extends State<libraryHome> {
                               ),
                             ),
                             Container(
-                              width: 60,
-                              height: 60,
+                              width: screenWidth * 0.15,
+                              height: screenWidth * 0.15,
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(

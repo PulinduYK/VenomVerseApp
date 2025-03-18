@@ -18,8 +18,9 @@ class LethalityBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      constraints: BoxConstraints(maxWidth: 190), // Set max width
+      constraints: BoxConstraints(maxWidth: screenWidth * 0.9), // Set max width
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: _getLethalityColor(),
@@ -35,7 +36,7 @@ class LethalityBadge extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
+                fontSize: screenWidth * 0.04,
               ),
               softWrap: true,
             ),
@@ -53,7 +54,7 @@ class LethalityBadge extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
+                fontSize: screenWidth * 0.04,
               ),
               softWrap: true,
             ),

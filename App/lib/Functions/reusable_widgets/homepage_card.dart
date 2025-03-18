@@ -8,8 +8,12 @@ class HomepageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen width and height
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      height: 120,
+      height: screenHeight * 0.15,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -22,12 +26,12 @@ class HomepageCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(screenWidth * 0.05),
         child: Row(
           children: [
             Container(
               padding: EdgeInsets.all(7.0),
-              width: 115,
+              width: screenWidth * 0.25,
               height: double.infinity,
               decoration: BoxDecoration(
                 color: Color(0xFF756EF3),
@@ -38,12 +42,12 @@ class HomepageCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 25,
+              width: screenWidth * 0.06,
             ),
             Text(
               option,
               style: TextStyle(
-                fontSize: 20,
+                fontSize: screenWidth * 0.05,
                 fontWeight: FontWeight.bold,
               ),
             )

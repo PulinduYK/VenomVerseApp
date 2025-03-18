@@ -55,90 +55,92 @@ class ScanInsectsScreen extends StatelessWidget {
               ),
               height: double.infinity,
               width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0xffB7AEF3),
-                          blurRadius: 8,
-                          offset: Offset(0, 4),
-                        ),
-                      ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xffB7AEF3),
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildInstructionStep(
+                            1,
+                            "Choose Your Scan Method",
+                            "Take a live photo or upload existing or via text.",
+                          ),
+                          const SizedBox(height: 10),
+                          _buildInstructionStep(
+                            2,
+                            "Identify the Insect",
+                            "Press the 'Scan' button to begin processing.",
+                          ),
+                          const SizedBox(height: 20),
+                          _buildInstructionStep(
+                            3,
+                            "View the results",
+                            "App will display the insect's details, possible species, and recommendations.",
+                          ),
+                          const SizedBox(height: 20),
+                          _buildInstructionStep(
+                            4,
+                            "Click panic button for emergencies",
+                            "App will display the nearest hospitals.",
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildInstructionStep(
-                          1,
-                          "Choose Your Scan Method",
-                          "Take a live photo or upload existing or via text.",
-                        ),
-                        const SizedBox(height: 10),
-                        _buildInstructionStep(
-                          2,
-                          "Identify the Insect",
-                          "Press the 'Scan' button to begin processing.",
-                        ),
-                        const SizedBox(height: 20),
-                        _buildInstructionStep(
-                          3,
-                          "View the results",
-                          "App will display the insect's details, possible species, and recommendations.",
-                        ),
-                        const SizedBox(height: 20),
-                        _buildInstructionStep(
-                          4,
-                          "Click panic button for emergencies",
-                          "App will display the nearest hospitals.",
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-                  // Buttons Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 15),
-                    child: Column(
-                      children: [
-                        _buildGradientButton("Scan Now", () async {
-                          File? pickedFile = await camM.pickImage(context);
-                          if (pickedFile != null) {
-                            // Navigate to ImageCapture with the selected image
+                    // Buttons Section
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 15),
+                      child: Column(
+                        children: [
+                          _buildGradientButton("Scan Now", () async {
+                            File? pickedFile = await camM.pickImage(context);
+                            if (pickedFile != null) {
+                              // Navigate to ImageCapture with the selected image
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CamPage(
+                                    modelNum: 3,
+                                    imageFile: pickedFile,
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
+                          const SizedBox(height: 20),
+                          _buildGradientButton("Upload Image", () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CamPage(
-                                  modelNum: 3,
-                                  imageFile: pickedFile,
-                                ),
+                                builder: (context) =>
+                                    UploadImagesPage(modelNum: 3),
                               ),
                             );
-                          }
-                        }),
-                        const SizedBox(height: 20),
-                        _buildGradientButton("Upload Image", () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  UploadImagesPage(modelNum: 3),
-                            ),
-                          );
-                        }),
-                        const SizedBox(height: 20),
-                        _buildGradientButton("Via Text", () {}),
-                      ],
+                          }),
+                          const SizedBox(height: 20),
+                          _buildGradientButton("Via Text", () {}),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
