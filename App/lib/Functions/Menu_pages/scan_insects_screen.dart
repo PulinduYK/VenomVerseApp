@@ -30,7 +30,7 @@ class ScanInsectsScreen extends StatelessWidget {
               ),
             ),
             child: const Padding(
-              padding: EdgeInsets.only(top: 87.0, left: 70),
+              padding: EdgeInsets.only(top: 60.0, left: 70),
               child: Text(
                 "Scan Insects",
                 style: TextStyle(
@@ -60,10 +60,10 @@ class ScanInsectsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(40),
                         boxShadow: const [
                           BoxShadow(
                             color: Color(0xffB7AEF3),
@@ -101,7 +101,7 @@ class ScanInsectsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 30),
 
                     // Buttons Section
                     Padding(
@@ -146,7 +146,7 @@ class ScanInsectsScreen extends StatelessWidget {
           ),
 
           // Back Button
-          Positioned(top: 80, left: 20, child: CustomBackButton()),
+          Positioned(top: 54, left: 20, child: CustomBackButton()),
 
           // Panic Button at Bottom Right
           Positioned(
@@ -167,13 +167,13 @@ class ScanInsectsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF1C16B9),
-            Color(0xFFDC9FDA),
+            Color(0xff8A7FD6),
+            Color(0xff6D5FD5),
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(40),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
