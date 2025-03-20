@@ -55,6 +55,11 @@ dependencies:
   google_maps_flutter: ^2.5.3
   flutter_social_button: ^1.1.6+1
   fluttertoast: ^8.2.12
+  pdf: ^3.11.3
+  printing: ^5.14.2
+  path_provider: ^2.1.5
+  flutter_email_sender: ^7.0.0
+  flutter_local_notifications: ^19.0.0
 
 
 

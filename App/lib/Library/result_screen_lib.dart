@@ -6,7 +6,6 @@ import '../Functions/Results_pages/back_button.dart';
 import '../Functions/Results_pages/description_section.dart';
 import '../Functions/Results_pages/immediate_actions.dart';
 import '../Functions/Results_pages/lethality_badge.dart';
-import '../Functions/Results_pages/retake_button.dart';
 
 class ResultScreenLib extends StatefulWidget {
   final String name;
@@ -142,8 +141,8 @@ class _ResultScreenState extends State<ResultScreenLib> {
                         children: [
                           Container(
                             width: 190, // Set a fixed width
-                            padding:
-                                EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.black),
@@ -180,12 +179,6 @@ class _ResultScreenState extends State<ResultScreenLib> {
                 ),
               ),
             ),
-          ),
-
-          Positioned(
-            left: 20,
-            bottom: 20, // Pin to the bottom
-            child: RetakeButton(),
           ),
 
           Positioned(
