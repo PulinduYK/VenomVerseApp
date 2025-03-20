@@ -80,8 +80,9 @@ class PdfReport {
       // Create the email message (Ensure proper construction)
       final message = Message()
         ..from = Address(smtpUser, 'Venom Verse App') // Sender's email
-        ..recipients
-            .add('pulindu.20230256@iit.ac.lk') // Replace with recipient's email
+        ..recipients.add(
+          email,
+        ) // Replace with recipient's email
         ..subject = 'Detection Report - Venom Verse' // Subject of email
         ..text =
             'Attached is the detection report for your recent scan.' // Body text
