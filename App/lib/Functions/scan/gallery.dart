@@ -95,9 +95,8 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ResultScreen(
-              uploadedImageData: uploadedImageData,
-            ),
+            builder: (context) =>
+                ResultScreen(uploadedImageData: uploadedImageData),
           ),
         );
       } else {

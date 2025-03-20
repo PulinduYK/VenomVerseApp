@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:venomverse/Functions/Results_pages/reportSection.dart';
@@ -27,11 +29,17 @@ class _ResultScreenState extends State<ResultScreen> {
   final FirebaseService _firebaseService = FirebaseService();
   final outcomeClass _outcomeClass = outcomeClass();
 
+  String userId = "not available";
+  String userName = "not available";
+  String dob = "not available";
+  String allergies = "not available";
+  String category = "not specified";
   String name = "Loading.....";
   String imagePath = "assets/snake.png";
   String lethalityLevel = "Loading.";
   String description = "Loading.....";
   List<String> remedies = ["Loading....."];
+  double finalConfidence = 0;
 
   @override
   void initState() {
@@ -42,11 +50,14 @@ class _ResultScreenState extends State<ResultScreen> {
   // Fetch data from Firebase
   void _fetchSnakeData() async {
     await Future.delayed(Duration(seconds: 1));
+    String categoryName;
     int classNo =
         widget.uploadedImageData['prediction']?.toDouble()?.toInt() ?? 0;
     int modelNo =
         widget.uploadedImageData['model_id']?.toDouble()?.toInt() ?? 0;
     String resultName = _outcomeClass.venomClass(modelNo, classNo);
+    double imageDataConfidence =
+        widget.uploadedImageData['confidence']?.toDouble() ?? 0;
 
     await _firebaseService.insertHistory(modelNo, true, true, resultName);
 
@@ -54,8 +65,23 @@ class _ResultScreenState extends State<ResultScreen> {
         await _firebaseService.getVenomDetails(modelNo, resultName);
     List<String> fetchedRemedies =
         await _firebaseService.getRemedies(modelNo, resultName);
+    Map<String, dynamic> userData = await _firebaseService.getUserData();
+    if (modelNo == 1) {
+      categoryName = "Snake";
+    } else if (modelNo == 2) {
+      categoryName = "Spider";
+    } else if (modelNo == 3) {
+      categoryName = "Insects";
+    } else {
+      categoryName = "not-specified";
+    }
 
     setState(() {
+      userId = userData['uid'] ?? 'Unknown';
+      userName = userData['name'] ?? 'Unknown';
+      dob = userData['dob'] ?? 'Unknown';
+      allergies = userData['allergies'] ?? 'Unknown';
+      category = categoryName;
       name = snakeDetails['name'] ?? 'Unknown';
       imagePath = snakeDetails['imagePath']?.isNotEmpty == true
           ? snakeDetails['imagePath']
@@ -63,7 +89,44 @@ class _ResultScreenState extends State<ResultScreen> {
       lethalityLevel = snakeDetails['lethalityLevel'] ?? 'Unknown';
       description = snakeDetails['description'] ?? 'Unknown';
       remedies = fetchedRemedies;
+      finalConfidence = imageDataConfidence;
     });
+  }
+
+  Future<Map<String, String>> getRealTimeData() async {
+    // Request location permission
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return {"dateTime": "Location services are disabled", "location": "N/A"};
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return {"dateTime": "Permission denied forever", "location": "N/A"};
+      }
+
+      if (permission == LocationPermission.denied) {
+        return {"dateTime": "Permission denied", "location": "N/A"};
+      }
+    }
+
+    // Get current location
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    // Get current date and time
+    String formattedDateTime =
+        DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now());
+
+    return {
+      "dateTime": formattedDateTime,
+      "location": "${position.latitude}° N, ${position.longitude}° E",
+    };
   }
 
   Future<void> _checkConfidence() async {
@@ -107,6 +170,9 @@ class _ResultScreenState extends State<ResultScreen> {
       );
     } else {
       _fetchSnakeData();
+      setState(() {
+        confidence = confidence;
+      });
     }
   }
 
@@ -208,23 +274,23 @@ class _ResultScreenState extends State<ResultScreen> {
                           // if (status.isDenied || status.isPermanentlyDenied) {
                           //   await openAppSettings();
                           // }
+                          Map<String, dynamic> dateAndLocation =
+                              await getRealTimeData();
                           await PdfReport.generateReport(
                             reportID: "RPT12345",
-                            dateTime: "15/03/2025 10:30",
-                            location: "7.8731° N, 80.7718° E",
-                            userID: "USR56789",
-                            userName: 'dude',
-                            dob: '209383 -3783 -3883',
-                            allergies: 'kjnfskgbdrkrgn',
-                            category: "Snake",
-                            scientificName: "Naja naja",
+                            dateTime: dateAndLocation['dateTime'] ?? 'Unknown',
+                            location: dateAndLocation['location'] ?? 'Unknown',
+                            userID: userId,
+                            userName: userName,
+                            dob: dob,
+                            allergies: allergies,
+                            category: category,
+                            scientificName: name,
                             image:
                                 null, // Replace with image bytes if available
-                            confidenceScore: 98.5,
-                            firstAidActions: [
-                              "Keep calm, apply pressure bandage."
-                            ],
-                            lethalityRisk: "High",
+                            confidenceScore: finalConfidence * 100,
+                            firstAidActions: remedies,
+                            lethalityRisk: lethalityLevel,
                             deviceModel: 'testing device',
                           );
                         },
