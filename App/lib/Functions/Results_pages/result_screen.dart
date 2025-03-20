@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:venomverse/Functions/Results_pages/reportSection.dart';
@@ -271,11 +272,11 @@ class _ResultScreenState extends State<ResultScreen> {
                       child: RetakeButton(
                         buttonName: "Generate Report",
                         onPressed: () async {
-                          // PermissionStatus status =
-                          //     await Permission.notification.request();
-                          // if (status.isDenied || status.isPermanentlyDenied) {
-                          //   await openAppSettings();
-                          // }
+                          PermissionStatus status =
+                              await Permission.notification.request();
+                          if (status.isDenied || status.isPermanentlyDenied) {
+                            await openAppSettings();
+                          }
                           Map<String, dynamic> dateAndLocation =
                               await getRealTimeData();
                           await PdfReport.generateReport(

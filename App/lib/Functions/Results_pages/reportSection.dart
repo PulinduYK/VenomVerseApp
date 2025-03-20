@@ -8,6 +8,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../../Login_and_signup/Login_and_signup_logic/services/notification_pdf.dart';
+
 class PdfReport {
   static Future<pw.Widget> buildHeader() async {
     // Load logo from assets (ensure you have the image in the assets folder)
@@ -198,6 +200,10 @@ class PdfReport {
     final file = File("${output.path}/Detection_Report.pdf");
     await file.writeAsBytes(await pdf.save());
     String newMsg = await generateAndSendEmail(file, userMail);
+    await NotificationPdf().showNotification(
+      title: 'VenomVerse',
+      body: newMsg,
+    );
     print(newMsg);
 
     // Open Preview
