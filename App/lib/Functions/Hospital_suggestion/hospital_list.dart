@@ -53,7 +53,8 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
   bool isLoading = true;
   String? error;
   Position? userLocation;
-  TextEditingController searchController = TextEditingController(); //  Search controller
+  TextEditingController searchController =
+      TextEditingController(); //  Search controller
 
   @override
   void initState() {
@@ -104,6 +105,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
       });
     }
   }
+
   //  Search Functionality
   void _filterHospitals(String query) {
     setState(() {
@@ -111,7 +113,8 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
         filteredHospitals = hospitals;
       } else {
         filteredHospitals = hospitals
-            .where((hospital) => hospital.hname.toLowerCase().contains(query.toLowerCase()))
+            .where((hospital) =>
+                hospital.hname.toLowerCase().contains(query.toLowerCase()))
             .toList();
       }
     });
@@ -133,7 +136,6 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                   Color(0xff6D5FD5),
                   Color(0xff8A7FD6),
                 ],
-
               ),
             ),
           ),
@@ -141,7 +143,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
           // Back Button & Title
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 35),
               child: Row(
                 children: [
                   IconButton(
@@ -158,6 +160,14 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    icon: const Icon(Icons.directions_car,
+                        color: Colors.white, size: 28),
+                    onPressed: () {
+                      _makePhoneCall("1990");
+                    },
+                  ),
                 ],
               ),
             ),
@@ -165,12 +175,12 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
 
           // White Rounded Container for Content
           Positioned(
-            top: 170,
+            top: 150,
             left: 0,
             right: 0,
             child: Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height - 170,
+              height: MediaQuery.of(context).size.height - 150,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -186,39 +196,36 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                    children: [
-                      // 🔹 Search Bar
-                      TextField(
-                        controller: searchController,
-                        onChanged: _filterHospitals,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search, color: Colors.grey),
-                          hintText: "Search hospitals...",
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(40),
-                            borderSide: BorderSide.none,
-                          ),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(children: [
+                    // 🔹 Search Bar
+                    TextField(
+                      controller: searchController,
+                      onChanged: _filterHospitals,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search, color: Colors.grey),
+                        hintText: "Search hospitals...",
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(40),
+                          borderSide: BorderSide.none,
                         ),
                       ),
-                      const SizedBox(height: 10), // Spacing
+                    ),
+                    const SizedBox(height: 10), // Spacing
 
-                      // Hospital List
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: filteredHospitals.length,
-                          itemBuilder: (context, index) {
-                            final hospital = filteredHospitals[index];
-                            return _buildHospitalCard(context, hospital);
-                          },
-                        ),
+                    // Hospital List
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: filteredHospitals.length,
+                        itemBuilder: (context, index) {
+                          final hospital = filteredHospitals[index];
+                          return _buildHospitalCard(context, hospital);
+                        },
                       ),
-                    ]
-                )
-              ),
+                    ),
+                  ])),
             ),
           ),
         ],
@@ -274,7 +281,8 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
-                          overflow: TextOverflow.ellipsis, // Prevents text overflow
+                          overflow:
+                              TextOverflow.ellipsis, // Prevents text overflow
                           maxLines: 1, // Ensures it stays in a single line
                         ),
                       ),
@@ -313,7 +321,6 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
       ),
     );
   }
-
 
   Widget _buildHospitalDetails(BuildContext context, Hospital hospital) {
     return Container(

@@ -96,6 +96,7 @@ flutter:
   assets:
     - assets/
     - assets/snakes_images/
+    - assets/hospital_images/
     - assets/insect.png
     - assets/spider.png
     - assets/snake.png

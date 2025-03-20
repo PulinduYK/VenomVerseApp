@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
-import 'heat_map_handler.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'heat_map_handler.dart';
 
 class GoogleMapScreen extends StatefulWidget {
   @override
@@ -44,7 +46,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     setState(() => _isFetching = true);
 
     try {
-      Map<String, Set<dynamic>> result = await _heatMapHandler.fetchHeatMapData(selectedFilter);
+      Map<String, Set<dynamic>> result =
+          await _heatMapHandler.fetchHeatMapData(selectedFilter);
       setState(() {
         _markers = result['markers']?.cast<Marker>() ?? {};
         _heatCircles = result['circles']?.cast<Circle>() ?? {};
@@ -58,11 +61,13 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   Future<void> _getCurrentLocation() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
       setState(() {
         _currentPosition = LatLng(position.latitude, position.longitude);
       });
-      _mapController?.animateCamera(CameraUpdate.newLatLngZoom(_currentPosition, 13));
+      _mapController
+          ?.animateCamera(CameraUpdate.newLatLngZoom(_currentPosition, 13));
     } catch (e) {
       print("⚠ Error getting location: $e");
     }
@@ -84,7 +89,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   void _zoomIn() {
     if (_selectedMarker != null) {
-      _mapController?.animateCamera(CameraUpdate.newLatLngZoom(_selectedMarker!, 15));
+      _mapController
+          ?.animateCamera(CameraUpdate.newLatLngZoom(_selectedMarker!, 15));
     } else {
       _mapController?.animateCamera(CameraUpdate.zoomIn());
     }
@@ -103,24 +109,30 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   }
 
   void _updateCircleSize() {
-    setState(() {
-      _heatCircles = _heatCircles.map((circle) {
-        double newRadius = _currentZoom < 8
-            ? 300.0
-            : (_currentZoom < 11 ? 1500.0 : (_currentZoom < 14 ? 1000.0 : 500.0));
-        return circle.copyWith(radiusParam: newRadius);
-      }).toSet();
-    });
+    if (mounted) {
+      setState(() {
+        _heatCircles = _heatCircles.map((circle) {
+          double newRadius = _currentZoom < 8
+              ? 300.0
+              : (_currentZoom < 11
+                  ? 1500.0
+                  : (_currentZoom < 14 ? 1000.0 : 500.0));
+          return circle.copyWith(radiusParam: newRadius);
+        }).toSet();
+      });
+    }
   }
 
   void _startWaveAnimation() {
     Timer.periodic(Duration(seconds: 2), (timer) {
-      setState(() {
-        _heatCircles = _heatCircles.map((circle) {
-          double radius = (circle.radius == 50) ? 70 : 50;
-          return circle.copyWith(radiusParam: radius);
-        }).toSet();
-      });
+      if (mounted) {
+        setState(() {
+          _heatCircles = _heatCircles.map((circle) {
+            double radius = (circle.radius == 50) ? 70 : 50;
+            return circle.copyWith(radiusParam: radius);
+          }).toSet();
+        });
+      }
     });
   }
 
@@ -157,15 +169,12 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
             }).toSet(),
             circles: _heatCircles,
           ),
-
           Positioned(
             top: 100,
-
             right: 20,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-
                 _filterButton("Spiders", "spider", Colors.purple),
                 _filterButton("Insects", "insect", Colors.purple),
                 _filterButton("Snakes", "snake", Colors.purple),
@@ -173,7 +182,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
               ],
             ),
           ),
-
           Positioned(
             bottom: 120,
             right: 20,

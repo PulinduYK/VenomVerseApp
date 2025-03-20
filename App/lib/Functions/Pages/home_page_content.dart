@@ -92,8 +92,9 @@ class _HomePageContentState extends State<HomePageContent> {
             ),
             child: SingleChildScrollView(
               child: Padding(
-                padding:
-                    EdgeInsets.symmetric(vertical: screenHeight * 0.04, horizontal: screenWidth * 0.08),
+                padding: EdgeInsets.symmetric(
+                    vertical: screenHeight * 0.04,
+                    horizontal: screenWidth * 0.08),
                 child: Column(
                   children: [
                     Row(
@@ -210,15 +211,15 @@ class _HomePageContentState extends State<HomePageContent> {
                                 offset: Offset(4, 4),
                               ),
                             ],
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(screenWidth * 0.15 / 2),
+                            color: Color(0xFF800000),
+                            borderRadius:
+                                BorderRadius.circular(screenWidth * 0.15 / 2),
                           ),
-                          child: Icon(
-                            Icons.wb_twighlight,
-                            color: Colors.white,
-                            size: screenWidth * 0.08,
+                          child: Image.asset(
+                            'assets/panic.gif', // Replace with your actual GIF file in assets
+                            fit: BoxFit.cover,
                           ),
-                        )
+                        ),
                       ],
                     )
                   ],
