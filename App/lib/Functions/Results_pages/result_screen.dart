@@ -29,6 +29,7 @@ class _ResultScreenState extends State<ResultScreen> {
   final FirebaseService _firebaseService = FirebaseService();
   final outcomeClass _outcomeClass = outcomeClass();
 
+  String userMailForPdf = "venomversese91@gmail.com";
   String userId = "not available";
   String userName = "not available";
   String dob = "not available";
@@ -77,6 +78,7 @@ class _ResultScreenState extends State<ResultScreen> {
     }
 
     setState(() {
+      userMailForPdf = userData['email'] ?? 'venomversese91@gmail.com';
       userId = userData['uid'] ?? 'Unknown';
       userName = userData['name'] ?? 'Unknown';
       dob = userData['dob'] ?? 'Unknown';
@@ -277,6 +279,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           Map<String, dynamic> dateAndLocation =
                               await getRealTimeData();
                           await PdfReport.generateReport(
+                            userMail: userMailForPdf,
                             reportID: "RPT12345",
                             dateTime: dateAndLocation['dateTime'] ?? 'Unknown',
                             location: dateAndLocation['location'] ?? 'Unknown',

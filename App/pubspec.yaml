@@ -60,6 +60,7 @@ dependencies:
   path_provider: ^2.1.5
   flutter_email_sender: ^7.0.0
   flutter_local_notifications: ^19.0.0
+  mailer: ^6.0.0
 
 
 

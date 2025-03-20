@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -33,8 +35,9 @@ class PdfReport {
         pw.Container(
           width: 300, // Set the width for text wrapping
           child: pw.Text(
-            "This details are according to users scan, use alternative methods before confirm these detail and venomverse team not gurantee about these details and not responsible of usage results",
+            "These details are generated based on the user's scan and are intended for reference and rough use only. Please verify the information using alternative methods before making any decisions. The Venom Verse team does not guarantee accuracy and assumes no responsibility for any consequences resulting from the use of this information.",
             style: pw.TextStyle(
+              fontSize: 10,
               fontWeight: pw.FontWeight.bold,
               color: PdfColor(1.0, 0.0, 0.0), // Red color (RGB: 1.0, 0.0, 0.0)
             ),
@@ -61,7 +64,40 @@ class PdfReport {
     );
   }
 
+  static Future<String> generateAndSendEmail(File file, String email) async {
+    String msg;
+    // Gmail SMTP credentials (Use your Gmail address and App Password)
+    const String smtpUser =
+        "venomversese91@gmail.com"; // Replace with your Gmail address
+    const String smtpPassword =
+        "mqsq lurk gtts yeae "; // Use the generated App Password
+
+    try {
+      final smtpServer = gmail(smtpUser, smtpPassword);
+
+      // Create the email message (Ensure proper construction)
+      final message = Message()
+        ..from = Address(smtpUser, 'Venom Verse App') // Sender's email
+        ..recipients
+            .add('pulindu.20230256@iit.ac.lk') // Replace with recipient's email
+        ..subject = 'Detection Report - Venom Verse' // Subject of email
+        ..text =
+            'Attached is the detection report for your recent scan.' // Body text
+        ..attachments.add(FileAttachment(file)); // Attach PDF file
+
+      // 5️⃣ Send the email
+      await send(message, smtpServer);
+      msg = "✅ Email Sent Successfully!";
+      print("✅ Email Sent Successfully!");
+    } catch (e) {
+      msg = "❌ Error Sending Email: $e";
+      print("❌ Error Sending Email: $e");
+    }
+    return msg;
+  }
+
   static Future<void> generateReport({
+    required String userMail,
     required String reportID,
     required String dateTime,
     required String location,
@@ -123,6 +159,7 @@ class PdfReport {
               pw.Text("* Name: $userName"),
               pw.Text("* Date of Birth: $dob"),
               pw.Text("* Allergies: $allergies"),
+              pw.Text("* Email: $userMail"),
               pw.SizedBox(height: 10),
 
               // Detected Species Details
@@ -160,7 +197,8 @@ class PdfReport {
     final output = await getTemporaryDirectory();
     final file = File("${output.path}/Detection_Report.pdf");
     await file.writeAsBytes(await pdf.save());
-    print("object");
+    String newMsg = await generateAndSendEmail(file, userMail);
+    print(newMsg);
 
     // Open Preview
     Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());
