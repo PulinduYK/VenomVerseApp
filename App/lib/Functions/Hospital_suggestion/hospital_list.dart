@@ -161,13 +161,6 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  IconButton(
-                    icon: const Icon(Icons.directions_car,
-                        color: Colors.white, size: 28),
-                    onPressed: () {
-                      _makePhoneCall("1990");
-                    },
-                  ),
                 ],
               ),
             ),
@@ -198,7 +191,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
               child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(children: [
-                    // 🔹 Search Bar
+                    //  Search Bar
                     TextField(
                       controller: searchController,
                       onChanged: _filterHospitals,
@@ -217,17 +210,65 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
 
                     // Hospital List
                     Expanded(
-                      child: ListView.builder(
+                      child: isLoading
+                          ? Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xff8A7FD6)),
+                        ),
+                      )
+                          : error != null
+                          ? Center(
+                        child: Text(
+                          error!,
+                          style: TextStyle(fontSize: 16, color: Colors.red),
+                        ),
+                      )
+                          : hospitals.isEmpty
+                          ? Center(
+                        child: Text(
+                          "No hospitals found",
+                          style: TextStyle(fontSize: 16, color: Colors.black54),
+                        ),
+                      )
+                          : ListView.builder(
                         itemCount: filteredHospitals.length,
                         itemBuilder: (context, index) {
                           final hospital = filteredHospitals[index];
                           return _buildHospitalCard(context, hospital);
                         },
                       ),
-                    ),
+                    )
+
                   ])),
             ),
           ),
+          Positioned(
+            bottom: 20,  // Distance from the bottom
+            right: 20,    // Distance from the left
+            child: GestureDetector(
+              onTap: () => _makePhoneCall("1990"), // Calls 1990 on tap
+              child: Container(
+                 // Padding around the PNG
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50), // Rounded button
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      spreadRadius: 3,
+                    ),
+                  ],
+                ),
+                child: Image.asset(
+                  'assets/1990.png', // Path to your PNG
+                  height: 60, // Adjust size
+                  width: 60,
+                ),
+              ),
+            ),
+          ),
+
         ],
       ),
     );
@@ -356,7 +397,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
           ),
           const SizedBox(height: 20),
 
-          // Phone Number Button (Currently Non-Functional)
+          // Phone Number Button
           GestureDetector(
               onTap: () => _makePhoneCall(hospital.phone),
               child: Container(
