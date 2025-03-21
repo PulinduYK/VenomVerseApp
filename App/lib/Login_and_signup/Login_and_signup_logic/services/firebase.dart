@@ -122,7 +122,7 @@ class FirebaseService {
         'dob': data['dob'] ?? 'No dob',
         'name': data['name'] ?? 'No Name',
         'email': data['email'] ?? 'No Email',
-        'uid': data['uid'] ?? 'No dob',
+        'uid': _auth.currentUser?.uid ?? 'test',
         'profileImage': data['profileImage'] ?? '',
         'gender': data['gender'] ?? 'Not Available',
         'phoneNumber': data['phoneNumber'] ?? 'Not Available',
@@ -133,7 +133,7 @@ class FirebaseService {
         'dob': 'No Date',
         'name': 'No Data',
         'email': 'No Data',
-        'uid': 'uid',
+        'uid': 'No uid',
         'profileImage': '', // Default empty string for no image
         'gender': 'No Data',
         'phoneNumber': 'No Data',

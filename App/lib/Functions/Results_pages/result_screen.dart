@@ -6,17 +6,16 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:venomverse/Functions/Results_pages/reportSection.dart';
-import '../../Functions/Hospital_suggestion/hospital_list.dart';
-import '../../Functions/Hospital_suggestion/hospital_list.dart';
 
+import '../../Functions/Hospital_suggestion/hospital_list.dart';
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import 'back_button.dart';
 import 'description_section.dart';
 import 'immediate_actions.dart';
 import 'lethality_badge.dart';
 import 'outcomeClass.dart';
-import 'retake_button.dart';
 import 'reportButton.dart';
+import 'retake_button.dart';
 
 class ResultScreen extends StatefulWidget {
   final Map<String, dynamic> uploadedImageData;
@@ -228,7 +227,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
                 boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
               ),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 00, vertical: 15),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,7 +344,6 @@ class _ResultScreenState extends State<ResultScreen> {
                         HospitalListScreen(), // Navigate to the hospital list
                   ),
                 );
-
               },
               child: Container(
                 width: 60,
@@ -360,14 +358,12 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ],
                   color: Color(0xFF800000),
-
                 ),
                 child: Image.asset(
                   'assets/panic.gif',
                   fit: BoxFit.cover,
                 ),
               ),
-
             ),
           ),
         ],
