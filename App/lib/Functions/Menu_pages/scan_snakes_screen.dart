@@ -102,7 +102,7 @@ class ScanSnakesScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 15),
 
                     // Buttons Section
                     Padding(
@@ -195,7 +195,7 @@ class ScanSnakesScreen extends StatelessWidget {
         child: Text(
           text,
           style: const TextStyle(
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -216,21 +216,22 @@ class ScanSnakesScreen extends StatelessWidget {
         );
       },
       child: Container(
-        width: 65,
+        width: 60,
         height: 65,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
+          color: Color(0xFF800000),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black38,
               blurRadius: 4,
-              offset: const Offset(0, 2),
+              offset: Offset(4, 4),
             ),
           ],
         ),
         child: ClipOval(
           child: Image.asset(
-            "assets/panic_button.png", // Ensure this image exists
+            'assets/panic.gif',
             fit: BoxFit.cover,
           ),
         ),

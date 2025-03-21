@@ -6,6 +6,7 @@ import '../Camera/camMethodClass.dart';
 import '../Camera/camPage.dart';
 import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
+import '../Hospital_suggestion/hospital_list.dart';
 
 class ScanSpidersScreen extends StatelessWidget {
   ScanSpidersScreen({super.key});
@@ -101,7 +102,7 @@ class ScanSpidersScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 15),
 
                     // Buttons Section
                     Padding(
@@ -194,7 +195,7 @@ class ScanSpidersScreen extends StatelessWidget {
         child: Text(
           text,
           style: const TextStyle(
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -207,25 +208,33 @@ class ScanSpidersScreen extends StatelessWidget {
   Widget _buildPanicButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                HospitalListScreen(), // Navigate to the hospital list
+          ),
+        );
+
         print("Panic Button Pressed!");
-        // You can add navigation or alert logic here
-      },
+        },
       child: Container(
-        width: 65,
+        width: 60,
         height: 65,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
+          color: Color(0xFF800000),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black38,
               blurRadius: 4,
-              offset: const Offset(0, 2),
+              offset: Offset(4, 4),
             ),
           ],
         ),
         child: ClipOval(
           child: Image.asset(
-            "assets/panic_button.png", // Update this with your image path
+            'assets/panic.gif',
             fit: BoxFit.cover,
           ),
         ),
