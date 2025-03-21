@@ -227,9 +227,8 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
               gradient: _selectedImage != null
                   ? const LinearGradient(
                       colors: [
-                        Color(0xFF1C16B9),
-                        Color(0xff6D5FD5),
                         Color(0xff8A7FD6),
+                        Color(0xff6D5FD5),
                       ],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
