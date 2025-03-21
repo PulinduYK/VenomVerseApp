@@ -7,6 +7,7 @@ import '../Menu_pages/scan_insects_screen.dart';
 import '../Menu_pages/scan_snakes_screen.dart';
 import '../Menu_pages/scan_spiders_screen.dart';
 import '../reusable_widgets/homepage_card.dart';
+import '../Hospital_suggestion/hospital_list.dart';
 
 class HomePageContent extends StatefulWidget {
   const HomePageContent({super.key});
@@ -104,6 +105,7 @@ class _HomePageContentState extends State<HomePageContent> {
                           "Scan Options",
                           style: TextStyle(
                             fontSize: screenWidth * 0.06,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Icon(Icons.notification_add),
@@ -155,6 +157,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       child: HomepageCard(
                         imgPath: "assets/spider.png",
                         option: "SPIDER SCAN",
+
                       ),
                     ),
                     SizedBox(
@@ -182,14 +185,14 @@ class _HomePageContentState extends State<HomePageContent> {
                                 ),
                               ],
                               gradient: LinearGradient(
-                                colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
+                                colors: [Color(0xff8A7FD6), Color(0xff6D5FD5)],
                               ),
-                              borderRadius: BorderRadius.circular(10.00),
+                              borderRadius: BorderRadius.circular(30.00),
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(screenWidth * 0.03),
                               child: Text(
-                                "journey to venom world",
+                                "Journey to venom world",
                                 style: TextStyle(
                                   fontSize: screenWidth * 0.045,
                                   fontWeight: FontWeight.bold,
@@ -200,26 +203,38 @@ class _HomePageContentState extends State<HomePageContent> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: screenWidth * 0.15,
-                          height: screenWidth * 0.15,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black38,
-                                blurRadius: 4,
-                                offset: Offset(4, 4),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HospitalListScreen(), // Navigate to the hospital list
                               ),
-                            ],
-                            color: Color(0xFF800000),
-                            borderRadius:
-                                BorderRadius.circular(screenWidth * 0.15 / 2),
+                            );
+
+                          },
+                          child: Container(
+                            width: screenWidth * 0.15,
+                            height: screenWidth * 0.15,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black38,
+                                  blurRadius: 4,
+                                  offset: Offset(4, 4),
+                                ),
+                              ],
+                              color: Color(0xFF800000),
+                              borderRadius: BorderRadius.circular(screenWidth * 0.15 / 2),
+                            ),
+                            child: Image.asset(
+                              'assets/panic.gif',
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          child: Image.asset(
-                            'assets/panic.gif', // Replace with your actual GIF file in assets
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        )
+
                       ],
                     )
                   ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../Functions/Results_pages/back_button.dart';
 import '../Functions/reusable_widgets/libPage_card.dart';
 import 'libraryList.dart';
+import '../../Functions/Hospital_suggestion/hospital_list.dart';
 
 class libraryHome extends StatefulWidget {
   const libraryHome({super.key});
@@ -75,6 +76,7 @@ class _libraryHomeState extends State<libraryHome> {
                               "Category",
                               style: TextStyle(
                                 fontSize: screenWidth * 0.06,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Icon(Icons.help),
@@ -155,8 +157,8 @@ class _libraryHomeState extends State<libraryHome> {
                                 ],
                                 gradient: LinearGradient(
                                   colors: [
-                                    Color(0xff1C16B9),
-                                    Color(0xffDC9FDA)
+                                    Color(0xff8A7FD6),
+                                    Color(0xff6D5FD5),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(60.00),
@@ -174,26 +176,37 @@ class _libraryHomeState extends State<libraryHome> {
                                 ),
                               ),
                             ),
-                            Container(
-                              width: screenWidth * 0.15,
-                              height: screenWidth * 0.15,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black38,
-                                    blurRadius: 4,
-                                    offset: Offset(4, 4),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        HospitalListScreen(), // Navigate to the hospital list
                                   ),
-                                ],
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(30.00),
+                                );
+
+                              },
+                              child: Container(
+                                width: screenWidth * 0.15,
+                                height: screenWidth * 0.15,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black38,
+                                      blurRadius: 4,
+                                      offset: Offset(4, 4),
+                                    ),
+                                  ],
+                                  color: Color(0xFF800000),
+                                  borderRadius: BorderRadius.circular(screenWidth * 0.15 / 2),
+                                ),
+                                child: Image.asset(
+                                  'assets/panic.gif',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                              child: Icon(
-                                Icons.wb_twighlight,
-                                color: Colors.white,
-                                size: 35,
-                              ),
-                            ),
+                            )
                           ],
                         ),
                       ],

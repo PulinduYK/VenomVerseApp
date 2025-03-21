@@ -15,19 +15,19 @@ class RetakeButton extends StatelessWidget {
         minWidth: 120,
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(40),
           gradient: LinearGradient(
-            colors: [Color(0xFF3B00FF), Color(0xFFD17DF3), Color(0xFFD3D5FF)],
+            colors: [Color(0xff8A7FD6), Color(0xff6D5FD5),],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
           boxShadow: const [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              offset: Offset(0, 4),
+              color: Colors.black38,
+              blurRadius: 4,
+              offset: Offset(4, 4),
             ),
           ],
         ),
@@ -52,7 +52,7 @@ class RetakeButton extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white, // Set text color to white
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 16,
                   ),
                   maxLines: 3, // Allows wrapping up to 3 lines
                   overflow: TextOverflow.visible,

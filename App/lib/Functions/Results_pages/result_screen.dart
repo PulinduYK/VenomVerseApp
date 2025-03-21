@@ -6,6 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:venomverse/Functions/Results_pages/reportSection.dart';
+import '../../Functions/Hospital_suggestion/hospital_list.dart';
+import '../../Functions/Hospital_suggestion/hospital_list.dart';
 
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import 'back_button.dart';
@@ -331,11 +333,38 @@ class _ResultScreenState extends State<ResultScreen> {
           Positioned(
             right: 20,
             bottom: 20,
-            child: FloatingActionButton(
-              backgroundColor: Colors.red,
-              onPressed: () {},
-              shape: const CircleBorder(),
-              child: Icon(Icons.wb_twighlight, color: Colors.white),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        HospitalListScreen(), // Navigate to the hospital list
+                  ),
+                );
+
+              },
+              child: Container(
+                width: 60,
+                height: 65,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black38,
+                      blurRadius: 4,
+                      offset: Offset(4, 4),
+                    ),
+                  ],
+                  color: Color(0xFF800000),
+
+                ),
+                child: Image.asset(
+                  'assets/panic.gif',
+                  fit: BoxFit.cover,
+                ),
+              ),
+
             ),
           ),
         ],

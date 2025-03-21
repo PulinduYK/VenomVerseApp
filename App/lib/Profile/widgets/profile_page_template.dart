@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../Functions/Hospital_suggestion/hospital_list.dart';
 
 // create custom widget to reuse same background template
 class ProfilePageTemplate extends StatelessWidget {
@@ -50,11 +51,31 @@ class ProfilePageTemplate extends StatelessWidget {
           elevation: 0,
           highlightElevation: 0,
           onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    HospitalListScreen(), // Navigate to the hospital list
+              ),
+            );
             //Panic button
           },
           backgroundColor: Colors.transparent,
-          child: ClipOval(
-            child: Image.asset('assets/panic_button.png', fit: BoxFit.cover),
+          child: Container(
+            width: 60,
+            height: 65,
+            decoration:BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black38,
+                  blurRadius: 4,
+                  offset: Offset(4, 4),
+                ),
+              ],
+              color: Color(0xFF800000),
+            ) ,
+            child: Image.asset('assets/panic.gif', fit: BoxFit.cover),
           ),
         ),
       ),

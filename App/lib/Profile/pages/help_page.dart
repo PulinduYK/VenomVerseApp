@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
+import 'package:venomverse/Profile/pages/emergency_contact.dart';
 
 
 // HelpPage displays the help details.
@@ -17,6 +18,11 @@ class HelpPage extends StatelessWidget {
           CustomButton(
             text: "Emergency Contact",
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EmergencyContactPage()),
+              );
               ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),

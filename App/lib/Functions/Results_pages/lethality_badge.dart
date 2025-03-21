@@ -41,7 +41,7 @@ class LethalityBadge extends StatelessWidget {
               softWrap: true,
             ),
           ),
-          SizedBox(width: 6),
+          SizedBox(width: 4),
           Container(
             height: 16,
             width: 1.5,
