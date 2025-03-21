@@ -35,21 +35,21 @@ class CreateAccountMain extends StatelessWidget {
                   child: Column(
                     children: [
                       const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 50.0),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.arrow_back,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(
+                      //       horizontal: 15.0, vertical: 50.0),
+                      //   child: Row(
+                      //     children: [
+                      //       IconButton(
+                      //         onPressed: () {
+                      //           Navigator.pop(context);
+                      //         },
+                      //         icon: const Icon(Icons.arrow_back,
+                      //             color: Colors.white),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Expanded(
                         child: Container(
                           width: screenWidth > 600 ? 500 : double.infinity,

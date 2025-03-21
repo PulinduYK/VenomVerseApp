@@ -126,7 +126,7 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                               clipBehavior: Clip
                                   .hardEdge, // Ensures the image follows the border radius
                               child: Image.asset(
-                                'assets/t.jpg', // Replace with your actual image path
+                                'assets/Gmail.png', // Replace with your actual image path
                                 fit: BoxFit
                                     .cover, // Adjusts how the image fits inside
                               ),
@@ -159,8 +159,8 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                                   ],
                                   gradient: LinearGradient(
                                     colors: [
-                                      Color(0xff1C16B9),
-                                      Color(0xffDC9FDA)
+                                      Color(0xff8A7FD6),
+                                      Color(0xff6D5FD5),
                                     ],
                                   ),
                                   borderRadius: BorderRadius.circular(10.00),
@@ -198,8 +198,8 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                                   ],
                                   gradient: LinearGradient(
                                     colors: [
-                                      Color(0xff1C16B9),
-                                      Color(0xffDC9FDA)
+                                      Color(0xff8A7FD6),
+                                      Color(0xff6D5FD5),
                                     ],
                                   ),
                                   borderRadius: BorderRadius.circular(10.00),
