@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../Login_and_signup_logic/services/auth.dart';
 import '../signup/createaccountmain.dart';
+import 'forgotPassword.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -199,7 +200,14 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 const SizedBox(height: 20),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ForgotPasswordPage()),
+                                    );
+                                  },
                                   child: const Text(
                                     'Forget Your Password',
                                     style: TextStyle(color: Colors.black54),

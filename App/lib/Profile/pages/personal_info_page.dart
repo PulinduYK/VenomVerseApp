@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:venomverse/Profile/pages/settings_edit_page.dart';
 
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../widgets/profile_page_template.dart';
