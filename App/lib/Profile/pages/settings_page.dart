@@ -210,11 +210,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   blurRadius: 10,
                 ),
               ],
-              border: Border.all(
-                // Adding stroke
-                color: Colors.redAccent, // Change to desired stroke color
-                width: 2, // Adjust thickness
-              ),
+
             ),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
