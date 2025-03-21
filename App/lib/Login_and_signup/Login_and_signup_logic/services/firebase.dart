@@ -126,6 +126,7 @@ class FirebaseService {
         'profileImage': data['profileImage'] ?? '',
         'gender': data['gender'] ?? 'Not Available',
         'phoneNumber': data['phoneNumber'] ?? 'Not Available',
+        'allergies': data['allergies'] ?? 'Not Available',
       };
     } else {
       return {
@@ -136,6 +137,7 @@ class FirebaseService {
         'profileImage': '', // Default empty string for no image
         'gender': 'No Data',
         'phoneNumber': 'No Data',
+        'allergies': 'No Data',
       };
     }
   }
