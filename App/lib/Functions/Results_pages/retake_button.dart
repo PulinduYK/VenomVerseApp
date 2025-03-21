@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import '../scan/gallery.dart';
+import '../Camera/camMethodClass.dart';
+import '../Camera/camPage.dart';
 
 class RetakeButton extends StatelessWidget {
   final VoidCallback? onPressed; // Allows passing an action
   final String buttonName;
+  final String previousPage;
 
-  const RetakeButton({Key? key, this.onPressed, required this.buttonName})
+  const RetakeButton({Key? key, this.onPressed, required this.buttonName,required this.previousPage,})
       : super(key: key);
 
   @override
@@ -33,7 +37,9 @@ class RetakeButton extends StatelessWidget {
         ),
         child: ElevatedButton(
           onPressed:
-              onPressed ?? () {}, // Default empty function if not provided
+              onPressed ?? () {
+                _navigateBack(context, previousPage);
+              },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             backgroundColor: Colors.transparent,
@@ -64,5 +70,19 @@ class RetakeButton extends StatelessWidget {
         ),
       ),
     );
+  }
+  // Function to handle navigation based on `previousPage
+  void _navigateBack(BuildContext context, String previousPage) {
+    if (previousPage == "scan") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => CamPage(modelNum: 1)),
+      );
+    } else if (previousPage == "upload") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => UploadImagesPage(modelNum: 1)),
+      );
+    }
   }
 }
