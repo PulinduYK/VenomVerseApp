@@ -15,6 +15,8 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
   final TextEditingController _fullNameController = TextEditingController();
   DateTime _selectedDate = DateTime(2024, 12, 25);
   String _selectedGender = 'Male';
+  final TextEditingController _allergieControl = TextEditingController();
+
 
   void _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -132,6 +134,36 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                               .none, // Hides the border
                                           hintStyle:
                                               TextStyle(color: Colors.black54),
+                                        ),
+                                        textInputAction: TextInputAction.next,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              // Full Name Input Field (No Border)
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.bug_report_outlined, color: Colors.black54),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: TextField(
+                                        controller: _allergieControl,
+                                        style: TextStyle(fontSize: 16) ,
+                                        decoration: InputDecoration(
+                                          hintText: "Allergies",
+                                          border: InputBorder
+                                              .none, // Hides the border
+                                          hintStyle:
+                                          TextStyle(color: Colors.black54),
                                         ),
                                         textInputAction: TextInputAction.next,
                                       ),
