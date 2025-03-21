@@ -215,7 +215,13 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                     backgroundColor: Colors.transparent,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SettingsEditPage()),
+                    );
+                  },
                   child: Text(
                     "Edit",
                     textAlign: TextAlign.left,
