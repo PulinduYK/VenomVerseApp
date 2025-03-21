@@ -1,3 +1,4 @@
+import 'package:device_information/device_information.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
@@ -42,6 +43,7 @@ class _ResultScreenState extends State<ResultScreen> {
   String description = "Loading.....";
   List<String> remedies = ["Loading....."];
   double finalConfidence = 0;
+  String deviceModel = "unknown";
 
   @override
   void initState() {
@@ -60,6 +62,7 @@ class _ResultScreenState extends State<ResultScreen> {
     String resultName = _outcomeClass.venomClass(modelNo, classNo);
     double imageDataConfidence =
         widget.uploadedImageData['confidence']?.toDouble() ?? 0;
+    String deviceName = await fetchDeviceModel();
 
     await _firebaseService.insertHistory(modelNo, true, true, resultName);
 
@@ -93,6 +96,7 @@ class _ResultScreenState extends State<ResultScreen> {
       description = snakeDetails['description'] ?? 'Unknown';
       remedies = fetchedRemedies;
       finalConfidence = imageDataConfidence;
+      deviceModel = deviceName;
     });
   }
 
@@ -130,6 +134,16 @@ class _ResultScreenState extends State<ResultScreen> {
       "dateTime": formattedDateTime,
       "location": "${position.latitude}° N, ${position.longitude}° E",
     };
+  }
+
+  Future<String> fetchDeviceModel() async {
+    try {
+      String modelName = await DeviceInformation.deviceModel;
+      return modelName;
+    } catch (e) {
+      print("Error getting device model: $e");
+      return "Error fetching model";
+    }
   }
 
   Future<void> _checkConfidence() async {
@@ -295,7 +309,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             confidenceScore: finalConfidence * 100,
                             firstAidActions: remedies,
                             lethalityRisk: lethalityLevel,
-                            deviceModel: 'testing device',
+                            deviceModel: deviceModel,
                           );
                         },
                       ),
