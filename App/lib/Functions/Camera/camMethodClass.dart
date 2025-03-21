@@ -85,6 +85,7 @@ class camMethodClass {
           MaterialPageRoute(
             builder: (context) => ResultScreen(
               uploadedImageData: uploadedImageData,
+              previousPage: "scan",
             ),
           ),
         );

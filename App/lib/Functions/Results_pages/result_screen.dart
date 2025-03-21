@@ -16,13 +16,16 @@ import 'immediate_actions.dart';
 import 'lethality_badge.dart';
 import 'outcomeClass.dart';
 import 'retake_button.dart';
+import 'reportButton.dart';
 
 class ResultScreen extends StatefulWidget {
   final Map<String, dynamic> uploadedImageData;
+  final String previousPage;
 
   const ResultScreen({
     super.key,
     required this.uploadedImageData,
+    required this.previousPage,
   });
 
   @override
@@ -285,8 +288,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     SizedBox(height: 20),
                     SizedBox(
                       width: double.infinity,
-                      child: RetakeButton(
-                        buttonName: "Generate Report",
+                      child: ReportButton(
                         onPressed: () async {
                           PermissionStatus status =
                               await Permission.notification.request();
@@ -328,6 +330,7 @@ class _ResultScreenState extends State<ResultScreen> {
             bottom: 20, // Pin to the bottom
             child: RetakeButton(
               buttonName: "Retake",
+              previousPage: widget.previousPage,
             ),
           ),
           Positioned(

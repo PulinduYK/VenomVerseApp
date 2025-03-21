@@ -96,7 +96,8 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                ResultScreen(uploadedImageData: uploadedImageData),
+                ResultScreen(uploadedImageData: uploadedImageData,
+                  previousPage: "upload",),
           ),
         );
       } else {
