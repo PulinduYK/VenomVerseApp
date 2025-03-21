@@ -17,7 +17,6 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
   String _selectedGender = 'Male';
   final TextEditingController _allergieControl = TextEditingController();
 
-
   void _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -152,18 +151,19 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.bug_report_outlined, color: Colors.black54),
+                                    Icon(Icons.bug_report_outlined,
+                                        color: Colors.black54),
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: TextField(
                                         controller: _allergieControl,
-                                        style: TextStyle(fontSize: 16) ,
+                                        style: TextStyle(fontSize: 16),
                                         decoration: InputDecoration(
                                           hintText: "Allergies",
                                           border: InputBorder
                                               .none, // Hides the border
                                           hintStyle:
-                                          TextStyle(color: Colors.black54),
+                                              TextStyle(color: Colors.black54),
                                         ),
                                         textInputAction: TextInputAction.next,
                                       ),
@@ -282,7 +282,8 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                     await FirebaseService().updateFirst(
                                         _fullNameController.text,
                                         _selectedDate.toString(),
-                                        _selectedGender);
+                                        _selectedGender,
+                                        _allergieControl.text);
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(

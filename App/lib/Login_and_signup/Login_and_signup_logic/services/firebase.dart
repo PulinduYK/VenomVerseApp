@@ -52,7 +52,8 @@ class FirebaseService {
     }
   }
 
-  Future<void> updateFirst(String newName, String dob, String gender) async {
+  Future<void> updateFirst(
+      String newName, String dob, String gender, String allergies) async {
     try {
       User? user = _auth.currentUser;
       if (user != null) {
@@ -60,6 +61,7 @@ class FirebaseService {
           'name': newName,
           'dob': dob,
           'gender': gender,
+          'allergies': allergies,
         });
         print("Name updated successfully");
       }
