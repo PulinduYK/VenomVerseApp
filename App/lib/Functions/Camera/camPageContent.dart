@@ -92,7 +92,8 @@ class _CamPageContentState extends State<CamPageContent> {
                           ),
                         ],
                         gradient: LinearGradient(
-                          colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
+                          colors: [Color(0xff8A7FD6),
+                            Color(0xff6D5FD5),],
                         ),
                         borderRadius: BorderRadius.circular(10.00),
                       ),
@@ -134,7 +135,8 @@ class _CamPageContentState extends State<CamPageContent> {
                           ),
                         ],
                         gradient: LinearGradient(
-                          colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
+                          colors: [Color(0xff8A7FD6),
+                            Color(0xff6D5FD5),],
                         ),
                         borderRadius: BorderRadius.circular(10.00),
                       ),
@@ -177,7 +179,8 @@ class _CamPageContentState extends State<CamPageContent> {
                           ),
                         ],
                         gradient: LinearGradient(
-                          colors: [Color(0xff1C16B9), Color(0xffDC9FDA)],
+                          colors: [Color(0xff8A7FD6),
+                            Color(0xff6D5FD5),],
                         ),
                         borderRadius: BorderRadius.circular(10.00),
                       ),
