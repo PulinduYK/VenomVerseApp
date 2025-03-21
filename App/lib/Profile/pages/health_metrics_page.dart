@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:venomverse/widgets/profile_page_template.dart';
+import 'package:venomverse/Profile/widgets/profile_page_template.dart';
 
 // PersonalInfoPage displays the user's personal details.
 class HealthMetricsPage extends StatefulWidget {
