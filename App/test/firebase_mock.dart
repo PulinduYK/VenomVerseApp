@@ -2,26 +2,24 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class MockFirebase {
-  static Future<void> setup() async {
+  static Future<void> setupFirebaseMocks() async {
     TestWidgetsFlutterBinding.ensureInitialized();
 
-    // Setup method channel mocks
-    const MethodChannel methodChannel =
-        MethodChannel('plugins.flutter.io/firebase_core');
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(
-      methodChannel,
-      (MethodCall methodCall) async {
+    // Mock the Firebase Core method channel
+    const MethodChannel channel = MethodChannel('plugins.flutter.io/firebase_core');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+      channel,
+          (MethodCall methodCall) async {
         switch (methodCall.method) {
           case 'Firebase#initializeCore':
             return [
               {
                 'name': '[DEFAULT]',
                 'options': {
-                  'apiKey': 'test-api-key',
-                  'appId': 'test-app-id',
-                  'messagingSenderId': 'test-sender-id',
-                  'projectId': 'test-project-id',
+                  'apiKey': 'mock-api-key',
+                  'appId': 'mock-app-id',
+                  'messagingSenderId': 'mock-sender-id',
+                  'projectId': 'mock-project-id',
                 },
                 'pluginConstants': {},
               }
@@ -38,13 +36,11 @@ class MockFirebase {
       },
     );
 
-    // Mock auth channel
-    const MethodChannel authChannel =
-        MethodChannel('plugins.flutter.io/firebase_auth');
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(
+    // Mock the Firebase Auth method channel
+    const MethodChannel authChannel = MethodChannel('plugins.flutter.io/firebase_auth');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
       authChannel,
-      (MethodCall methodCall) async {
+          (MethodCall methodCall) async {
         switch (methodCall.method) {
           case 'Auth#authStateChanges':
           case 'Auth#idTokenChanges':
