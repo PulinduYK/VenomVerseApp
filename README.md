@@ -1,6 +1,6 @@
 # Venom Verse
 
-![Venom Verse Logo](App/assets/playstore.png)
+<img src="App/assets/playstore.png" alt="Venom Verse Logo" width="200" height="200">
 
 A medical-focused mobile application designed to identify venomous snakes, spiders and insects and provide emergency guidance.
 
