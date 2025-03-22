@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:venomverse/Profile/pages/health_metrics_page.dart';
 import 'package:venomverse/Profile/pages/medical_info_page.dart';
 import 'package:venomverse/Profile/pages/personal_info_page.dart';
+import 'package:venomverse/Profile/pages/tracking_wearable_page.dart';
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
 
 // ProfilePage displays the user's account details.
@@ -29,6 +30,11 @@ class AccountDetailsPage extends StatelessWidget {
             CustomButton(
               text: "Tracking Wearable",
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TrackingWearablePage()),
+                );
+                ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
               },
             ),
             SizedBox(height: 20),
@@ -39,6 +45,7 @@ class AccountDetailsPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => MedicalInfoPage()),
                 );
+                ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
               },
             ),
             SizedBox(height: 20),
@@ -49,6 +56,7 @@ class AccountDetailsPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => HealthMetricsPage()),
                 );
+                ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
               },
             ),
           ],
