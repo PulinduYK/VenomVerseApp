@@ -109,7 +109,7 @@ class CreateAccountMain extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.3),
+                                        color: Colors.black.withValues(),
                                         offset: const Offset(0, 5),
                                         blurRadius: 10,
                                       ),
@@ -174,8 +174,7 @@ class CreateAccountMain extends StatelessWidget {
                                             40), // Adjust corner radius
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.15),
+                                            color: Colors.black.withValues(),
                                             offset: Offset(0, 4),
                                             blurRadius: 8,
                                           ),
@@ -233,8 +232,7 @@ class CreateAccountMain extends StatelessWidget {
                                             40), // Adjust corner radius
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.15),
+                                            color: Colors.black.withValues(),
                                             offset: Offset(0, 4),
                                             blurRadius: 8,
                                           ),

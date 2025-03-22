@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import '../scan/gallery.dart';
-import '../Camera/camMethodClass.dart';
+
 import '../Camera/camPage.dart';
+import '../scan/gallery.dart';
 
 class RetakeButton extends StatelessWidget {
   final VoidCallback? onPressed; // Allows passing an action
   final String buttonName;
   final String previousPage;
 
-  const RetakeButton({Key? key, this.onPressed, required this.buttonName,required this.previousPage,})
-      : super(key: key);
+  const RetakeButton({
+    Key? key,
+    this.onPressed,
+    required this.buttonName,
+    required this.previousPage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,10 @@ class RetakeButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
           gradient: LinearGradient(
-            colors: [Color(0xff8A7FD6), Color(0xff6D5FD5),],
+            colors: [
+              Color(0xff8A7FD6),
+              Color(0xff6D5FD5),
+            ],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
@@ -36,8 +43,8 @@ class RetakeButton extends StatelessWidget {
           ],
         ),
         child: ElevatedButton(
-          onPressed:
-              onPressed ?? () {
+          onPressed: onPressed ??
+              () {
                 _navigateBack(context, previousPage);
               },
           style: ElevatedButton.styleFrom(
@@ -71,6 +78,7 @@ class RetakeButton extends StatelessWidget {
       ),
     );
   }
+
   // Function to handle navigation based on `previousPage
   void _navigateBack(BuildContext context, String previousPage) {
     if (previousPage == "scan") {

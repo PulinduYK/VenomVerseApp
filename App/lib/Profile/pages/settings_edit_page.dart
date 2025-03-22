@@ -22,7 +22,6 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
   //final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
-  bool _isEmailValid = true;
   @override
   void initState() {
     super.initState();
@@ -62,12 +61,6 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
       //_emailController.text = userData['email'] ?? '';
       _phoneController.text = userData['phoneNumber'] ?? '';
       _dobController.text = userData['dob'] ?? '';
-    });
-  }
-
-  void _validateEmail(String email) {
-    setState(() {
-      _isEmailValid = RegExp(r"^[a-zA-Z0-9._%+-]+@gmail\.com$").hasMatch(email);
     });
   }
 

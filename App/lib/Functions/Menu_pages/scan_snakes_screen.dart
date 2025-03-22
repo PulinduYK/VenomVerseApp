@@ -177,7 +177,7 @@ class ScanSnakesScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(40),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(),
             blurRadius: 1,
             offset: const Offset(0, 3),
           ),
@@ -246,7 +246,7 @@ class ScanSnakesScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 18,
-          backgroundColor:Color(0xff8A7FD6),
+          backgroundColor: Color(0xff8A7FD6),
           child: Text(
             number.toString(),
             style: const TextStyle(

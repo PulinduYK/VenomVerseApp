@@ -78,7 +78,7 @@ class SuccessPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
+                            color: Colors.black.withValues(),
                             offset: const Offset(0, 5),
                             blurRadius: 10,
                           ),

@@ -121,10 +121,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 shadowColor: Colors.transparent, // Keeps shadow consistent
               ).merge(
                 ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
                   // No overlay effect
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
+                  backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                    (Set<WidgetState> states) {
                       // Gradient background on press
                       return Colors.transparent;
                     },
@@ -172,17 +172,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   Navigator.pop(context); // Go back to login
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // Rounded corners
                   ),
-                  backgroundColor: Colors.transparent, // Transparent to show gradient
+                  backgroundColor:
+                      Colors.transparent, // Transparent to show gradient
                   shadowColor: Colors.transparent, // Keeps shadow consistent
                 ).merge(
                   ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(Colors.transparent), // No overlay effect
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
+                    overlayColor: WidgetStateProperty.all(
+                        Colors.transparent), // No overlay effect
+                    backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                      (Set<WidgetState> states) {
                         return Colors.transparent; // Gradient stays on press
                       },
                     ),
@@ -198,11 +201,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
-                    borderRadius: BorderRadius.circular(30), // Match button corners
+                    borderRadius:
+                        BorderRadius.circular(30), // Match button corners
                   ),
                   child: Container(
                     alignment: Alignment.center,
-                    constraints: const BoxConstraints(minWidth: 200, minHeight: 50), // Button size
+                    constraints: const BoxConstraints(
+                        minWidth: 200, minHeight: 50), // Button size
                     child: const Text(
                       "Back to Login",
                       style: TextStyle(

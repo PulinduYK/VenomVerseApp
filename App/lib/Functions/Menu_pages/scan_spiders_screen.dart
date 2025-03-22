@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../Camera/camMethodClass.dart';
 import '../Camera/camPage.dart';
+import '../Hospital_suggestion/hospital_list.dart';
 import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
-import '../Hospital_suggestion/hospital_list.dart';
 
 class ScanSpidersScreen extends StatelessWidget {
   ScanSpidersScreen({super.key});
@@ -177,7 +177,7 @@ class ScanSpidersScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(40),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(),
             blurRadius: 1,
             offset: const Offset(0, 3),
           ),
@@ -217,7 +217,7 @@ class ScanSpidersScreen extends StatelessWidget {
         );
 
         print("Panic Button Pressed!");
-        },
+      },
       child: Container(
         width: 60,
         height: 65,

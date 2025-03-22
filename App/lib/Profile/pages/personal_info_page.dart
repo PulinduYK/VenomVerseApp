@@ -4,7 +4,6 @@ import 'package:venomverse/Profile/pages/settings_edit_page.dart';
 
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../widgets/profile_page_template.dart';
-import 'settings_edit_page.dart';
 
 // PersonalInfoPage displays the user's personal details.
 class PersonalInfoPage extends StatefulWidget {
