@@ -190,7 +190,8 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                 gradient: LinearGradient(
                   colors: [
                     Color(0xFF1C16B9), // 0%
-                    Color(0xFFDC9FDA), // 100%
+                    Color(0xFF6D5FD5), // 50%
+                    Color(0xFF8A7FD6), // 100%
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.topRight,
