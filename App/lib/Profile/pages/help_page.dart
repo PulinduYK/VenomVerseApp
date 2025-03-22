@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:venomverse/Profile/pages/customer_support_page.dart';
+import 'package:venomverse/Profile/pages/device_manager_page.dart';
 import 'package:venomverse/Profile/pages/faq_page.dart';
 import 'package:venomverse/Profile/pages/password_manager_page.dart';
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
@@ -76,6 +77,11 @@ class HelpPage extends StatelessWidget {
           CustomButton(
             text: "Device Manager",
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DeviceManagerPage()),
+              );
               ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),
