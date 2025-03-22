@@ -285,36 +285,40 @@ class _ResultScreenState extends State<ResultScreen> {
                     // Description Section
                     DescriptionSection(description: description),
                     SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ReportButton(
-                        onPressed: () async {
-                          PermissionStatus status =
-                              await Permission.notification.request();
-                          if (status.isDenied || status.isPermanentlyDenied) {
-                            await openAppSettings();
-                          }
-                          Map<String, dynamic> dateAndLocation =
-                              await getRealTimeData();
-                          await PdfReport.generateReport(
-                            userMail: userMailForPdf,
-                            reportID: "RPT12345",
-                            dateTime: dateAndLocation['dateTime'] ?? 'Unknown',
-                            location: dateAndLocation['location'] ?? 'Unknown',
-                            userID: userId,
-                            userName: userName,
-                            dob: dob,
-                            allergies: allergies,
-                            category: category,
-                            scientificName: name,
-                            image:
-                                null, // Replace with image bytes if available
-                            confidenceScore: finalConfidence * 100,
-                            firstAidActions: remedies,
-                            lethalityRisk: lethalityLevel,
-                            deviceModel: deviceModel,
-                          );
-                        },
+                    Center(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width -40 ,
+                        child: Center(
+                          child: ReportButton(
+                            onPressed: () async {
+                              PermissionStatus status =
+                                  await Permission.notification.request();
+                              if (status.isDenied || status.isPermanentlyDenied) {
+                                await openAppSettings();
+                              }
+                              Map<String, dynamic> dateAndLocation =
+                                  await getRealTimeData();
+                              await PdfReport.generateReport(
+                                userMail: userMailForPdf,
+                                reportID: "RPT12345",
+                                dateTime: dateAndLocation['dateTime'] ?? 'Unknown',
+                                location: dateAndLocation['location'] ?? 'Unknown',
+                                userID: userId,
+                                userName: userName,
+                                dob: dob,
+                                allergies: allergies,
+                                category: category,
+                                scientificName: name,
+                                image:
+                                    null, // Replace with image bytes if available
+                                confidenceScore: finalConfidence * 100,
+                                firstAidActions: remedies,
+                                lethalityRisk: lethalityLevel,
+                                deviceModel: deviceModel,
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(height: 80),
