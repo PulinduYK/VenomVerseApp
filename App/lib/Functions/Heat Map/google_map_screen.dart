@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -176,10 +175,10 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _filterButton("Spiders", "spider", Colors.purpleAccent),
-                _filterButton("Insects", "insect", Colors.purpleAccent),
-                _filterButton("Snakes", "snake", Colors.purpleAccent),
-                _filterButton("All", "all", CupertinoColors.activeGreen,
+                _filterButton("Spiders", "spider", Colors.deepPurpleAccent),
+                _filterButton("Insects", "insect", Colors.deepPurpleAccent),
+                _filterButton("Snakes", "snake", Colors.deepPurpleAccent),
+                _filterButton("All", "all", Colors.deepPurple),
               ],
             ),
           ),
@@ -192,21 +191,22 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 FloatingActionButton(
                   heroTag: "zoomIn",
                   onPressed: _zoomIn,
-                  backgroundColor: Colors.blue[700],
+                  backgroundColor: Colors.deepPurple,
                   child: Icon(Icons.add, color: Colors.white),
                 ),
                 SizedBox(height: 10),
                 FloatingActionButton(
                   heroTag: "zoomOut",
                   onPressed: _zoomOut,
-                  backgroundColor: Colors.blue[700],
+                  backgroundColor: Colors.deepPurple,
                   child: Icon(Icons.remove, color: Colors.white),
                 ),
                 SizedBox(height: 10),
                 FloatingActionButton(
                   heroTag: "fetchData",
                   onPressed: _fetchData,
-                  backgroundColor: _isFetching ? Colors.grey : Colors.purple,
+                  backgroundColor:
+                      _isFetching ? Colors.purpleAccent : Colors.deepPurple,
                   child: _isFetching
                       ? CircularProgressIndicator(color: Colors.white)
                       : Icon(Icons.refresh, color: Colors.white),
@@ -215,7 +215,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 FloatingActionButton(
                   heroTag: "getLocation",
                   onPressed: _getCurrentLocation,
-                  backgroundColor: Colors.purple,
+                  backgroundColor: Colors.deepPurple,
                   child: Icon(Icons.my_location, color: Colors.white),
                 ),
               ],

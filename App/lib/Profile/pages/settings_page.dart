@@ -65,17 +65,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 // );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,        // Button background color
-                foregroundColor: Colors.white,       // Text color
+                backgroundColor:
+                    Colors.deepPurpleAccent, // Button background color
+                foregroundColor: Colors.white, // Text color
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8), // Rounded corners
                 ),
-                elevation: 2,                         // Shadow (optional)
+                elevation: 2, // Shadow (optional)
               ),
               child: Text("Proceed"),
             ),
           ],
-
         );
       },
     );
@@ -220,7 +220,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   blurRadius: 10,
                 ),
               ],
-
             ),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
