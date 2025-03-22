@@ -88,7 +88,53 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             // Send Reset Link Button
             ElevatedButton(
               onPressed: sendResetEmail,
-              child: const Text("Send Reset Link"),
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30), // Rounded corners
+                ),
+                backgroundColor: Colors.transparent,
+                // Makes the button background transparent
+                shadowColor: Colors.transparent, // Keeps shadow consistent
+              ).merge(
+                ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  // No overlay effect
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      // Gradient background on press
+                      return Colors.transparent;
+                    },
+                  ),
+                ),
+              ),
+              child: Ink(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xff8A7FD6), // Left color
+                      Color(0xff6D5FD5), // Right color
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  constraints:
+                      const BoxConstraints(minWidth: 200, minHeight: 50),
+                  child: const Text(
+                    "Send Reset Link",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ),
 
             if (isResetSent) ...[
