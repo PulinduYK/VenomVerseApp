@@ -74,7 +74,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "Enter your email to receive a password reset link.",
+              "Enter your email to receive a link to reset your password .",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16),
             ),
@@ -171,7 +171,48 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 onPressed: () {
                   Navigator.pop(context); // Go back to login
                 },
-                child: const Text("Back to Login"),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30), // Rounded corners
+                  ),
+                  backgroundColor: Colors.transparent, // Transparent to show gradient
+                  shadowColor: Colors.transparent, // Keeps shadow consistent
+                ).merge(
+                  ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent), // No overlay effect
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        return Colors.transparent; // Gradient stays on press
+                      },
+                    ),
+                  ),
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xff8A7FD6), // Left gradient color
+                        Color(0xff6D5FD5), // Right gradient color
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    borderRadius: BorderRadius.circular(30), // Match button corners
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    constraints: const BoxConstraints(minWidth: 200, minHeight: 50), // Button size
+                    child: const Text(
+                      "Back to Login",
+                      style: TextStyle(
+                        color: Colors.white, // White text color
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ]
           ],
