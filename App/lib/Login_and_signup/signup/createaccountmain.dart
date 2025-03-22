@@ -34,7 +34,7 @@ class CreateAccountMain extends StatelessWidget {
                 child: IntrinsicHeight(
                   child: Column(
                     children: [
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 170),
                       // Padding(
                       //   padding: const EdgeInsets.symmetric(
                       //       horizontal: 15.0, vertical: 50.0),
@@ -53,6 +53,7 @@ class CreateAccountMain extends StatelessWidget {
                       Expanded(
                         child: Container(
                           width: screenWidth > 600 ? 500 : double.infinity,
+                          //height: double.infinity,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 30),
                           decoration: const BoxDecoration(
@@ -85,6 +86,7 @@ class CreateAccountMain extends StatelessWidget {
                                 const Text(
                                   'Nice to see you !',
                                   style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 26,
                                     color: Colors.black,
                                   ),
@@ -94,6 +96,7 @@ class CreateAccountMain extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                   "You're few steps away from our app",
                                   style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 26,
                                     color: Colors.black,
                                   ),
@@ -190,7 +193,8 @@ class CreateAccountMain extends StatelessWidget {
                                             customAsset: 'assets/warning.gif',
                                             widget: Center(
                                               child: Text(
-                                                "Sorry method not available",
+                                                "Sorry this sign in method currently not available",
+                                                textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
@@ -248,7 +252,8 @@ class CreateAccountMain extends StatelessWidget {
                                             customAsset: 'assets/warning.gif',
                                             widget: Center(
                                               child: Text(
-                                                "Sorry method not available",
+                                                "Sorry this sign in method currently not available",
+                                                textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
