@@ -45,6 +45,12 @@ class AboutUsPage extends StatelessWidget {
 
   // Function to open URLs
   void _launchURL(String url) async {
+    // Check if this is a GitHub username or a full URL
+    if (!url.startsWith('http')) {
+      // For GitHub usernames, construct the proper URL
+      url = 'https://github.com/$url';
+    }
+
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -97,17 +103,21 @@ class AboutUsPage extends StatelessWidget {
       title: "About Us",
       contentHeightFactor: 0.85,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         child: ListView.builder(
+          padding: EdgeInsets.zero,
           itemCount: teamMembers.length,
           itemBuilder: (context, index) {
+            EdgeInsets cardMargin = index == 0
+                ? const EdgeInsets.only(top: 16.0, bottom: 10.0)
+                : const EdgeInsets.only(bottom: 10.0);
             return FutureBuilder<String?>(
               future: teamMembers[index].fetchGitHubProfileImage(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Card(
                     elevation: 0,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: cardMargin,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     child: Padding(
@@ -147,7 +157,7 @@ class AboutUsPage extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Card(
                     elevation: 0,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: cardMargin,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     child: Padding(
@@ -188,7 +198,7 @@ class AboutUsPage extends StatelessWidget {
                 } else if (snapshot.data == null) {
                   return Card(
                     elevation: 0,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: cardMargin,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     child: Padding(
