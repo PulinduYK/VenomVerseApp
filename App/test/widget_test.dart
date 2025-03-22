@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:venomverse/main.dart';
-
-import 'mock_firebase.dart';
+import 'package:venomverse/test_app.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
-  setUpAll(() async {
-    // Set up Firebase mocks before tests
-    await MockFirebase.setup();
-  });
-
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const TestApp());
 
     // Allow the app to initialize
     await tester.pumpAndSettle();
