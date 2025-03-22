@@ -1,17 +1,18 @@
-name: Flutter CI/CD Pipeline
+name: Flutter CI/CD
 
 on:
   push:
     branches:
       - main
-      - dev
+      - develop
   pull_request:
     branches:
       - main
-      - dev
+      - develop
 
 jobs:
-  build:
+  build-test-deploy:
+    name: Build, Test, and Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -21,31 +22,44 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.x  # Change this to your Flutter version
-          channel: stable
+          flutter-version: 3.x  # Use the Flutter version you need
+          cache: true
+
+      - name: Navigate to Flutter Project Directory
+        run: cd App
 
       - name: Install Dependencies
-        run: flutter pub get
-        working-directory: app  # Since your Flutter project is inside 'app'
+        run: |
+          cd App
+          flutter pub get
 
-      - name: Run Linter
-        run: flutter analyze
-        working-directory: app
+      - name: Run Flutter Analyzer
+        run: |
+          cd App
+          flutter analyze
 
-      - name: Run Tests
-        run: flutter test
-        working-directory: app
+      - name: Run Flutter Tests
+        run: |
+          cd App
+          flutter test
 
       - name: Build APK
-        run: flutter build apk --release
-        working-directory: app
+        run: |
+          cd App
+          flutter build apk --release
 
       - name: Build App Bundle (AAB)
-        run: flutter build appbundle --release
-        working-directory: app
+        run: |
+          cd App
+          flutter build appbundle --release
 
-      - name: Upload APK as Artifact
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: release-apk
-          path: app/build/app/outputs/flutter-apk/app-release.apk
+          name: build-artifacts
+          path: |
+            App/build/app/outputs/flutter-apk/app-release.apk
+            App/build/app/outputs/bundle/release/app-release.aab
+
+      # Deployment Steps (Optional)
+      # - You can add deployment to Firebase, Play Store, or App Store if needed
