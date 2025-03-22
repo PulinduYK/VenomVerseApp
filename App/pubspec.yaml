@@ -62,6 +62,9 @@ dependencies:
   flutter_email_sender: ^7.0.0
   flutter_local_notifications: ^19.0.0
   mailer: ^6.0.0
+  firebase_core_platform_interface: ^5.4.0
+  firebase_auth_mocks: ^0.14.1
+  mockito: ^5.4.5
 
 
 
