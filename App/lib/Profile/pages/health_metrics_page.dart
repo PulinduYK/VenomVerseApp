@@ -125,8 +125,8 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                 borderRadius: BorderRadius.circular(40),
                 gradient: LinearGradient(
                   colors: [
-                    Color(0xFF1C16B9), // 0%
-                    Color(0xFFDC9FDA), // 100%
+                    Color(0xff8A7FD6),
+                    Color(0xff6D5FD5),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.topRight,
