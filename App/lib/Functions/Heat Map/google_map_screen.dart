@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -178,7 +179,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 _filterButton("Spiders", "spider", Colors.purpleAccent),
                 _filterButton("Insects", "insect", Colors.purpleAccent),
                 _filterButton("Snakes", "snake", Colors.purpleAccent),
-                _filterButton("All", "all", Colors.purpleAccent),
+                _filterButton("All", "all", CupertinoColors.activeGreen,
               ],
             ),
           ),
