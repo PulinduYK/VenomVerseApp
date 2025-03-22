@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class ImmediateActionsSection extends StatelessWidget {
   final List<String> actions; // List of bullet points
 
-  const ImmediateActionsSection({Key? key, required this.actions})
-      : super(key: key);
+  const ImmediateActionsSection({super.key, required this.actions});
 
   @override
   Widget build(BuildContext context) {

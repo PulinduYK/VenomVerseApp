@@ -69,7 +69,11 @@ class GoogleMapScreenState extends State<GoogleMapScreen> {
   Future<void> _getCurrentLocation() async {
     try {
       Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+        locationSettings: LocationSettings(
+          accuracy: LocationAccuracy.high, // Set desired accuracy
+          distanceFilter: 10, // Optional: Set the distance filter
+        ),
+      );
       setState(() {
         _currentPosition = LatLng(position.latitude, position.longitude);
       });

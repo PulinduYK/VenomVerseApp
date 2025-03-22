@@ -4,9 +4,9 @@ class ReportButton extends StatelessWidget {
   final Future<void> Function() onPressed;
 
   const ReportButton({
-    Key? key,
+    super.key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

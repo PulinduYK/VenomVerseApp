@@ -129,7 +129,11 @@ class ResultScreenState extends State<ResultScreen> {
 
     // Get current location
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      locationSettings: LocationSettings(
+        accuracy: LocationAccuracy.high, // Set desired accuracy
+        distanceFilter: 10, // Optional: Set the distance filter
+      ),
+    );
 
     // Get current date and time
     String formattedDateTime =
@@ -161,7 +165,7 @@ class ResultScreenState extends State<ResultScreen> {
     if (confidence < 90) {
       await _firebaseService.insertHistory(
           modelNoForHistory, true, false, "none");
-      if(mounted) {
+      if (mounted) {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.custom,

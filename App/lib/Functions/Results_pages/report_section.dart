@@ -129,7 +129,7 @@ class PdfReport {
         children: [
           pw.Text(title, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
           pw.SizedBox(height: 5),
-          ...items.map((item) => pw.Bullet(text: item)).toList(),
+          ...items.map((item) => pw.Bullet(text: item)),
           pw.SizedBox(height: 10),
         ],
       );

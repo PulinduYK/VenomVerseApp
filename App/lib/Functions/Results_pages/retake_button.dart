@@ -9,11 +9,11 @@ class RetakeButton extends StatelessWidget {
   final String previousPage;
 
   const RetakeButton({
-    Key? key,
+    super.key,
     this.onPressed,
     required this.buttonName,
     required this.previousPage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,8 @@ class RetakeButton extends StatelessWidget {
     } else if (previousPage == "upload") {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const UploadImagesPage(modelNum: 1)),
+        MaterialPageRoute(
+            builder: (context) => const UploadImagesPage(modelNum: 1)),
       );
     }
   }

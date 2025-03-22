@@ -4,14 +4,16 @@ class LethalityBadge extends StatelessWidget {
   final String confidence;
 
   const LethalityBadge({
-    Key? key,
+    super.key,
     required this.confidence,
-  }) : super(key: key);
+  });
 
   Color _getLethalityColor() {
     if (confidence == "None") return const Color(0xFF1F6D00); // Green (None)
     if (confidence == "Low") return const Color(0xFFEDDB12); // Yellow (Medium)
-    if (confidence == "Medium") return const Color(0xFFF3560E); // Orange (Medium)
+    if (confidence == "Medium") {
+      return const Color(0xFFF3560E); // Orange (Medium)
+    }
     if (confidence == "High") return const Color(0xFFFF0004); // Red (High)
     return const Color(0xFF3104DF); // Wight (Not specified)
   }
