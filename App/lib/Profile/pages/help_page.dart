@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:venomverse/Profile/pages/faq_page.dart';
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
 import 'package:venomverse/Profile/pages/emergency_contact.dart';
 
@@ -30,6 +31,11 @@ class HelpPage extends StatelessWidget {
           CustomButton(
             text: "FAQs",
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FAQPage()),
+              );
               ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
             },
           ),

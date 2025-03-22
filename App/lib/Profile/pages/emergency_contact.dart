@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:venomverse/Profile/widgets/profile_page_template.dart';
 
-// ProfilePage displays the user's account details.
+// EmergencyContactPage displays the user's emergency contacts.
 class EmergencyContactPage extends StatefulWidget {
   const EmergencyContactPage({super.key});
 
