@@ -184,9 +184,8 @@ class _ResultScreenState extends State<ResultScreenLib> {
           Positioned(
             right: 20,
             bottom: 20,
-            child: FloatingActionButton(
-              backgroundColor: Colors.red,
-              onPressed: () {
+            child: GestureDetector(
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -195,8 +194,25 @@ class _ResultScreenState extends State<ResultScreenLib> {
                   ),
                 );
               },
-              shape: const CircleBorder(),
-              child: Icon(Icons.wb_twighlight, color: Colors.white),
+              child: Container(
+                width: 60,
+                height: 65,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black38,
+                      blurRadius: 4,
+                      offset: Offset(4, 4),
+                    ),
+                  ],
+                  color: Color(0xFF800000),
+                ),
+                child: Image.asset(
+                  'assets/panic.gif',
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
         ],
