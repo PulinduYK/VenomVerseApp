@@ -59,7 +59,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Reset Password")),
+      appBar: AppBar(
+        title: const Text(
+          "Reset Password",
+          style: TextStyle(
+            fontWeight: FontWeight.bold, // Makes the text bold
+          ),
+        ),
+        centerTitle: false, // Aligns the title to the left
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -78,7 +86,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               enabled: userEmail == null, // Disable if email is detected
               decoration: InputDecoration(
                 labelText: "Email",
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30), // Rounded corners
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  // Rounded when not focused
+                  borderSide:
+                      BorderSide(color: Colors.grey), // Default border color
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  // Rounded when focused
+                  borderSide:
+                      BorderSide(color: Colors.blue), // Border color on focus
+                ),
                 prefixIcon: const Icon(Icons.email),
               ),
             ),
