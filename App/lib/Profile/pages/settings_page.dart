@@ -58,14 +58,24 @@ class _SettingsPageState extends State<SettingsPage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
+
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => SignupPage()),
                 // );
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,        // Button background color
+                foregroundColor: Colors.white,       // Text color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), // Rounded corners
+                ),
+                elevation: 2,                         // Shadow (optional)
+              ),
               child: Text("Proceed"),
             ),
           ],
+
         );
       },
     );
