@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensures Flutter is initialized before calling availableCameras()
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensures Flutter is initialized before calling availableCameras()
   runApp(const MyApp());
 }
 
@@ -12,13 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Camera App',
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -37,7 +38,6 @@ class _HomePageState extends State<HomePage> {
     _setupCameraController();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,22 +46,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildUI() {
-    if(cameraController == null || cameraController?.value.isInitialized == false){
+    if (cameraController == null ||
+        cameraController?.value.isInitialized == false) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
-    return SafeArea(child: SizedBox.expand(),
+    return const SafeArea(
+      child: SizedBox.expand(),
     );
   }
 
   Future<void> _setupCameraController() async {
-    List<CameraDescription> _cameras = await availableCameras();
-    if (_cameras.isNotEmpty) {
+    List<CameraDescription> cameras = await availableCameras();
+    if (cameras.isNotEmpty) {
       setState(() {
-        cameras = _cameras;
+        cameras = cameras;
         cameraController = CameraController(
-          _cameras.first,
+          cameras.first,
           ResolutionPreset.high,
         );
       });

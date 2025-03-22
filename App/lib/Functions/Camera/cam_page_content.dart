@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../Results_pages/back_button.dart';
-import 'camMethodClass.dart';
+import 'cam_method_class.dart';
 
 class CamPageContent extends StatefulWidget {
   final File? imageFile;
@@ -16,7 +16,7 @@ class CamPageContent extends StatefulWidget {
 }
 
 class _CamPageContentState extends State<CamPageContent> {
-  final camMethodClass camM = camMethodClass();
+  final CamMethodClass camM = CamMethodClass();
   File? _imageFile;
   bool _isLoading = false;
 
@@ -30,7 +30,7 @@ class _CamPageContentState extends State<CamPageContent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 100,
           child: Stack(
             children: [
@@ -44,9 +44,9 @@ class _CamPageContentState extends State<CamPageContent> {
         ),
         Expanded(
           child: Container(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             width: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(40.00),
@@ -56,13 +56,13 @@ class _CamPageContentState extends State<CamPageContent> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (_isLoading)
-                  Center(
+                  const Center(
                     child: CircularProgressIndicator(),
                   )
                 else if (_imageFile != null) ...[
                   Stack(
                     children: [
-                      Text(
+                      const Text(
                         "sometime showing image take little longer. it depends on system performance be patient",
                         textAlign: TextAlign.center,
                       ),
@@ -73,7 +73,7 @@ class _CamPageContentState extends State<CamPageContent> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   GestureDetector(
@@ -84,21 +84,23 @@ class _CamPageContentState extends State<CamPageContent> {
                     child: Container(
                       width: 265,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black38,
                             blurRadius: 4,
                             offset: Offset(4, 4),
                           ),
                         ],
-                        gradient: LinearGradient(
-                          colors: [Color(0xff8A7FD6),
-                            Color(0xff6D5FD5),],
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xff8A7FD6),
+                            Color(0xff6D5FD5),
+                          ],
                         ),
                         borderRadius: BorderRadius.circular(10.00),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
                         child: Text(
                           "Edit",
                           style: TextStyle(
@@ -111,7 +113,7 @@ class _CamPageContentState extends State<CamPageContent> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   GestureDetector(
@@ -127,21 +129,23 @@ class _CamPageContentState extends State<CamPageContent> {
                     child: Container(
                       width: 265,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black38,
                             blurRadius: 4,
                             offset: Offset(4, 4),
                           ),
                         ],
-                        gradient: LinearGradient(
-                          colors: [Color(0xff8A7FD6),
-                            Color(0xff6D5FD5),],
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xff8A7FD6),
+                            Color(0xff6D5FD5),
+                          ],
                         ),
                         borderRadius: BorderRadius.circular(10.00),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
                         child: Text(
                           "Upload",
                           style: TextStyle(
@@ -155,8 +159,8 @@ class _CamPageContentState extends State<CamPageContent> {
                     ),
                   ),
                 ] else ...[
-                  Text("Once you click upload image getting Reset"),
-                  SizedBox(
+                  const Text("Once you click upload image getting Reset"),
+                  const SizedBox(
                     height: 25,
                   ),
                   GestureDetector(
@@ -171,21 +175,23 @@ class _CamPageContentState extends State<CamPageContent> {
                     child: Container(
                       width: 265,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black38,
                             blurRadius: 4,
                             offset: Offset(4, 4),
                           ),
                         ],
-                        gradient: LinearGradient(
-                          colors: [Color(0xff8A7FD6),
-                            Color(0xff6D5FD5),],
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xff8A7FD6),
+                            Color(0xff6D5FD5),
+                          ],
                         ),
                         borderRadius: BorderRadius.circular(10.00),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
                         child: Text(
                           "Retake another image",
                           style: TextStyle(

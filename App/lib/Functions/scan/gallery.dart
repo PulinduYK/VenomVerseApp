@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -15,10 +16,10 @@ class UploadImagesPage extends StatefulWidget {
   const UploadImagesPage({super.key, required this.modelNum});
 
   @override
-  _UploadImagesPageState createState() => _UploadImagesPageState();
+  UploadImagesPageState createState() => UploadImagesPageState();
 }
 
-class _UploadImagesPageState extends State<UploadImagesPage> {
+class UploadImagesPageState extends State<UploadImagesPage> {
   final FirebaseService _firebaseService = FirebaseService();
   List<AssetEntity> _galleryImages =
       []; // This is Where the received images of gallery is saved
@@ -82,35 +83,46 @@ class _UploadImagesPageState extends State<UploadImagesPage> {
         // Store the JSON response in a variable
         Map<String, dynamic> uploadedImageData = jsonResponse;
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Image uploaded successfully!')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Image uploaded successfully!')),
+          );
+        }
 
         // Example of using the stored variable
-        print('Uploaded Image Data: $uploadedImageData');
+        if (kDebugMode) {
+          print('Uploaded Image Data: $uploadedImageData');
+        }
 
         setState(() => _selectedImage =
             null); // Clear the selection after uploading it to the server
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ResultScreen(uploadedImageData: uploadedImageData,
-                  previousPage: "upload",),
-          ),
-        );
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultScreen(
+                uploadedImageData: uploadedImageData,
+                previousPage: "upload",
+              ),
+            ),
+          );
+        }
       } else {
         await _firebaseService.insertHistory(
             widget.modelNum, false, false, "none");
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to upload image.')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to upload image.')),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
     } finally {
       setState(() => _isUploading = false);
     }

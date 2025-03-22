@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
-
 class HospitalListScreenT extends StatelessWidget {
   final List<Map<String, String>> hospitals = [
     {
@@ -10,30 +8,36 @@ class HospitalListScreenT extends StatelessWidget {
       'address': '123 Healthcare Ave, City Center',
       'phone': '+1234567890',
       'distance': '2.5 km',
-      'image': 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?q=80&w=2940&auto=format&fit=crop'
+      'image':
+          'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?q=80&w=2940&auto=format&fit=crop'
     },
     {
       'name': 'Emergency Care Center',
       'address': '456 Medical Blvd, Downtown',
       'phone': '+1234567891',
       'distance': '3.8 km',
-      'image': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
+      'image':
+          'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
     },
     {
       'name': 'Emergency Care Center',
       'address': '456 Medical Blvd, Downtown',
       'phone': '+1234567891',
       'distance': '3.8 km',
-      'image': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
+      'image':
+          'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
     },
     {
       'name': 'Emergency Care Center',
       'address': '456 Medical Blvd, Downtown',
       'phone': '+1234567891',
       'distance': '3.8 km',
-      'image': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
+      'image':
+          'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2940&auto=format&fit=crop'
     },
   ];
+
+  HospitalListScreenT({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +68,8 @@ class HospitalListScreenT extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                    icon: const Icon(Icons.arrow_back,
+                        color: Colors.white, size: 28),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 10),
@@ -106,7 +111,8 @@ class HospitalListScreenT extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   itemCount: hospitals.length,
                   itemBuilder: (context, index) {
                     final hospital = hospitals[index];
@@ -122,7 +128,8 @@ class HospitalListScreenT extends StatelessWidget {
   }
 
   // Hospital Card Widget
-  Widget _buildHospitalCard(BuildContext context, Map<String, String> hospital) {
+  Widget _buildHospitalCard(
+      BuildContext context, Map<String, String> hospital) {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -165,18 +172,22 @@ class HospitalListScreenT extends StatelessWidget {
                       Expanded(
                         child: Text(
                           hospital['name']!,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.blue.shade100,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           hospital['distance']!,
-                          style: const TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -196,7 +207,8 @@ class HospitalListScreenT extends StatelessWidget {
   }
 
   // Bottom Sheet for Hospital Details
-  Widget _buildHospitalDetails(BuildContext context, Map<String, String> hospital) {
+  Widget _buildHospitalDetails(
+      BuildContext context, Map<String, String> hospital) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
@@ -238,7 +250,7 @@ class HospitalListScreenT extends StatelessWidget {
           // Phone Number Button (Currently Non-Functional)
           GestureDetector(
               onTap: () => _makePhoneCall(hospital['phone']!),
-              child:Container(
+              child: Container(
                 padding: const EdgeInsets.all(16),
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -260,12 +272,12 @@ class HospitalListScreenT extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
-          ),
+              )),
         ],
       ),
     );
   }
+
   // Function to Open Phone Dialer
   void _makePhoneCall(String phoneNumber) async {
     final Uri url = Uri.parse('tel:$phoneNumber');
@@ -275,5 +287,4 @@ class HospitalListScreenT extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
-
 }

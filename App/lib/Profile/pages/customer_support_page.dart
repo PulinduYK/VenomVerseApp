@@ -7,15 +7,11 @@ class CustomerSupportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProfilePageTemplate(
+    return const ProfilePageTemplate(
         title: "Customer Support",
         contentHeightFactor: 0.85,
         child: Column(
-          children:[
-
-          ],
-        )
-    );
+          children: [],
+        ));
   }
 }
-

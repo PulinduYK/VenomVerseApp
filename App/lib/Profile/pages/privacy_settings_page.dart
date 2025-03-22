@@ -7,15 +7,11 @@ class PrivacySettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProfilePageTemplate(
+    return const ProfilePageTemplate(
         title: "Privacy Settings",
         contentHeightFactor: 0.85,
         child: Column(
-          children:[
-
-          ],
-        )
-    );
+          children: [],
+        ));
   }
 }
-

@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 class DescriptionSection extends StatelessWidget {
   final String description;
 
-  const DescriptionSection({Key? key, required this.description}) : super(key: key);
+  const DescriptionSection({Key? key, required this.description})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         // Centered Header: Description
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 8.0),
           child: Center(
             child: Text(
               "Description",
@@ -26,7 +27,7 @@ class DescriptionSection extends StatelessWidget {
 
         // Description Content
         Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
@@ -34,7 +35,7 @@ class DescriptionSection extends StatelessWidget {
           ),
           child: Text(
             description,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
       ],

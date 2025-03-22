@@ -4,16 +4,16 @@ import 'package:venomverse/Library/result_screen_lib.dart';
 import '../Functions/Results_pages/back_button.dart';
 import '../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 
-class libraryList extends StatefulWidget {
+class LibraryList extends StatefulWidget {
   final String category;
   final int modelNo;
-  const libraryList({super.key, required this.category, required this.modelNo});
+  const LibraryList({super.key, required this.category, required this.modelNo});
 
   @override
-  State<libraryList> createState() => _libraryListState();
+  State<LibraryList> createState() => _LibraryListState();
 }
 
-class _libraryListState extends State<libraryList> {
+class _LibraryListState extends State<LibraryList> {
   final FirebaseService _firebaseService = FirebaseService();
 
   Future<List<Map<String, dynamic>>> Function() returnFunctionBasedOnString(
@@ -35,7 +35,7 @@ class _libraryListState extends State<libraryList> {
     return Scaffold(
       body: Container(
         //height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF1C16B9),
@@ -53,13 +53,13 @@ class _libraryListState extends State<libraryList> {
                   height: 150,
                   child: Row(
                     children: [
-                      CustomBackButton(),
-                      SizedBox(
+                      const CustomBackButton(),
+                      const SizedBox(
                         width: 20,
                       ),
                       Text(
                         "${widget.category} List",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -71,7 +71,7 @@ class _libraryListState extends State<libraryList> {
               ),
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(40.00),
@@ -86,7 +86,8 @@ class _libraryListState extends State<libraryList> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           }
 
                           if (snapshot.hasError ||
@@ -109,7 +110,7 @@ class _libraryListState extends State<libraryList> {
 
                               return Card(
                                 elevation: 5,
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 16),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
@@ -141,22 +142,23 @@ class _libraryListState extends State<libraryList> {
                                             fit: BoxFit.cover,
                                             errorBuilder: (context, error,
                                                     stackTrace) =>
-                                                Icon(Icons.image_not_supported,
+                                                const Icon(
+                                                    Icons.image_not_supported,
                                                     size: 60),
                                           ),
                                         ),
-                                        SizedBox(width: 16),
+                                        const SizedBox(width: 16),
                                         Expanded(
                                           child: Text(
                                             name,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.black87,
                                             ),
                                           ),
                                         ),
-                                        Icon(
+                                        const Icon(
                                           Icons.arrow_forward,
                                           color: Colors.deepPurpleAccent,
                                         ),

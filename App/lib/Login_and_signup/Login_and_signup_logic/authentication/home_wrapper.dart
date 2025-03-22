@@ -50,10 +50,10 @@ class HomeWrapper extends StatelessWidget {
         }
 
         if (!snapshot.hasData || snapshot.data == false) {
-          return BirthdayGenderPage();
+          return const BirthdayGenderPage();
         }
 
-        return HomePage();
+        return const HomePage();
       },
     );
   }

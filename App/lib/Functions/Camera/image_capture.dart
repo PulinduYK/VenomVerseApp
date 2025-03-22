@@ -32,9 +32,11 @@ class _ImageCaptureState extends State<ImageCapture> {
   Future<void> _pickImage() async {
     bool hasPermission = await _checkPermission();
     if (!hasPermission) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Camera permission denied")),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Camera permission denied")),
+        );
+      }
       return;
     }
 
@@ -45,11 +47,23 @@ class _ImageCaptureState extends State<ImageCapture> {
 
       File selectedImg = File(pickedFile.path);
 
-      setState(() {
-        _imageFile = selectedImg;
-      });
+      // Check if the widget is still mounted before calling setState
+      if (mounted) {
+        setState(() {
+          _imageFile = selectedImg;
+        });
+        // Show a confirmation SnackBar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Image picked successfully")),
+        );
+      }
     } on PlatformException catch (e) {
-      print(e);
+      // Show an error SnackBar in case of an exception
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error picking image: ${e.message}")),
+        );
+      }
     }
   }
 
@@ -103,31 +117,39 @@ class _ImageCaptureState extends State<ImageCapture> {
         // Store the JSON response in a variable
         Map<String, dynamic> uploadedImageData = jsonResponse;
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Image uploaded successfully!")),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Image uploaded successfully!")),
+          );
+        }
 
         setState(() => _imageFile =
             null); // Clear the selection after uploading it to the server
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ResultScreen(
-              uploadedImageData: uploadedImageData,
-              previousPage: "scan",
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultScreen(
+                uploadedImageData: uploadedImageData,
+                previousPage: "scan",
+              ),
             ),
-          ),
-        );
+          );
+        }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to upload image")),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to upload image")),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
     }
   }
 

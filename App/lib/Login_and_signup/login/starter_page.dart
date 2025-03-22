@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class StarterPage extends StatefulWidget {
@@ -65,7 +66,8 @@ class _StarterPageState extends State<StarterPage> {
             const SizedBox(height: 30),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -74,7 +76,6 @@ class _StarterPageState extends State<StarterPage> {
                   ),
                 ),
                 child: Column(
-
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Display Google Accounts
@@ -85,10 +86,14 @@ class _StarterPageState extends State<StarterPage> {
                           return GestureDetector(
                             onTap: () {
                               // Handle account selection
-                              print('Selected Account: ${_googleAccounts[index]}');
+                              if (kDebugMode) {
+                                print(
+                                    'Selected Account: ${_googleAccounts[index]}');
+                              }
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Selected Account: ${_googleAccounts[index]}'),
+                                  content: Text(
+                                      'Selected Account: ${_googleAccounts[index]}'),
                                 ),
                               );
                             },
@@ -103,7 +108,8 @@ class _StarterPageState extends State<StarterPage> {
                                 children: [
                                   const CircleAvatar(
                                     backgroundColor: Colors.blueAccent,
-                                    child: Icon(Icons.person, color: Colors.white),
+                                    child:
+                                        Icon(Icons.person, color: Colors.white),
                                   ),
                                   const SizedBox(width: 15),
                                   Text(
@@ -125,10 +131,11 @@ class _StarterPageState extends State<StarterPage> {
                     // Add Account Button
                     GestureDetector(
                       onTap: _addAccount,
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.add_circle, color: Color(0xFF1C16B9), size: 30),
+                        children: [
+                          Icon(Icons.add_circle,
+                              color: Color(0xFF1C16B9), size: 30),
                           SizedBox(width: 10),
                           Text(
                             'Add Account',

@@ -47,9 +47,11 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
       dob: _dobController.text,
     );
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('User data updated successfully!')),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User data updated successfully!')),
+      );
+    }
   }
 
   // Load user data from FirebaseService
@@ -286,17 +288,17 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                       ToastPopup.showToast("Not Saved");
                       Navigator.pop(context);
                     },
-                    child: Text(
+                    child: const Text(
                       "Discard",
                       textAlign: TextAlign.left,
                     )),
               ),
-              SizedBox(width: 15), // For Space between buttons
+              const SizedBox(width: 15), // For Space between buttons
 
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Color(0xff8A7FD6),
                       Color(0xff6D5FD5),
@@ -332,7 +334,7 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                           "Profile picture update not available in this version!");
                       Navigator.pop(context);
                     },
-                    child: Text(
+                    child: const Text(
                       "Save",
                       textAlign: TextAlign.left,
                     )),

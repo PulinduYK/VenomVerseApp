@@ -1,11 +1,12 @@
 import 'package:device_information/device_information.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:venomverse/Functions/Results_pages/reportSection.dart';
+import 'package:venomverse/Functions/Results_pages/report_section.dart';
 
 import '../../Functions/Hospital_suggestion/hospital_list.dart';
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
@@ -13,8 +14,8 @@ import 'back_button.dart';
 import 'description_section.dart';
 import 'immediate_actions.dart';
 import 'lethality_badge.dart';
-import 'outcomeClass.dart';
-import 'reportButton.dart';
+import 'outcome_class.dart';
+import 'report_button.dart';
 import 'retake_button.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -28,12 +29,12 @@ class ResultScreen extends StatefulWidget {
   });
 
   @override
-  _ResultScreenState createState() => _ResultScreenState();
+  ResultScreenState createState() => ResultScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreen> {
+class ResultScreenState extends State<ResultScreen> {
   final FirebaseService _firebaseService = FirebaseService();
-  final outcomeClass _outcomeClass = outcomeClass();
+  final OutcomeClass _outcomeClass = OutcomeClass();
 
   String userMailForPdf = "venomversese91@gmail.com";
   String userId = "not available";
@@ -57,7 +58,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   // Fetch data from Firebase
   void _fetchSnakeData() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     String categoryName;
     int classNo =
         widget.uploadedImageData['prediction']?.toDouble()?.toInt() ?? 0;
@@ -145,7 +146,9 @@ class _ResultScreenState extends State<ResultScreen> {
       String modelName = await DeviceInformation.deviceModel;
       return modelName;
     } catch (e) {
-      print("Error getting device model: $e");
+      if (kDebugMode) {
+        print("Error getting device model: $e");
+      }
       return "Error fetching model";
     }
   }
@@ -287,13 +290,14 @@ class _ResultScreenState extends State<ResultScreen> {
                     SizedBox(height: 20),
                     Center(
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width -40 ,
+                        width: MediaQuery.of(context).size.width - 40,
                         child: Center(
                           child: ReportButton(
                             onPressed: () async {
                               PermissionStatus status =
                                   await Permission.notification.request();
-                              if (status.isDenied || status.isPermanentlyDenied) {
+                              if (status.isDenied ||
+                                  status.isPermanentlyDenied) {
                                 await openAppSettings();
                               }
                               Map<String, dynamic> dateAndLocation =
@@ -301,8 +305,10 @@ class _ResultScreenState extends State<ResultScreen> {
                               await PdfReport.generateReport(
                                 userMail: userMailForPdf,
                                 reportID: "RPT12345",
-                                dateTime: dateAndLocation['dateTime'] ?? 'Unknown',
-                                location: dateAndLocation['location'] ?? 'Unknown',
+                                dateTime:
+                                    dateAndLocation['dateTime'] ?? 'Unknown',
+                                location:
+                                    dateAndLocation['location'] ?? 'Unknown',
                                 userID: userId,
                                 userName: userName,
                                 dob: dob,

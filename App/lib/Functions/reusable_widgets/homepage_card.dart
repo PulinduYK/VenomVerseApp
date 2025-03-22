@@ -17,7 +17,7 @@ class HomepageCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black38,
             blurRadius: 6,
@@ -30,11 +30,11 @@ class HomepageCard extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(7.0),
+              padding: const EdgeInsets.all(7.0),
               width: screenWidth * 0.25,
               height: double.infinity,
               decoration: BoxDecoration(
-                color: Color(0xFF756EF3),
+                color: const Color(0xFF756EF3),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Image.asset(

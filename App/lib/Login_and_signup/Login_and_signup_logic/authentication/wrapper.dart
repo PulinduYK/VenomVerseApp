@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:venomverse/Login_and_signup/Login_and_signup_logic/authentication/verifyEmailWrapper.dart';
+import 'package:venomverse/Login_and_signup/Login_and_signup_logic/authentication/verify_email_wrapper.dart';
 
-import '../../login/LoginPage.dart';
+import '../../login/login_page.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -21,7 +21,7 @@ class _WrapperState extends State<Wrapper> {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-          return const verifyEmailWrapper();
+          return const VerifyEmailWrapper();
         } else {
           return const LoginPage();
         }

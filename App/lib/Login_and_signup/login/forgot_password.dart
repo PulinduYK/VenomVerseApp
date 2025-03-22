@@ -5,10 +5,10 @@ class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
 
   @override
-  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
+  ForgotPasswordPageState createState() => ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
   String? userEmail;
   bool isResetSent = false;
@@ -46,13 +46,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         isResetSent = true;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Reset link sent to $email")),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Reset link sent to $email")),
+        );
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: $e")),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e")),
+        );
+      }
     }
   }
 
@@ -92,14 +96,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   // Rounded when not focused
-                  borderSide:
-                      BorderSide(color: Colors.grey), // Default border color
+                  borderSide: const BorderSide(
+                      color: Colors.grey), // Default border color
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   // Rounded when focused
-                  borderSide:
-                      BorderSide(color: Colors.blue), // Border color on focus
+                  borderSide: const BorderSide(
+                      color: Colors.blue), // Border color on focus
                 ),
                 prefixIcon: const Icon(Icons.email),
               ),

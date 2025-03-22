@@ -1,6 +1,6 @@
 import 'dart:core';
 
-class outcomeClass {
+class OutcomeClass {
   List<String> snakes = [
     "Banded Krait",
     "Common Krait",

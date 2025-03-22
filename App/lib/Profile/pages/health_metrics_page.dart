@@ -23,11 +23,11 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
         contentHeightFactor: 0.85,
         child: Column(
           children: [
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             CustomTextBox(
                 child: Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   "Age:",
                   style: GoogleFonts.inriaSans(
@@ -36,7 +36,7 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   age,
                   style: GoogleFonts.inriaSans(
@@ -47,11 +47,11 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                 ),
               ],
             )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomTextBox(
                 child: Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   "Height:",
                   style: GoogleFonts.inriaSans(
@@ -60,7 +60,7 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   height,
                   style: GoogleFonts.inriaSans(
@@ -71,11 +71,11 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                 ),
               ],
             )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomTextBox(
                 child: Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   "Weight:",
                   style: GoogleFonts.inriaSans(
@@ -84,7 +84,7 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   weight,
                   style: GoogleFonts.inriaSans(
@@ -95,11 +95,11 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                 ),
               ],
             )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomTextBox(
                 child: Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   "BMI:",
                   style: GoogleFonts.inriaSans(
@@ -108,7 +108,7 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   bmi,
                   style: GoogleFonts.inriaSans(
@@ -119,11 +119,11 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                 ),
               ],
             )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   colors: [
                     Color(0xff8A7FD6),
                     Color(0xff6D5FD5),
@@ -155,7 +155,7 @@ class _HealthMetricsPageState extends State<HealthMetricsPage> {
                   onPressed: () {
                     ToastPopup.showToast("Not Available");
                   },
-                  child: Text(
+                  child: const Text(
                     "Edit",
                     textAlign: TextAlign.left,
                   )),

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'camPageContent.dart';
+import 'cam_page_content.dart';
 
 class CamPage extends StatefulWidget {
   final File? imageFile;
@@ -18,7 +18,7 @@ class _CamPageState extends State<CamPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF1C16B9),

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../Functions/Results_pages/back_button.dart';
-import '../Functions/reusable_widgets/libPage_card.dart';
-import 'libraryList.dart';
 import '../../Functions/Hospital_suggestion/hospital_list.dart';
+import '../Functions/Results_pages/back_button.dart';
+import '../Functions/reusable_widgets/lib_page_card.dart';
+import 'library_list.dart';
 
-class libraryHome extends StatefulWidget {
-  const libraryHome({super.key});
+class LibraryHome extends StatefulWidget {
+  const LibraryHome({super.key});
 
   @override
-  State<libraryHome> createState() => _libraryHomeState();
+  State<LibraryHome> createState() => _LibraryHomeState();
 }
 
-class _libraryHomeState extends State<libraryHome> {
+class _LibraryHomeState extends State<LibraryHome> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -21,7 +21,7 @@ class _libraryHomeState extends State<libraryHome> {
     return Scaffold(
       body: Container(
         //height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF1C16B9),
@@ -39,9 +39,9 @@ class _libraryHomeState extends State<libraryHome> {
                   height: screenHeight * 0.15,
                   child: Row(
                     children: [
-                      CustomBackButton(),
+                      const CustomBackButton(),
                       SizedBox(
-                          width: screenWidth * 0.05,
+                        width: screenWidth * 0.05,
                       ),
                       Text(
                         "Library",
@@ -57,7 +57,7 @@ class _libraryHomeState extends State<libraryHome> {
               ),
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(40.00),
@@ -66,7 +66,8 @@ class _libraryHomeState extends State<libraryHome> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: screenHeight * 0.04,
-                      horizontal: screenWidth * 0.08,),
+                      horizontal: screenWidth * 0.08,
+                    ),
                     child: Column(
                       children: [
                         Row(
@@ -79,68 +80,68 @@ class _libraryHomeState extends State<libraryHome> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Icon(Icons.help),
+                            const Icon(Icons.help),
                           ],
                         ),
                         SizedBox(
-                            height: screenHeight * 0.03,
+                          height: screenHeight * 0.03,
                         ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => libraryList(
+                                  builder: (context) => const LibraryList(
                                         category: "Snakes",
                                         modelNo: 1,
                                       )),
                             );
                           },
-                          child: libPageCard(
+                          child: const LibPageCard(
                             imgPath: "assets/snake.png",
                             option: "SNAKES LOG",
                           ),
                         ),
                         SizedBox(
-                            height: screenHeight * 0.035,
+                          height: screenHeight * 0.035,
                         ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => libraryList(
+                                  builder: (context) => const LibraryList(
                                         category: "Insects",
                                         modelNo: 3,
                                       )),
                             );
                           },
-                          child: libPageCard(
+                          child: const LibPageCard(
                             imgPath: "assets/insect.png",
                             option: "INSECTS LOG",
                           ),
                         ),
                         SizedBox(
-                            height: screenHeight * 0.035,
+                          height: screenHeight * 0.035,
                         ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => libraryList(
+                                  builder: (context) => const LibraryList(
                                         category: "Spiders",
                                         modelNo: 2,
                                       )),
                             );
                           },
-                          child: libPageCard(
+                          child: const LibPageCard(
                             imgPath: "assets/spider.png",
                             option: "SPIDERS LOG",
                           ),
                         ),
                         SizedBox(
-                            height: screenHeight * 0.05,
+                          height: screenHeight * 0.05,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,14 +149,14 @@ class _libraryHomeState extends State<libraryHome> {
                             Container(
                               width: screenWidth * 0.6,
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Colors.black38,
                                     blurRadius: 4,
                                     offset: Offset(4, 4),
                                   ),
                                 ],
-                                gradient: LinearGradient(
+                                gradient: const LinearGradient(
                                   colors: [
                                     Color(0xff8A7FD6),
                                     Color(0xff6D5FD5),
@@ -182,24 +183,24 @@ class _libraryHomeState extends State<libraryHome> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        HospitalListScreen(), // Navigate to the hospital list
+                                        const HospitalListScreen(), // Navigate to the hospital list
                                   ),
                                 );
-
                               },
                               child: Container(
                                 width: screenWidth * 0.15,
                                 height: screenWidth * 0.15,
                                 decoration: BoxDecoration(
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black38,
                                       blurRadius: 4,
                                       offset: Offset(4, 4),
                                     ),
                                   ],
-                                  color: Color(0xFF800000),
-                                  borderRadius: BorderRadius.circular(screenWidth * 0.15 / 2),
+                                  color: const Color(0xFF800000),
+                                  borderRadius: BorderRadius.circular(
+                                      screenWidth * 0.15 / 2),
                                 ),
                                 child: Image.asset(
                                   'assets/panic.gif',

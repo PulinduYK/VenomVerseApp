@@ -4,7 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 class NotificationPdf {
   final notificationPlugin = FlutterLocalNotificationsPlugin();
 
-  bool _isInitialized = false;
+  final bool _isInitialized = false;
 
   bool get isInitialized => _isInitialized;
 

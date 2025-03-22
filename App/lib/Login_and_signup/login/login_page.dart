@@ -1,17 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../Login_and_signup_logic/services/auth.dart';
 import '../signup/createaccountmain.dart';
-import 'forgotPassword.dart';
+import 'forgot_password.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final AuthServices _auth = AuthServices();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -46,8 +47,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       const SizedBox(height: 40),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 50.0),
                       ),
                       Expanded(
@@ -161,8 +162,10 @@ class _LoginPageState extends State<LoginPage> {
                                             _emailController.text,
                                             _passwordController.text);
                                         // Pulindu Firebase login logic here (Firebase auth)
-                                        print(
-                                            'Login attempt: ${_emailController.text}');
+                                        if (kDebugMode) {
+                                          print(
+                                              'Login attempt: ${_emailController.text}');
+                                        }
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(

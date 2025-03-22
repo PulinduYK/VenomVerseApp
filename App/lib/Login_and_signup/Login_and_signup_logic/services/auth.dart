@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../models/userModel.dart';
+import '../models/user_model.dart';
 import 'firebase.dart';
 
 class AuthServices {
@@ -16,7 +17,7 @@ class AuthServices {
     return _auth.currentUser!;
   }
 
-  bool VerifyUser() {
+  bool verifyuser() {
     if (_auth.currentUser!.emailVerified) {
       return true;
     } else {
@@ -70,12 +71,14 @@ class AuthServices {
         errorMessage = "Your password is too weak.";
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMessage),
-          backgroundColor: Colors.red,
-        ),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
 
       return null;
     }
@@ -96,15 +99,19 @@ class AuthServices {
       if (err.code == 'invalid-credential') {
         errorMessage = "Invalid credential check credential again";
       } else {
-        print(err.code);
+        if (kDebugMode) {
+          print(err.code);
+        }
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMessage),
-          backgroundColor: Colors.red,
-        ),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
 
       return null;
     }
@@ -115,7 +122,9 @@ class AuthServices {
     try {
       return await _auth.signOut();
     } catch (err) {
-      print(err.toString());
+      if (kDebugMode) {
+        print(err.toString());
+      }
       return null;
     }
   }

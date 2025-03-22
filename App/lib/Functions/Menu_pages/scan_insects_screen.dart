@@ -1,16 +1,17 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../Camera/camMethodClass.dart';
-import '../Camera/camPage.dart';
+import '../Camera/cam_method_class.dart';
+import '../Camera/cam_page.dart';
 import '../Hospital_suggestion/hospital_list.dart';
 import '../Results_pages/back_button.dart';
 import '../scan/gallery.dart';
 
 class ScanInsectsScreen extends StatelessWidget {
   ScanInsectsScreen({super.key});
-  final camMethodClass camM = camMethodClass();
+  final CamMethodClass camM = CamMethodClass();
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +48,8 @@ class ScanInsectsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 180.0),
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
                 ),
@@ -112,7 +113,7 @@ class ScanInsectsScreen extends StatelessWidget {
                         children: [
                           _buildGradientButton("Scan Now", () async {
                             File? pickedFile = await camM.pickImage(context);
-                            if (pickedFile != null) {
+                            if (pickedFile != null && context.mounted) {
                               // Navigate to ImageCapture with the selected image
                               Navigator.push(
                                 context,
@@ -131,7 +132,7 @@ class ScanInsectsScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    UploadImagesPage(modelNum: 3),
+                                    const UploadImagesPage(modelNum: 3),
                               ),
                             );
                           }),
@@ -147,7 +148,7 @@ class ScanInsectsScreen extends StatelessWidget {
           ),
 
           // Back Button
-          Positioned(top: 54, left: 20, child: CustomBackButton()),
+          const Positioned(top: 54, left: 20, child: CustomBackButton()),
 
           // Panic Button at Bottom Right
           Positioned(
@@ -212,15 +213,17 @@ class ScanInsectsScreen extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                HospitalListScreen(), // Navigate to the hospital list
+                const HospitalListScreen(), // Navigate to the hospital list
           ),
         );
-        print("Panic Button Pressed!");
+        if (kDebugMode) {
+          print("Panic Button Pressed!");
+        }
       },
       child: Container(
         width: 60,
         height: 65,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Color(0xFF800000),
           boxShadow: [
@@ -248,7 +251,7 @@ class ScanInsectsScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 18,
-          backgroundColor: Color(0xff8A7FD6),
+          backgroundColor: const Color(0xff8A7FD6),
           child: Text(
             number.toString(),
             style: const TextStyle(

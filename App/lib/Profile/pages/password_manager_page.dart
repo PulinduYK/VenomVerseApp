@@ -7,15 +7,11 @@ class PasswordManagerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProfilePageTemplate(
+    return const ProfilePageTemplate(
         title: "Password Manager",
         contentHeightFactor: 0.85,
         child: Column(
-          children:[
-
-          ],
-        )
-    );
+          children: [],
+        ));
   }
 }
-

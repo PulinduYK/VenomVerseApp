@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
@@ -34,7 +35,9 @@ class TeamMember {
         throw 'Failed to load GitHub profile image. Status code: ${response.statusCode}';
       }
     } catch (e) {
-      print("Error fetching GitHub profile image: $e");
+      if (kDebugMode) {
+        print("Error fetching GitHub profile image: $e");
+      }
       return null; // Return null if there's an error
     }
   }
@@ -125,7 +128,7 @@ class AboutUsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 50,
                             child:
                                 CircularProgressIndicator(), // Show loading indicator while fetching image
@@ -165,7 +168,7 @@ class AboutUsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.grey,
                             child: Icon(Icons
@@ -206,7 +209,7 @@ class AboutUsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.grey,
                           ),

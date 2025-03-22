@@ -48,12 +48,12 @@ class _SettingsPageState extends State<SettingsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Create New Account"),
-          content: Text("Would you like to create a new account?"),
+          title: const Text("Create New Account"),
+          content: const Text("Would you like to create a new account?"),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -73,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 elevation: 2, // Shadow (optional)
               ),
-              child: Text("Proceed"),
+              child: const Text("Proceed"),
             ),
           ],
         );
@@ -93,12 +93,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   0.10), // For Space// For Space
           CircleAvatar(
             radius: 62.5, // 125 / 2
-            backgroundColor: Color(0xFFD9D9D9), // Placeholder color
+            backgroundColor: const Color(0xFFD9D9D9), // Placeholder color
             backgroundImage: profileImage != '' && profileImage.isNotEmpty
                 ? NetworkImage(profileImage) as ImageProvider
                 : const AssetImage('assets/default_profile_picture.jpg'),
           ),
-          SizedBox(height: 20), // For Space
+          const SizedBox(height: 20), // For Space
           // StreamBuilder for username
           StreamBuilder<String>(
             stream: widget.usernameStream,
@@ -143,13 +143,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SettingsEditPage()),
+                          builder: (context) => const SettingsEditPage()),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     "Edit",
                   )),
-              SizedBox(width: 10), // For Space between buttons
+              const SizedBox(width: 10), // For Space between buttons
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize:
@@ -176,7 +176,8 @@ class _SettingsPageState extends State<SettingsPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AccountDetailsPage()),
+                MaterialPageRoute(
+                    builder: (context) => const AccountDetailsPage()),
               );
             },
           ),
@@ -186,7 +187,7 @@ class _SettingsPageState extends State<SettingsPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HelpPage()),
+                MaterialPageRoute(builder: (context) => const HelpPage()),
               );
             },
           ),
@@ -196,7 +197,7 @@ class _SettingsPageState extends State<SettingsPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AboutUsPage()),
+                MaterialPageRoute(builder: (context) => const AboutUsPage()),
               );
             },
           ),
@@ -205,7 +206,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: [
                   Color(0xFFB9161C), // 0%
                   Color(0xFFF28E8E), // 100%
@@ -235,14 +236,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
-                  if (mounted) {
+                  if (context.mounted) {
                     Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => Wrapper()),
+                      MaterialPageRoute(builder: (context) => const Wrapper()),
                       (route) => false,
                     ); // Clears all previous routes);
                   }
                 },
-                child: Text(
+                child: const Text(
                   "Log out",
                   textAlign: TextAlign.left,
                 )),

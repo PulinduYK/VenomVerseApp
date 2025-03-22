@@ -217,7 +217,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 _emailController.text,
                                                 _confirmPasswordController
                                                     .text);
-                                        if (mounted) {
+                                        if (context.mounted) {
                                           Navigator.of(context).popUntil(
                                               (route) => route.isFirst);
                                         }

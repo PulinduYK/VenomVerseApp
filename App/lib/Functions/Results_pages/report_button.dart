@@ -41,9 +41,9 @@ class ReportButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
           ),
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Icon(Icons.picture_as_pdf, color: Colors.white),
               SizedBox(width: 8),
               Text(

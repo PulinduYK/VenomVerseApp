@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class libPageCard extends StatelessWidget {
+class LibPageCard extends StatelessWidget {
   //final IconData iconData;
   final String option;
   final String imgPath;
-  const libPageCard({super.key, required this.option, required this.imgPath});
+  const LibPageCard({super.key, required this.option, required this.imgPath});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class libPageCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(screenWidth * 0.15),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black38,
             blurRadius: 6,
@@ -32,7 +32,7 @@ class libPageCard extends StatelessWidget {
               width: screenWidth * 0.3,
               height: double.infinity,
               decoration: BoxDecoration(
-                color: Color(0xFF756EF3),
+                color: const Color(0xFF756EF3),
                 borderRadius: BorderRadius.circular(screenWidth * 0.15),
               ),
               child: Image.asset(
@@ -40,7 +40,7 @@ class libPageCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-                width: screenWidth * 0.05,
+              width: screenWidth * 0.05,
             ),
             Text(
               option,

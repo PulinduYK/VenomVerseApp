@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:venomverse/Profile/pages/settings_edit_page.dart';
@@ -51,7 +52,9 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
         email = 'Error';
         //profileImage = ''; // Default to empty string for error case
       });
-      print('Error retrieving user data: $e');
+      if (kDebugMode) {
+        print('Error retrieving user data: $e');
+      }
     }
   }
 
@@ -66,7 +69,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
             CustomTextBox(
                 child: Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   "Date of Birth:",
                   style: GoogleFonts.inriaSans(
@@ -75,7 +78,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Expanded(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -96,7 +99,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
             CustomTextBox(
                 child: Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   "Gender:",
                   style: GoogleFonts.inriaSans(
@@ -105,7 +108,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Expanded(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -126,7 +129,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
             CustomTextBox(
                 child: Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   "Phone Number:",
                   style: GoogleFonts.inriaSans(
@@ -135,7 +138,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Expanded(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -156,7 +159,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
             CustomTextBox(
                 child: Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   "Email:",
                   style: GoogleFonts.inriaSans(
@@ -165,7 +168,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Expanded(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -186,7 +189,7 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   colors: [
                     Color(0xff8A7FD6),
                     Color(0xff6D5FD5),
@@ -220,10 +223,10 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SettingsEditPage()),
+                          builder: (context) => const SettingsEditPage()),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     "Edit",
                     textAlign: TextAlign.left,
                   )),

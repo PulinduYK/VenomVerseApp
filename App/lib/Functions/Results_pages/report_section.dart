@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
@@ -41,7 +42,8 @@ class PdfReport {
             style: pw.TextStyle(
               fontSize: 10,
               fontWeight: pw.FontWeight.bold,
-              color: PdfColor(1.0, 0.0, 0.0), // Red color (RGB: 1.0, 0.0, 0.0)
+              color: const PdfColor(
+                  1.0, 0.0, 0.0), // Red color (RGB: 1.0, 0.0, 0.0)
             ),
             textAlign:
                 pw.TextAlign.justify, // Optional: Align text to the center
@@ -79,7 +81,7 @@ class PdfReport {
 
       // Create the email message (Ensure proper construction)
       final message = Message()
-        ..from = Address(smtpUser, 'Venom Verse App') // Sender's email
+        ..from = const Address(smtpUser, 'Venom Verse App') // Sender's email
         ..recipients.add(
           email,
         ) // Replace with recipient's email
@@ -91,10 +93,14 @@ class PdfReport {
       // 5️⃣ Send the email
       await send(message, smtpServer);
       msg = "✅ Email Sent Successfully!";
-      print("✅ Email Sent Successfully!");
+      if (kDebugMode) {
+        print("✅ Email Sent Successfully!");
+      }
     } catch (e) {
       msg = "❌ Error Sending Email: $e";
-      print("❌ Error Sending Email: $e");
+      if (kDebugMode) {
+        print("❌ Error Sending Email: $e");
+      }
     }
     return msg;
   }
@@ -205,7 +211,9 @@ class PdfReport {
       title: 'VenomVerse',
       body: newMsg,
     );
-    print(newMsg);
+    if (kDebugMode) {
+      print(newMsg);
+    }
 
     // Open Preview
     Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());

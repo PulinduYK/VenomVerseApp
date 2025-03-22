@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -42,11 +43,13 @@ class Hospital {
 }
 
 class HospitalListScreen extends StatefulWidget {
+  const HospitalListScreen({super.key});
+
   @override
-  _HospitalListScreenState createState() => _HospitalListScreenState();
+  HospitalListScreenState createState() => HospitalListScreenState();
 }
 
-class _HospitalListScreenState extends State<HospitalListScreen> {
+class HospitalListScreenState extends State<HospitalListScreen> {
   final FirebaseService _firebaseService = FirebaseService();
   List<Hospital> hospitals = [];
   List<Hospital> filteredHospitals = []; //  Added for search functionality
@@ -98,7 +101,9 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
         isLoading = false;
       });
     } catch (e) {
-      print("Error fetching hospitals: ${e.toString()}");
+      if (kDebugMode) {
+        print("Error fetching hospitals: ${e.toString()}");
+      }
       setState(() {
         error = "Error loading hospitals: ${e.toString()}";
         isLoading = false;
@@ -196,7 +201,8 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                       controller: searchController,
                       onChanged: _filterHospitals,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search, color: Colors.grey),
+                        prefixIcon:
+                            const Icon(Icons.search, color: Colors.grey),
                         hintText: "Search hospitals...",
                         filled: true,
                         fillColor: Colors.grey[200],
@@ -211,48 +217,53 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                     // Hospital List
                     Expanded(
                       child: isLoading
-                          ? Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xff8A7FD6)),
-                        ),
-                      )
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color(0xff8A7FD6)),
+                              ),
+                            )
                           : error != null
-                          ? Center(
-                        child: Text(
-                          error!,
-                          style: TextStyle(fontSize: 16, color: Colors.red),
-                        ),
-                      )
-                          : hospitals.isEmpty
-                          ? Center(
-                        child: Text(
-                          "No hospitals found",
-                          style: TextStyle(fontSize: 16, color: Colors.black54),
-                        ),
-                      )
-                          : ListView.builder(
-                        itemCount: filteredHospitals.length,
-                        itemBuilder: (context, index) {
-                          final hospital = filteredHospitals[index];
-                          return _buildHospitalCard(context, hospital);
-                        },
-                      ),
+                              ? Center(
+                                  child: Text(
+                                    error!,
+                                    style: const TextStyle(
+                                        fontSize: 16, color: Colors.red),
+                                  ),
+                                )
+                              : hospitals.isEmpty
+                                  ? const Center(
+                                      child: Text(
+                                        "No hospitals found",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black54),
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      itemCount: filteredHospitals.length,
+                                      itemBuilder: (context, index) {
+                                        final hospital =
+                                            filteredHospitals[index];
+                                        return _buildHospitalCard(
+                                            context, hospital);
+                                      },
+                                    ),
                     )
-
                   ])),
             ),
           ),
           Positioned(
-            bottom: 20,  // Distance from the bottom
-            right: 20,    // Distance from the left
+            bottom: 20, // Distance from the bottom
+            right: 20, // Distance from the left
             child: GestureDetector(
               onTap: () => _makePhoneCall("1990"), // Calls 1990 on tap
               child: Container(
-                 // Padding around the PNG
+                // Padding around the PNG
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(50), // Rounded button
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black26,
                       blurRadius: 10,
@@ -268,7 +279,6 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
               ),
             ),
           ),
-
         ],
       ),
     );
@@ -335,7 +345,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: Color(0xffB7AEF3),
+                          color: const Color(0xffB7AEF3),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -404,7 +414,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
                 padding: const EdgeInsets.all(16),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xffB7AEF3),
+                  color: const Color(0xffB7AEF3),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(

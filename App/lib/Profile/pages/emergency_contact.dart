@@ -12,15 +12,11 @@ class EmergencyContactPage extends StatefulWidget {
 class _EmergencyContactPageState extends State<EmergencyContactPage> {
   @override
   Widget build(BuildContext context) {
-    return ProfilePageTemplate(
+    return const ProfilePageTemplate(
         title: "Emergency Contacts",
         contentHeightFactor: 0.85,
         child: Column(
-          children:[
-
-          ],
-        )
-    );
+          children: [],
+        ));
   }
 }
-

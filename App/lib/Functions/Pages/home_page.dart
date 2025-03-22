@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../History/historyPage.dart';
+import '../../History/history_page.dart';
 import '../Heat Map/google_map_screen.dart';
 import 'home_page_content.dart';
 
@@ -16,9 +16,9 @@ class _HomePageState extends State<HomePage> {
 
   // List of pages to switch between
   final List<Widget> _pages = [
-    HomePageContent(),
-    HistoryPage(),
-    GoogleMapScreen(),
+    const HomePageContent(),
+    const HistoryPage(),
+    const GoogleMapScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
       // Navigate to GoogleMapScreen instead of switching tabs
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => GoogleMapScreen()),
+        MaterialPageRoute(builder: (context) => const GoogleMapScreen()),
       );
     } else {
       setState(() {
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.history_rounded), label: "History"),
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         //height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF1C16B9),

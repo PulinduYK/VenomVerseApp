@@ -7,14 +7,11 @@ class TrackingWearablePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProfilePageTemplate(
+    return const ProfilePageTemplate(
         title: "Tracking Wearable",
         contentHeightFactor: 0.85,
         child: Column(
-          children:[
-
-          ],
-        )
-    );
+          children: [],
+        ));
   }
 }

@@ -20,10 +20,10 @@ class ResultScreenLib extends StatefulWidget {
   });
 
   @override
-  _ResultScreenState createState() => _ResultScreenState();
+  ResultScreenState createState() => ResultScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreenLib> {
+class ResultScreenState extends State<ResultScreenLib> {
   final FirebaseService _firebaseService = FirebaseService();
 
   String name = "Loading.....";
@@ -63,25 +63,27 @@ class _ResultScreenState extends State<ResultScreenLib> {
     confidence = confidence * 100;
     if (confidence < 90) {
       Future.delayed(Duration.zero, () {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Center(
-              child: Text("Low Accuracy"),
-            ),
-            content: Text(
-                "Image uploaded Successfully But The accuracy of the detection is low. Please retake the image for better results."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: Text("OK"),
+        if (mounted) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Center(
+                child: Text("Low Accuracy"),
               ),
-            ],
-          ),
-        );
+              content: const Text(
+                  "Image uploaded Successfully But The accuracy of the detection is low. Please retake the image for better results."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
+          );
+        }
       });
     } else {
       _fetchSnakeData();
@@ -95,14 +97,14 @@ class _ResultScreenState extends State<ResultScreenLib> {
       body: Stack(
         children: [
           // Background Image
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 370,
             child: Image.asset(imagePath, fit: BoxFit.cover),
           ),
 
           // Back Button (Top-Left)
-          Positioned(top: 50, left: 15, child: CustomBackButton()),
+          const Positioned(top: 50, left: 15, child: CustomBackButton()),
 
           // Result Card (Bottom Section)
           Align(
@@ -110,7 +112,7 @@ class _ResultScreenState extends State<ResultScreenLib> {
             child: Container(
               height: MediaQuery.of(context).size.height * 0.67,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
@@ -118,13 +120,13 @@ class _ResultScreenState extends State<ResultScreenLib> {
                 ),
                 boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
               ),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Result Title
-                    Center(
+                    const Center(
                       heightFactor: 2,
                       child: Text(
                         "Result",
@@ -132,7 +134,7 @@ class _ResultScreenState extends State<ResultScreenLib> {
                             fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     // Snake Name & Lethality Badge
                     Center(
@@ -141,7 +143,7 @@ class _ResultScreenState extends State<ResultScreenLib> {
                         children: [
                           Container(
                             width: 190, // Set a fixed width
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 8),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -149,15 +151,15 @@ class _ResultScreenState extends State<ResultScreenLib> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                              "Name:- ${name}",
-                              style: TextStyle(
+                              "Name:- $name",
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w500),
                               softWrap: true, // Ensures text wraps
                               overflow: TextOverflow
                                   .visible, // Ensures text doesn't get cut off
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           LethalityBadge(
@@ -167,14 +169,14 @@ class _ResultScreenState extends State<ResultScreenLib> {
                       ),
                     ),
 
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
 
                     ImmediateActionsSection(actions: remedies),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
 
                     // Description Section
                     DescriptionSection(description: description),
-                    SizedBox(height: 65),
+                    const SizedBox(height: 65),
                   ],
                 ),
               ),
@@ -190,14 +192,14 @@ class _ResultScreenState extends State<ResultScreenLib> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        HospitalListScreen(), // Navigate to the hospital list
+                        const HospitalListScreen(), // Navigate to the hospital list
                   ),
                 );
               },
               child: Container(
                 width: 60,
                 height: 65,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(

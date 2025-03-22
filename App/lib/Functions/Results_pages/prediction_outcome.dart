@@ -1,4 +1,4 @@
-class predictionOutcome {
+class PredictionOutcome {
   List<String> snakeNames = ["Banded Krait"];
   String numberToSnakeClass(number) {
     if (number != null) {

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../Login_and_signup_logic/services/firebase.dart';
-import '../../done/SuccessPage.dart';
+import '../../done/success_page.dart';
 
 class BirthdayGenderPage extends StatefulWidget {
   const BirthdayGenderPage({super.key});
 
   @override
-  _BirthdayGenderPageState createState() => _BirthdayGenderPageState();
+  BirthdayGenderPageState createState() => BirthdayGenderPageState();
 }
 
-class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
+class BirthdayGenderPageState extends State<BirthdayGenderPage> {
   final TextEditingController _fullNameController = TextEditingController();
   DateTime _selectedDate = DateTime(2024, 12, 25);
   String _selectedGender = 'Male';
@@ -26,12 +26,13 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Color(0xFF6D5FD5),
-            colorScheme: ColorScheme.light(
+            primaryColor: const Color(0xFF6D5FD5),
+            colorScheme: const ColorScheme.light(
               primary: Color(0xFF6D5FD5),
               secondary: Color(0xFF1C16B9),
             ),
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           child: child!,
         );
@@ -113,7 +114,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                               const SizedBox(height: 50),
                               // Full Name Input Field (No Border)
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 6),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[200],
@@ -121,13 +122,14 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.person, color: Colors.black54),
+                                    const Icon(Icons.person,
+                                        color: Colors.black54),
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: TextField(
                                         controller: _fullNameController,
-                                        style: TextStyle(fontSize: 16),
-                                        decoration: InputDecoration(
+                                        style: const TextStyle(fontSize: 16),
+                                        decoration: const InputDecoration(
                                           hintText: "Full Name",
                                           border: InputBorder
                                               .none, // Hides the border
@@ -143,7 +145,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                               const SizedBox(height: 20),
                               // Full Name Input Field (No Border)
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 6),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[200],
@@ -151,14 +153,14 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.bug_report_outlined,
+                                    const Icon(Icons.bug_report_outlined,
                                         color: Colors.black54),
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: TextField(
                                         controller: _allergieControl,
-                                        style: TextStyle(fontSize: 16),
-                                        decoration: InputDecoration(
+                                        style: const TextStyle(fontSize: 16),
+                                        decoration: const InputDecoration(
                                           hintText: "Allergies",
                                           border: InputBorder
                                               .none, // Hides the border
@@ -176,7 +178,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                               GestureDetector(
                                 onTap: () => _selectDate(context),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       vertical: 16, horizontal: 20),
                                   decoration: BoxDecoration(
                                     color: Colors.grey[200],
@@ -189,11 +191,11 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                       Text(
                                         DateFormat('MMMM d, yyyy')
                                             .format(_selectedDate),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18,
                                             color: Colors.black54),
                                       ),
-                                      Icon(Icons.calendar_today,
+                                      const Icon(Icons.calendar_today,
                                           color: Colors.black54),
                                     ],
                                   ),
@@ -202,7 +204,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                               const SizedBox(height: 20),
                               // Modern Gender Selection
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 40, vertical: 12),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[200],
@@ -219,10 +221,10 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                         });
                                       },
                                       child: Chip(
-                                        label: Text('Male'),
+                                        label: const Text('Male'),
                                         backgroundColor:
                                             _selectedGender == 'Male'
-                                                ? Color(0xFF6D5FD5)
+                                                ? const Color(0xFF6D5FD5)
                                                 : Colors.grey[300],
                                         labelStyle: TextStyle(
                                           color: _selectedGender == 'Male'
@@ -238,10 +240,10 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                         });
                                       },
                                       child: Chip(
-                                        label: Text('Female'),
+                                        label: const Text('Female'),
                                         backgroundColor:
                                             _selectedGender == 'Female'
-                                                ? Color(0xFF6D5FD5)
+                                                ? const Color(0xFF6D5FD5)
                                                 : Colors.grey[300],
                                         labelStyle: TextStyle(
                                           color: _selectedGender == 'Female'
@@ -271,7 +273,7 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                     if (fullName.isEmpty) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        SnackBar(
+                                        const SnackBar(
                                           content: Text(
                                               "Please enter your full name"),
                                           backgroundColor: Colors.white10,
@@ -284,13 +286,15 @@ class _BirthdayGenderPageState extends State<BirthdayGenderPage> {
                                         _selectedDate.toString(),
                                         _selectedGender,
                                         _allergieControl.text);
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SuccessPage(),
-                                      ),
-                                    );
+                                    if (context.mounted) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SuccessPage(),
+                                        ),
+                                      );
+                                    }
                                   },
                                   child: Ink(
                                     decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../Results_pages/result_screen.dart';
 
-class camMethodClass {
+class CamMethodClass {
   final FirebaseService _firebaseService = FirebaseService();
   File? imageFile;
 
@@ -24,7 +25,7 @@ class camMethodClass {
   // Function to pick an image from the camera
   Future<File?> pickImage(BuildContext context) async {
     bool hasPermission = await checkPermission();
-    if (!hasPermission) {
+    if (!hasPermission && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Camera permission denied")),
       );
@@ -38,7 +39,9 @@ class camMethodClass {
 
       return File(pickedFile.path);
     } on PlatformException catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return null;
     }
   }
@@ -80,31 +83,41 @@ class camMethodClass {
         // Store the JSON response in a variable
         Map<String, dynamic> uploadedImageData = jsonResponse;
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ResultScreen(
-              uploadedImageData: uploadedImageData,
-              previousPage: "scan",
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultScreen(
+                uploadedImageData: uploadedImageData,
+                previousPage: "scan",
+              ),
             ),
-          ),
-        );
+          );
+        }
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Image uploaded successfully!")),
-        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Image uploaded successfully!")),
+          );
+        }
 
-        print(jsonResponse);
+        if (kDebugMode) {
+          print(jsonResponse);
+        }
       } else {
         await _firebaseService.insertHistory(modelNum, false, false, "none");
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to upload image")),
-        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to upload image")),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
     }
   }
 }

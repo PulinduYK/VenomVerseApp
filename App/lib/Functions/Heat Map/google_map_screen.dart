@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,16 +9,18 @@ import 'package:permission_handler/permission_handler.dart';
 import 'heat_map_handler.dart';
 
 class GoogleMapScreen extends StatefulWidget {
+  const GoogleMapScreen({super.key});
+
   @override
-  _GoogleMapScreenState createState() => _GoogleMapScreenState();
+  GoogleMapScreenState createState() => GoogleMapScreenState();
 }
 
-class _GoogleMapScreenState extends State<GoogleMapScreen> {
+class GoogleMapScreenState extends State<GoogleMapScreen> {
   GoogleMapController? _mapController;
-  LatLng _currentPosition = LatLng(6.9271, 79.8612);
+  LatLng _currentPosition = const LatLng(6.9271, 79.8612);
   Set<Marker> _markers = {};
   Set<Circle> _heatCircles = {};
-  HeatMapHandler _heatMapHandler = HeatMapHandler();
+  final HeatMapHandler _heatMapHandler = HeatMapHandler();
   String selectedFilter = "all";
   double _currentZoom = 13;
   Timer? _zoomTimer;
@@ -37,7 +40,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     if (status.isGranted) {
       _getCurrentLocation();
     } else {
-      print("⚠ Location permission denied");
+      if (kDebugMode) {
+        print("⚠ Location permission denied");
+      }
     }
   }
 
@@ -53,7 +58,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
         _heatCircles = result['circles']?.cast<Circle>() ?? {};
       });
     } catch (e) {
-      print("⚠ Fetch error: $e");
+      if (kDebugMode) {
+        print("⚠ Fetch error: $e");
+      }
     } finally {
       setState(() => _isFetching = false);
     }
@@ -69,7 +76,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       _mapController
           ?.animateCamera(CameraUpdate.newLatLngZoom(_currentPosition, 13));
     } catch (e) {
-      print("⚠ Error getting location: $e");
+      if (kDebugMode) {
+        print("⚠ Error getting location: $e");
+      }
     }
   }
 
@@ -103,7 +112,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   void _onCameraMove(CameraPosition position) {
     _currentZoom = position.zoom;
     if (_zoomTimer != null && _zoomTimer!.isActive) return;
-    _zoomTimer = Timer(Duration(milliseconds: 500), () {
+    _zoomTimer = Timer(const Duration(milliseconds: 500), () {
       _updateCircleSize();
     });
   }
@@ -124,7 +133,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   }
 
   void _startWaveAnimation() {
-    Timer.periodic(Duration(seconds: 2), (timer) {
+    Timer.periodic(const Duration(seconds: 2), (timer) {
       if (mounted) {
         setState(() {
           _heatCircles = _heatCircles.map((circle) {
@@ -192,31 +201,31 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                   heroTag: "zoomIn",
                   onPressed: _zoomIn,
                   backgroundColor: Colors.deepPurple,
-                  child: Icon(Icons.add, color: Colors.white),
+                  child: const Icon(Icons.add, color: Colors.white),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 FloatingActionButton(
                   heroTag: "zoomOut",
                   onPressed: _zoomOut,
                   backgroundColor: Colors.deepPurple,
-                  child: Icon(Icons.remove, color: Colors.white),
+                  child: const Icon(Icons.remove, color: Colors.white),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 FloatingActionButton(
                   heroTag: "fetchData",
                   onPressed: _fetchData,
                   backgroundColor:
                       _isFetching ? Colors.purpleAccent : Colors.deepPurple,
                   child: _isFetching
-                      ? CircularProgressIndicator(color: Colors.white)
-                      : Icon(Icons.refresh, color: Colors.white),
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Icon(Icons.refresh, color: Colors.white),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 FloatingActionButton(
                   heroTag: "getLocation",
                   onPressed: _getCurrentLocation,
                   backgroundColor: Colors.deepPurple,
-                  child: Icon(Icons.my_location, color: Colors.white),
+                  child: const Icon(Icons.my_location, color: Colors.white),
                 ),
               ],
             ),
@@ -232,7 +241,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       style: ElevatedButton.styleFrom(
         backgroundColor: selectedFilter == type ? color : Colors.grey,
       ),
-      child: Text(label, style: TextStyle(color: Colors.white)),
+      child: Text(label, style: const TextStyle(color: Colors.white)),
     );
   }
 }

@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import '../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 
 class HistoryPage extends StatefulWidget {
+  const HistoryPage({super.key});
+
   @override
-  _HistoryPageState createState() => _HistoryPageState();
+  HistoryPageState createState() => HistoryPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class HistoryPageState extends State<HistoryPage> {
   final FirebaseService _firebaseService = FirebaseService();
 
   void _clearHistory() async {
@@ -23,7 +25,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       body: Container(
         //height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF1C16B9),
@@ -42,7 +44,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "History",
                         style: TextStyle(
                           fontSize: 24,
@@ -51,25 +53,26 @@ class _HistoryPageState extends State<HistoryPage> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete_sweep,
+                        icon: const Icon(Icons.delete_sweep,
                             size: 40, color: Colors.white),
                         onPressed: () {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: Text("Clear All History?"),
-                              content: Text("This action cannot be undone."),
+                              title: const Text("Clear All History?"),
+                              content:
+                                  const Text("This action cannot be undone."),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.pop(context),
-                                  child: Text("Cancel"),
+                                  child: const Text("Cancel"),
                                 ),
                                 TextButton(
                                   onPressed: () {
                                     _clearHistory();
                                     Navigator.pop(context);
                                   },
-                                  child: Text("Clear",
+                                  child: const Text("Clear",
                                       style: TextStyle(color: Colors.red)),
                                 ),
                               ],
@@ -83,7 +86,7 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(40.00),
@@ -97,14 +100,16 @@ class _HistoryPageState extends State<HistoryPage> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(
+                          return const Center(
                               child:
                                   CircularProgressIndicator()); // Loading indicator
                         } else if (snapshot.hasError) {
-                          return Center(child: Text("Error loading history"));
+                          return const Center(
+                              child: Text("Error loading history"));
                         } else if (!snapshot.hasData ||
                             snapshot.data!.isEmpty) {
-                          return Center(child: Text("No history available"));
+                          return const Center(
+                              child: Text("No history available"));
                         }
 
                         List<Map<String, dynamic>> history = snapshot.data!;
@@ -117,7 +122,7 @@ class _HistoryPageState extends State<HistoryPage> {
                             return true;
                           },
                           child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             itemCount: history.length,
                             itemBuilder: (context, index) {
                               final item = history[index];
@@ -127,15 +132,15 @@ class _HistoryPageState extends State<HistoryPage> {
                                 ),
                                 elevation: 4,
                                 child: ListTile(
-                                  contentPadding: EdgeInsets.all(16),
-                                  leading: CircleAvatar(
+                                  contentPadding: const EdgeInsets.all(16),
+                                  leading: const CircleAvatar(
                                     backgroundColor: Colors.deepPurpleAccent,
                                     child: Icon(Icons.history,
                                         color: Colors.white),
                                   ),
                                   title: Text(
                                     item['UserPreferredType'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -143,27 +148,32 @@ class _HistoryPageState extends State<HistoryPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(height: 4),
+                                      const SizedBox(height: 4),
                                       Text(
                                         "Status: ${item['status']}",
-                                        style: TextStyle(color: Colors.black87),
+                                        style: const TextStyle(
+                                            color: Colors.black87),
                                       ),
                                       Text(
                                         "Preview: ${item['previewStatus']}",
-                                        style: TextStyle(color: Colors.black87),
+                                        style: const TextStyle(
+                                            color: Colors.black87),
                                       ),
                                       Text(
                                         "Name: ${item['detectedName']}",
-                                        style: TextStyle(color: Colors.black87),
+                                        style: const TextStyle(
+                                            color: Colors.black87),
                                       ),
                                       Text(
                                         "Time: ${item['timestamp']}",
-                                        style: TextStyle(color: Colors.grey),
+                                        style:
+                                            const TextStyle(color: Colors.grey),
                                       ),
                                     ],
                                   ),
                                   trailing: IconButton(
-                                    icon: Icon(Icons.delete, color: Colors.red),
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red),
                                     onPressed: () => _deleteHistory(item['id']),
                                   ),
                                 ),

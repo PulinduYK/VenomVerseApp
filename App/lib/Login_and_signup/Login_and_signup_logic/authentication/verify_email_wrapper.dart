@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../services/auth.dart';
-import 'Homewrapper.dart';
+import 'home_wrapper.dart';
 
-class verifyEmailWrapper extends StatefulWidget {
-  const verifyEmailWrapper({super.key});
+class VerifyEmailWrapper extends StatefulWidget {
+  const VerifyEmailWrapper({super.key});
 
   @override
-  State<verifyEmailWrapper> createState() => _verifyEmailWrapperState();
+  State<VerifyEmailWrapper> createState() => _VerifyEmailWrapperState();
 }
 
-class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
+class _VerifyEmailWrapperState extends State<VerifyEmailWrapper> {
   final AuthServices _auth = AuthServices();
   bool isEmailVerified = false;
   Timer? timer;
@@ -21,7 +21,7 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isEmailVerified = _auth.VerifyUser();
+    isEmailVerified = _auth.verifyuser();
 
     if (!isEmailVerified) {
       sendVerificationEmail();
@@ -33,6 +33,7 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
     }
   }
 
+  @override
   void dispose() {
     timer?.cancel();
     super.dispose();
@@ -40,7 +41,7 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
 
   Future checkEmailVerified() async {
     await _auth.reloadUser();
-    bool emailVerified = _auth.VerifyUser();
+    bool emailVerified = _auth.verifyuser();
     if (emailVerified) {
       setState(() {
         isEmailVerified = true;
@@ -54,21 +55,23 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
       final user = _auth.getUser();
       await user.sendEmailVerification();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+          ),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? HomeWrapper()
+      ? const HomeWrapper()
       : Scaffold(
           body: Container(
             //height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   Color(0xFF1C16B9),
@@ -87,7 +90,7 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Verification Note",
                             style: TextStyle(
                               fontSize: 24,
@@ -96,7 +99,7 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.question_mark_rounded,
+                            icon: const Icon(Icons.question_mark_rounded,
                                 size: 40, color: Colors.white),
                             onPressed: () {},
                           ),
@@ -106,8 +109,8 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(20.0),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.all(20.0),
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(40.00),
@@ -150,14 +153,14 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                               child: Container(
                                 width: 265,
                                 decoration: BoxDecoration(
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black38,
                                       blurRadius: 4,
                                       offset: Offset(4, 4),
                                     ),
                                   ],
-                                  gradient: LinearGradient(
+                                  gradient: const LinearGradient(
                                     colors: [
                                       Color(0xff8A7FD6),
                                       Color(0xff6D5FD5),
@@ -165,8 +168,8 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                                   ),
                                   borderRadius: BorderRadius.circular(10.00),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
                                   child: Text(
                                     "resend email",
                                     style: TextStyle(
@@ -179,7 +182,7 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             GestureDetector(
@@ -189,14 +192,14 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                               child: Container(
                                 width: 265,
                                 decoration: BoxDecoration(
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black38,
                                       blurRadius: 4,
                                       offset: Offset(4, 4),
                                     ),
                                   ],
-                                  gradient: LinearGradient(
+                                  gradient: const LinearGradient(
                                     colors: [
                                       Color(0xff8A7FD6),
                                       Color(0xff6D5FD5),
@@ -204,8 +207,8 @@ class _verifyEmailWrapperState extends State<verifyEmailWrapper> {
                                   ),
                                   borderRadius: BorderRadius.circular(10.00),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
                                   child: Text(
                                     "sign out",
                                     style: TextStyle(

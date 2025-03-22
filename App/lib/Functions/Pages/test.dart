@@ -15,12 +15,12 @@ class TestPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context); // Goes back to the previous screen
                 },
-                child: Text("Go Back"),
+                child: const Text("Go Back"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
-              Text("This is home"),
+              const Text("This is home"),
             ],
           ),
         ),

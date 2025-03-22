@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../Functions/Hospital_suggestion/hospital_list.dart';
 
 // create custom widget to reuse same background template
@@ -30,7 +31,7 @@ class ProfilePageTemplate extends StatelessWidget {
             color: Colors.white,
             size: MediaQuery.of(context).size.width > 350 ? 26 : 20,
           ),
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
         ),
@@ -50,12 +51,12 @@ class ProfilePageTemplate extends StatelessWidget {
         child: FloatingActionButton(
           elevation: 0,
           highlightElevation: 0,
-          onPressed: (){
+          onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    HospitalListScreen(), // Navigate to the hospital list
+                    const HospitalListScreen(), // Navigate to the hospital list
               ),
             );
             //Panic button
@@ -64,7 +65,7 @@ class ProfilePageTemplate extends StatelessWidget {
           child: Container(
             width: 60,
             height: 65,
-            decoration:BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
@@ -74,7 +75,7 @@ class ProfilePageTemplate extends StatelessWidget {
                 ),
               ],
               color: Color(0xFF800000),
-            ) ,
+            ),
             child: Image.asset('assets/panic.gif', fit: BoxFit.cover),
           ),
         ),
@@ -132,10 +133,11 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(MediaQuery.of(context).size.width * 0.85, MediaQuery.of(context).size.height * 0.075),
+        minimumSize: Size(MediaQuery.of(context).size.width * 0.85,
+            MediaQuery.of(context).size.height * 0.075),
         alignment: Alignment.centerLeft,
         textStyle: GoogleFonts.inriaSans(
-          fontSize:  MediaQuery.of(context).size.width > 350 ? 24 : 18,
+          fontSize: MediaQuery.of(context).size.width > 350 ? 24 : 18,
           fontWeight: FontWeight.normal,
         ),
         elevation: 5,
@@ -170,7 +172,7 @@ class CustomTextBox extends StatelessWidget {
             color: Colors.black.withAlpha((0.3 * 255).toInt()),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3), // Shadow position
+            offset: const Offset(0, 3), // Shadow position
           ),
         ],
       ),
@@ -179,13 +181,14 @@ class CustomTextBox extends StatelessWidget {
   }
 }
 
-class ToastPopup{
-  static void showToast(String message, {ToastGravity gravity = ToastGravity.BOTTOM}) {
+class ToastPopup {
+  static void showToast(String message,
+      {ToastGravity gravity = ToastGravity.BOTTOM}) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: gravity,
-      backgroundColor: Color(0xFF8A7FD6),
+      backgroundColor: const Color(0xFF8A7FD6),
       textColor: Colors.white,
     );
   }

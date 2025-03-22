@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../Library/libraryHome.dart';
+import '../../Library/library_home.dart';
 import '../../Login_and_signup/Login_and_signup_logic/services/firebase.dart';
 import '../../Profile/pages/settings_page.dart';
+import '../Hospital_suggestion/hospital_list.dart';
 import '../Menu_pages/scan_insects_screen.dart';
 import '../Menu_pages/scan_snakes_screen.dart';
 import '../Menu_pages/scan_spiders_screen.dart';
 import '../reusable_widgets/homepage_card.dart';
-import '../Hospital_suggestion/hospital_list.dart';
 
 class HomePageContent extends StatefulWidget {
   const HomePageContent({super.key});
@@ -108,7 +108,7 @@ class _HomePageContentState extends State<HomePageContent> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Icon(Icons.notification_add),
+                        const Icon(Icons.notification_add),
                       ],
                     ),
                     SizedBox(
@@ -122,7 +122,7 @@ class _HomePageContentState extends State<HomePageContent> {
                               builder: (context) => ScanSnakesScreen()),
                         );
                       },
-                      child: HomepageCard(
+                      child: const HomepageCard(
                         imgPath: "assets/snake.png",
                         option: "SNAKE SCAN",
                       ),
@@ -138,7 +138,7 @@ class _HomePageContentState extends State<HomePageContent> {
                               builder: (context) => ScanInsectsScreen()),
                         );
                       },
-                      child: HomepageCard(
+                      child: const HomepageCard(
                         imgPath: "assets/insect.png",
                         option: "INSECTS SCAN",
                       ),
@@ -154,10 +154,9 @@ class _HomePageContentState extends State<HomePageContent> {
                               builder: (context) => ScanSpidersScreen()),
                         );
                       },
-                      child: HomepageCard(
+                      child: const HomepageCard(
                         imgPath: "assets/spider.png",
                         option: "SPIDER SCAN",
-
                       ),
                     ),
                     SizedBox(
@@ -171,20 +170,20 @@ class _HomePageContentState extends State<HomePageContent> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => libraryHome()),
+                                  builder: (context) => const LibraryHome()),
                             );
                           },
                           child: Container(
                             width: screenWidth * 0.6,
                             decoration: BoxDecoration(
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Colors.black38,
                                   blurRadius: 4,
                                   offset: Offset(4, 4),
                                 ),
                               ],
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [Color(0xff8A7FD6), Color(0xff6D5FD5)],
                               ),
                               borderRadius: BorderRadius.circular(30.00),
@@ -209,24 +208,24 @@ class _HomePageContentState extends State<HomePageContent> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    HospitalListScreen(), // Navigate to the hospital list
+                                    const HospitalListScreen(), // Navigate to the hospital list
                               ),
                             );
-
                           },
                           child: Container(
                             width: screenWidth * 0.15,
                             height: screenWidth * 0.15,
                             decoration: BoxDecoration(
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Colors.black38,
                                   blurRadius: 4,
                                   offset: Offset(4, 4),
                                 ),
                               ],
-                              color: Color(0xFF800000),
-                              borderRadius: BorderRadius.circular(screenWidth * 0.15 / 2),
+                              color: const Color(0xFF800000),
+                              borderRadius:
+                                  BorderRadius.circular(screenWidth * 0.15 / 2),
                             ),
                             child: Image.asset(
                               'assets/panic.gif',
@@ -234,7 +233,6 @@ class _HomePageContentState extends State<HomePageContent> {
                             ),
                           ),
                         )
-
                       ],
                     )
                   ],

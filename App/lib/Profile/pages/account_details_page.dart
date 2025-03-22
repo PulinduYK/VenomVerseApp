@@ -15,48 +15,55 @@ class AccountDetailsPage extends StatelessWidget {
         title: "Account details",
         contentHeightFactor: 0.85,
         child: Column(
-          children:[
-            SizedBox(height: 50),
+          children: [
+            const SizedBox(height: 50),
             CustomButton(
               text: "Personal info",
-              onPressed: (){
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PersonalInfoPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const PersonalInfoPage()),
                 );
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomButton(
               text: "Tracking Wearable",
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TrackingWearablePage()),
+                  MaterialPageRoute(
+                      builder: (context) => const TrackingWearablePage()),
                 );
-                ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
+                ToastPopup.showToast(
+                    "Coming Soon! This feature will be available in a future update.");
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomButton(
               text: "Medical Info",
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MedicalInfoPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const MedicalInfoPage()),
                 );
-                ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
+                ToastPopup.showToast(
+                    "Coming Soon! This feature will be available in a future update.");
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomButton(
               text: "Health Metrics",
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HealthMetricsPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const HealthMetricsPage()),
                 );
-                ToastPopup.showToast("Coming Soon! This feature will be available in a future update.");
+                ToastPopup.showToast(
+                    "Coming Soon! This feature will be available in a future update.");
               },
             ),
           ],

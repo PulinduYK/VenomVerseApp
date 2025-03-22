@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Camera/camPage.dart';
+import '../Camera/cam_page.dart';
 import '../scan/gallery.dart';
 
 class RetakeButton extends StatelessWidget {

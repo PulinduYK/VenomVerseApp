@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../../Functions/Hospital_suggestion/hospital_list.dart';
@@ -18,7 +19,9 @@ class FirebaseService {
         }, SetOptions(merge: true));
       }
     } catch (e) {
-      print("Error updating name: $e");
+      if (kDebugMode) {
+        print("Error updating name: $e");
+      }
     }
   }
 
@@ -47,7 +50,9 @@ class FirebaseService {
         return {'email': 'User not logged in'};
       }
     } catch (e) {
-      print('Error retrieving user data: $e');
+      if (kDebugMode) {
+        print('Error retrieving user data: $e');
+      }
       return {'email': 'Error'};
     }
   }
@@ -63,10 +68,14 @@ class FirebaseService {
           'gender': gender,
           'allergies': allergies,
         });
-        print("Name updated successfully");
+        if (kDebugMode) {
+          print("Name updated successfully");
+        }
       }
     } catch (e) {
-      print("Error updating name: $e");
+      if (kDebugMode) {
+        print("Error updating name: $e");
+      }
     }
   }
 
@@ -77,10 +86,14 @@ class FirebaseService {
         await _firestore.collection('users').doc(user.uid).update({
           'displayName': newName,
         });
-        print("Name updated successfully");
+        if (kDebugMode) {
+          print("Name updated successfully");
+        }
       }
     } catch (e) {
-      print("Error updating name: $e");
+      if (kDebugMode) {
+        print("Error updating name: $e");
+      }
     }
   }
 
@@ -91,10 +104,14 @@ class FirebaseService {
         await _firestore.collection('users').doc(user.uid).update({
           'displayName': newName,
         });
-        print("Name updated successfully");
+        if (kDebugMode) {
+          print("Name updated successfully");
+        }
       }
     } catch (e) {
-      print("Error updating name: $e");
+      if (kDebugMode) {
+        print("Error updating name: $e");
+      }
     }
   }
 
@@ -105,10 +122,14 @@ class FirebaseService {
         await _firestore.collection('users').doc(user.uid).update({
           'displayName': newName,
         });
-        print("Name updated successfully");
+        if (kDebugMode) {
+          print("Name updated successfully");
+        }
       }
     } catch (e) {
-      print("Error updating name: $e");
+      if (kDebugMode) {
+        print("Error updating name: $e");
+      }
     }
   }
 
@@ -157,9 +178,13 @@ class FirebaseService {
         'dob': dob,
       }, SetOptions(merge: true));
 
-      print("User data updated successfully!");
+      if (kDebugMode) {
+        print("User data updated successfully!");
+      }
     } catch (e) {
-      print("Error updating user data: $e");
+      if (kDebugMode) {
+        print("Error updating user data: $e");
+      }
     }
   }
 
@@ -218,7 +243,9 @@ class FirebaseService {
             .toList();
       }
     } catch (e) {
-      print("Error fetching remedies: $e");
+      if (kDebugMode) {
+        print("Error fetching remedies: $e");
+      }
     }
     return [];
   }
@@ -239,7 +266,9 @@ class FirebaseService {
             .toList();
       }
     } catch (e) {
-      print("Error fetching remedies: $e");
+      if (kDebugMode) {
+        print("Error fetching remedies: $e");
+      }
     }
     return [];
   }
@@ -263,7 +292,9 @@ class FirebaseService {
         };
       }
     } catch (e) {
-      print("Error fetching snake details: $e");
+      if (kDebugMode) {
+        print("Error fetching snake details: $e");
+      }
     }
     return {};
   }
@@ -287,7 +318,9 @@ class FirebaseService {
         };
       }
     } catch (e) {
-      print("Error fetching snake details: $e");
+      if (kDebugMode) {
+        print("Error fetching snake details: $e");
+      }
     }
     return {};
   }
@@ -322,29 +355,31 @@ class FirebaseService {
         };
       }).toList();
     } catch (e) {
-      print("Error fetching $category: $e");
+      if (kDebugMode) {
+        print("Error fetching $category: $e");
+      }
       return [];
     }
   }
 
-  Future<int> insertHistory(int UserSelectedType, bool success,
+  Future<int> insertHistory(int userselectedtype, bool success,
       bool previewStatus, String name) async {
     String? userId = _auth.currentUser?.uid;
     if (userId == null) return 0;
-    String Utype;
+    String utype;
     List<String> type = [
       "Snake Category",
       "Spider Category",
       "Insect Category"
     ];
-    if (UserSelectedType == 1) {
-      Utype = type[UserSelectedType - 1];
-    } else if (UserSelectedType == 2) {
-      Utype = type[UserSelectedType - 1];
-    } else if (UserSelectedType == 3) {
-      Utype = type[UserSelectedType - 1];
+    if (userselectedtype == 1) {
+      utype = type[userselectedtype - 1];
+    } else if (userselectedtype == 2) {
+      utype = type[userselectedtype - 1];
+    } else if (userselectedtype == 3) {
+      utype = type[userselectedtype - 1];
     } else {
-      Utype = "Error while saving history";
+      utype = "Error while saving history";
     }
     try {
       await _firestore
@@ -352,7 +387,7 @@ class FirebaseService {
           .doc(userId)
           .collection('history')
           .add({
-        'UserPreferredType': Utype,
+        'UserPreferredType': utype,
         'status': success ? 'Success' : 'Failure',
         'previewStatus': previewStatus ? 'Shown' : 'Restricted',
         'detectedName': name,
@@ -360,7 +395,9 @@ class FirebaseService {
       });
       return 1; // Success
     } catch (e) {
-      print("Error inserting history: $e");
+      if (kDebugMode) {
+        print("Error inserting history: $e");
+      }
       return 0; // Failure
     }
   }
@@ -414,7 +451,9 @@ class FirebaseService {
           await doc.reference.delete();
         }
       } catch (e) {
-        print("Error clearing history: $e");
+        if (kDebugMode) {
+          print("Error clearing history: $e");
+        }
       }
     }
   }
@@ -431,7 +470,9 @@ class FirebaseService {
           .doc(historyId)
           .delete();
     } catch (e) {
-      print("Error deleting history: $e");
+      if (kDebugMode) {
+        print("Error deleting history: $e");
+      }
     }
   }
 }

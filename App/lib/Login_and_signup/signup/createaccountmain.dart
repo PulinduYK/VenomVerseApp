@@ -175,7 +175,7 @@ class CreateAccountMain extends StatelessWidget {
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.black.withValues(),
-                                            offset: Offset(0, 4),
+                                            offset: const Offset(0, 4),
                                             blurRadius: 8,
                                           ),
                                         ],
@@ -190,7 +190,7 @@ class CreateAccountMain extends StatelessWidget {
                                             confirmBtnColor:
                                                 Colors.deepPurpleAccent,
                                             customAsset: 'assets/warning.gif',
-                                            widget: Center(
+                                            widget: const Center(
                                               child: Text(
                                                 "Sorry this sign in method currently not available",
                                                 textAlign: TextAlign.center,
@@ -212,7 +212,7 @@ class CreateAccountMain extends StatelessWidget {
                                                 15), // Matches container for rounded box effect
                                           ),
                                         ),
-                                        child: Row(
+                                        child: const Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
@@ -233,7 +233,7 @@ class CreateAccountMain extends StatelessWidget {
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.black.withValues(),
-                                            offset: Offset(0, 4),
+                                            offset: const Offset(0, 4),
                                             blurRadius: 8,
                                           ),
                                         ],
@@ -248,7 +248,7 @@ class CreateAccountMain extends StatelessWidget {
                                             confirmBtnColor:
                                                 Colors.deepPurpleAccent,
                                             customAsset: 'assets/warning.gif',
-                                            widget: Center(
+                                            widget: const Center(
                                               child: Text(
                                                 "Sorry this sign in method currently not available",
                                                 textAlign: TextAlign.center,
@@ -268,7 +268,7 @@ class CreateAccountMain extends StatelessWidget {
                                                 BorderRadius.circular(15),
                                           ),
                                         ),
-                                        child: Row(
+                                        child: const Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
