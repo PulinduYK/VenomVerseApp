@@ -26,7 +26,7 @@ class RetakeButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
               Color(0xff8A7FD6),
               Color(0xff6D5FD5),
@@ -48,7 +48,7 @@ class RetakeButton extends StatelessWidget {
                 _navigateBack(context, previousPage);
               },
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
             shape:
@@ -57,12 +57,12 @@ class RetakeButton extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.refresh, color: Colors.white), // White icon
-              SizedBox(width: 8),
+              const Icon(Icons.refresh, color: Colors.white), // White icon
+              const SizedBox(width: 8),
               Flexible(
                 child: Text(
                   buttonName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white, // Set text color to white
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -84,12 +84,12 @@ class RetakeButton extends StatelessWidget {
     if (previousPage == "scan") {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => CamPage(modelNum: 1)),
+        MaterialPageRoute(builder: (context) => const CamPage(modelNum: 1)),
       );
     } else if (previousPage == "upload") {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => UploadImagesPage(modelNum: 1)),
+        MaterialPageRoute(builder: (context) => const UploadImagesPage(modelNum: 1)),
       );
     }
   }

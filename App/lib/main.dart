@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: FirebaseOptions(
+        options: const FirebaseOptions(
             apiKey: "AIzaSyD67Z9a_EdUwckQh4Pg7EwPJnG2jB2XR6g",
             authDomain: "venomverse-baaf2.firebaseapp.com",
             projectId: "venomverse-baaf2",
@@ -20,7 +20,7 @@ void main() async {
     NotificationPdf().initNotification();
     await Firebase.initializeApp();
   }
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Wrapper(),
     );

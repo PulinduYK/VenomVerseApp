@@ -161,37 +161,39 @@ class ResultScreenState extends State<ResultScreen> {
     if (confidence < 90) {
       await _firebaseService.insertHistory(
           modelNoForHistory, true, false, "none");
-      QuickAlert.show(
-        context: context,
-        type: QuickAlertType.custom,
-        barrierDismissible: true,
-        confirmBtnText: 'Got it',
-        onConfirmBtnTap: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
-        confirmBtnColor: Colors.deepPurpleAccent,
-        customAsset: 'assets/warning.gif',
-        widget: Center(
-          child: Column(
-            children: [
-              Text(
-                "Low Accuracy",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Image uploaded Successfully But The accuracy of the detection is low. Please retake the image for better results.",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-              ),
-            ],
+      if(mounted) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.custom,
+          barrierDismissible: true,
+          confirmBtnText: 'Got it',
+          onConfirmBtnTap: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          confirmBtnColor: Colors.deepPurpleAccent,
+          customAsset: 'assets/warning.gif',
+          widget: const Center(
+            child: Column(
+              children: [
+                Text(
+                  "Low Accuracy",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Image uploaded Successfully But The accuracy of the detection is low. Please retake the image for better results.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
           ),
-        ),
-      );
+        );
+      }
     } else {
       _fetchSnakeData();
       setState(() {
@@ -207,14 +209,14 @@ class ResultScreenState extends State<ResultScreen> {
       body: Stack(
         children: [
           // Background Image
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 370,
             child: Image.asset(imagePath, fit: BoxFit.cover),
           ),
 
           // Back Button (Top-Left)
-          Positioned(top: 50, left: 15, child: CustomBackButton()),
+          const Positioned(top: 50, left: 15, child: CustomBackButton()),
 
           // Result Card (Bottom Section)
           Align(
@@ -222,7 +224,7 @@ class ResultScreenState extends State<ResultScreen> {
             child: Container(
               height: MediaQuery.of(context).size.height * 0.67,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
@@ -230,13 +232,13 @@ class ResultScreenState extends State<ResultScreen> {
                 ),
                 boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
               ),
-              padding: EdgeInsets.symmetric(horizontal: 00, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 00, vertical: 15),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Result Title
-                    Center(
+                    const Center(
                       heightFactor: 2,
                       child: Text(
                         "Result",
@@ -244,7 +246,7 @@ class ResultScreenState extends State<ResultScreen> {
                             fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     // Snake Name & Lethality Badge
                     Center(
@@ -254,7 +256,7 @@ class ResultScreenState extends State<ResultScreen> {
                           Container(
                             width: MediaQuery.of(context).size.width *
                                 0.75, // Set a fixed width
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 8),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -262,15 +264,15 @@ class ResultScreenState extends State<ResultScreen> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                              "Name:- ${name}",
-                              style: TextStyle(
+                              "Name:- $name",
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w500),
                               softWrap: true, // Ensures text wraps
                               overflow: TextOverflow
                                   .visible, // Ensures text doesn't get cut off
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           LethalityBadge(
@@ -280,14 +282,14 @@ class ResultScreenState extends State<ResultScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
 
                     ImmediateActionsSection(actions: remedies),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
 
                     // Description Section
                     DescriptionSection(description: description),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Center(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width - 40,
@@ -327,7 +329,7 @@ class ResultScreenState extends State<ResultScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 80),
+                    const SizedBox(height: 80),
                   ],
                 ),
               ),
@@ -351,14 +353,14 @@ class ResultScreenState extends State<ResultScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        HospitalListScreen(), // Navigate to the hospital list
+                        const HospitalListScreen(), // Navigate to the hospital list
                   ),
                 );
               },
               child: Container(
                 width: 60,
                 height: 65,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
