@@ -175,10 +175,10 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _filterButton("Spiders", "spider", Colors.purple),
-                _filterButton("Insects", "insect", Colors.purple),
-                _filterButton("Snakes", "snake", Colors.purple),
-                _filterButton("All", "all", Colors.purple),
+                _filterButton("Spiders", "spider", Colors.purpleAccent),
+                _filterButton("Insects", "insect", Colors.purpleAccent),
+                _filterButton("Snakes", "snake", Colors.purpleAccent),
+                _filterButton("All", "all", Colors.purpleAccent),
               ],
             ),
           ),
