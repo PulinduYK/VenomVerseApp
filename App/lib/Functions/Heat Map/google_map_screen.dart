@@ -192,14 +192,14 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 FloatingActionButton(
                   heroTag: "zoomIn",
                   onPressed: _zoomIn,
-                  backgroundColor: Colors.purple,
+                  backgroundColor: Colors.blue[700],
                   child: Icon(Icons.add, color: Colors.white),
                 ),
                 SizedBox(height: 10),
                 FloatingActionButton(
                   heroTag: "zoomOut",
                   onPressed: _zoomOut,
-                  backgroundColor: Colors.purple,
+                  backgroundColor: Colors.blue[700],
                   child: Icon(Icons.remove, color: Colors.white),
                 ),
                 SizedBox(height: 10),
