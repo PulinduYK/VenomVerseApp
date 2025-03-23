@@ -1,4 +1,4 @@
-import 'package:device_information/device_information.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -147,8 +147,9 @@ class ResultScreenState extends State<ResultScreen> {
 
   Future<String> fetchDeviceModel() async {
     try {
-      String modelName = await DeviceInformation.deviceModel;
-      return modelName;
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.model;
     } catch (e) {
       if (kDebugMode) {
         print("Error getting device model: $e");

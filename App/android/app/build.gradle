@@ -6,6 +6,12 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+allprojects {
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs.add('-Xlint:deprecation')
+    }
+}
+
 android {
     namespace = "com.example.venomverse"
     compileSdkVersion 35
