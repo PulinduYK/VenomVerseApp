@@ -56,5 +56,22 @@ jobs:
             App/build/app/outputs/flutter-apk/app-release.apk
             App/build/app/outputs/bundle/release/app-release.aab
 
+      - name: Get version number from GitHub Run ID
+        id: version
+        run: echo "VERSION_NAME=1.0.${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: App/build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          
+      - name: Tag the release with version
+        run: git tag -a "v1.0.${{ github.run_number }}" -m "Release version 1.0.${{ github.run_number }}"
+      
+      - name: Push the tag to GitHub
+        run: git push origin --tags
+
       # Deployment Steps (Optional)
       # - You can add deployment to Firebase, Play Store, or App Store if needed
