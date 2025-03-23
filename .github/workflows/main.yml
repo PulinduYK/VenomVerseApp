@@ -43,10 +43,10 @@ jobs:
           cd App
           flutter test
 
-      #- name: Build APK
-      #  run: |
-      #    cd App
-      #    flutter build apk --release || true
+      - name: Build APK
+        run: |
+          cd App
+          flutter build apk --release || true
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
