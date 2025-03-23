@@ -68,7 +68,7 @@ jobs:
       - name: Tag the release with version
         run: |
           git tag -a "v1.0.${{ github.run_number }}" -m "Release version 1.0.${{ github.run_number }}"
-          git push origin "v1.0.${{ github.run_number }}"  # Push the tag to GitHub
+          git push https://x-access-token:${{ secrets.TOKEN }}@github.com/${{ github.repository }} "v1.0.${{ github.run_number }}"  # Push the tag using the PAT
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
