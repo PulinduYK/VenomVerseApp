@@ -72,11 +72,12 @@ jobs:
 
       - name: Verify Tag Creation
         run: git tag
-        
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           files: App/build/app/outputs/flutter-apk/app-release.apk
+          tag_name: v1.0.${{ github.run_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
