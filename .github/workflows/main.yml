@@ -60,18 +60,17 @@ jobs:
         id: version
         run: echo "VERSION_NAME=1.0.${{ github.run_number }}" >> $GITHUB_ENV
 
+      - name: Tag the release with version
+        run: |
+          git tag -a "v1.0.${{ github.run_number }}" -m "Release version 1.0.${{ github.run_number }}"
+          git push origin "v1.0.${{ github.run_number }}"  # Push the tag to GitHub
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           files: App/build/app/outputs/flutter-apk/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          
-      - name: Tag the release with version
-        run: git tag -a "v1.0.${{ github.run_number }}" -m "Release version 1.0.${{ github.run_number }}"
-      
-      - name: Push the tag to GitHub
-        run: git push origin --tags
 
       # Deployment Steps (Optional)
       # - You can add deployment to Firebase, Play Store, or App Store if needed

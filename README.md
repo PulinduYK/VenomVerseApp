@@ -87,7 +87,7 @@ flutter run
 1. Open the app and upload an image or take a picture using device camera of a snake, insect, or spider.
 2. Wait for processing, as the app identifies the species and predicts its venom level.
 3. View results, including severity analysis and recommended actions.
-4. Save reports for medical reference or future use and its automaticaly send to your user eamil.
+4. Save reports for medical reference or future use and its automaticaly send to your user email.
 
 ## API Endpoints
 
